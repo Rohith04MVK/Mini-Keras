@@ -1,2 +1,2 @@
 # Mini-Keras
-### AI and DL library in pure nujpy
+### AI and DL library in pure numpy
