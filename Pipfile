@@ -5,10 +5,11 @@ name = "pypi"
 
 [packages]
 numpy = "*"
-scipy = "#"
+scipy = "*"
 matplotlib = "*"
+flake8 = "*"
 
 [dev-packages]
 
-[scripts]
-lint = "<command>"
+[requires]
+python_version = "3.7"
