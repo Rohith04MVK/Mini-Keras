@@ -11,5 +11,4 @@ matplotlib = "*"
 [dev-packages]
 
 [scripts]
-lint = "pre-commit run --all-files"
-precommit = "pre-commit install"
+lint = "<command>"
