@@ -11,4 +11,4 @@ matplotlib = "*"
 [dev-packages]
 
 [scripts]
-lint = "flake8"
+lint = "python -m flake8"
