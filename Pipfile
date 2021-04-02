@@ -10,3 +10,6 @@ matplotlib = "*"
 flake8 = "*"
 
 [dev-packages]
+
+[scripts]
+lint = "python -m flake8"
