@@ -10,8 +10,8 @@ class BaseCostFunction(metaclass=abc.ABCMeta):
     @classmethod
     def __subclasshook__(cls, subclass: "BaseCostFunction") -> t.Union[True, NotImplemented]:
         return (
-            hasattr(subclass, 'f') and callable(subclass.f) and
-            hasattr(subclass, 'grad') and callable(subclass.grad) or
+            hasattr(subclass, 'f') and callable(subclass.f) and  # noqa: W504
+            hasattr(subclass, 'grad') and callable(subclass.grad) or  # noqa: W504
             NotImplemented
         )
 
@@ -30,8 +30,8 @@ class BaseActivation(metaclass=abc.ABCMeta):
     @classmethod
     def __subclasshook__(cls, subclass: "BaseActivation") -> t.Union[True, NotImplemented]:
         return (
-            hasattr(subclass, 'f') and callable(subclass.f) and
-            hasattr(subclass, 'df') and callable(subclass.df) or
+            hasattr(subclass, 'f') and callable(subclass.f) and  # noqa: W504
+            hasattr(subclass, 'df') and callable(subclass.df) or  # noqa: W504
             NotImplemented
         )
 
@@ -53,8 +53,8 @@ class BaseOptimizer(metaclass=abc.ABCMeta):
     @classmethod
     def __subclasshook__(cls, subclass: "BaseOptimizer") -> t.Union[True, NotImplemented]:
         return (
-            hasattr(subclass, 'initialize') and callable(subclass.initialize) and
-            hasattr(subclass, 'update') and callable(subclass.update) or
+            hasattr(subclass, 'initialize') and callable(subclass.initialize) and  # noqa: W504
+            hasattr(subclass, 'update') and callable(subclass.update) or  # noqa: W504
             NotImplemented
         )
 
@@ -73,12 +73,12 @@ class BaseLayer:
     @classmethod
     def __subclasshook__(cls, subclass: "BaseOptimizer") -> t.Union[True, NotImplemented]:
         return (
-                hasattr(subclass, 'init') and callable(subclass.init) and
-                hasattr(subclass, 'forward') and callable(subclass.forward) and
-                hasattr(subclass, 'backward') and callable(subclass.backward) and
-                hasattr(subclass, 'update_params') and callable(subclass.update_params) and
-                hasattr(subclass, 'get_params') and callable(subclass.get_params) and
-                hasattr(subclass, 'get_output_dim') and callable(subclass.get_output_dim) or
+                hasattr(subclass, 'init') and callable(subclass.init) and  # noqa: W504
+                hasattr(subclass, 'forward') and callable(subclass.forward) and  # noqa: W504
+                hasattr(subclass, 'backward') and callable(subclass.backward) and  # noqa: W504
+                hasattr(subclass, 'update_params') and callable(subclass.update_params) and  # noqa: W504
+                hasattr(subclass, 'get_params') and callable(subclass.get_params) and  # noqa: W504
+                hasattr(subclass, 'get_output_dim') and callable(subclass.get_output_dim) or  # noqa: W504
                 NotImplemented
         )
 
