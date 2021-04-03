@@ -23,5 +23,10 @@ class ReLU(BaseActivation):
         return np.where(x <= 0, 0, 1)
 
 
-class Softmax(BaseActivation):
-    pass
+class SoftMax(BaseActivation):
+    def f(self, x):
+        y = np.exp(x - np.max(x, axis=1, keepdims=True))
+        return y / np.sum(y, axis=1, keepdims=True)
+
+    def df():
+        raise NotImplementedError
