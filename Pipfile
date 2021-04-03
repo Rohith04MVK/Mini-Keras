@@ -4,10 +4,9 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-numpy = "*"
-scipy = "*"
-matplotlib = "*"
-flake8 = "*"
+numpy = "==1.20.2"
+scipy = "==1.6.2"
+matplotlib = "==3.4.1"
 
 [dev-packages]
 flake8 = "*"
