@@ -1,15 +1,9 @@
 import numpy as np
 
-
-class ActivationFunction:
-    def function(self, x):
-        raise NotImplementedError
-
-    def derivative(self, x, cached_y=None):
-        raise NotImplementedError
+from .abc import BaseActivation
 
 
-class Identify(ActivationFunction):
+class Identify(BaseActivation):
     def function(self, x):
         return x
 
@@ -17,13 +11,13 @@ class Identify(ActivationFunction):
         return np.full(x.shape, 1)
 
 
-class Sigmoid(ActivationFunction):
+class Sigmoid(BaseActivation):
     pass
 
 
-class ReLU(ActivationFunction):
+class ReLU(BaseActivation):
     pass
 
 
-class Softmax(ActivationFunction):
+class Softmax(BaseActivation):
     pass

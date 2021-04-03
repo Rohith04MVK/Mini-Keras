@@ -8,7 +8,7 @@ class BaseCostFunction(metaclass=abc.ABCMeta):
     __slots__ = ()
 
     @classmethod
-    def __subclasshook__(cls, subclass: "BaseCostFunction") -> t.Union[True, NotImplemented]:
+    def __subclasshook__(cls, subclass: "BaseCostFunction") -> t.Union[bool, type(NotImplemented)]:
         return (
             hasattr(subclass, 'f') and callable(subclass.f) and
             hasattr(subclass, 'grad') and callable(subclass.grad) or
@@ -28,11 +28,11 @@ class BaseActivation(metaclass=abc.ABCMeta):
     __slots__ = ()
 
     @classmethod
-    def __subclasshook__(cls, subclass: "BaseActivation") -> t.Union[True, NotImplemented]:
+    def __subclasshook__(cls, subclass: "BaseActivation") -> t.Union[bool, type(NotImplemented)]:
         return (
             hasattr(subclass, 'f') and callable(subclass.f) and
             hasattr(subclass, 'df') and callable(subclass.df) or
-            NotImplemented
+            type(NotImplemented)
         )
 
     @abc.abstractmethod
@@ -51,7 +51,7 @@ class BaseOptimizer(metaclass=abc.ABCMeta):
         self.trainable_layers = trainable_layers
 
     @classmethod
-    def __subclasshook__(cls, subclass: "BaseOptimizer") -> t.Union[True, NotImplemented]:
+    def __subclasshook__(cls, subclass: "BaseOptimizer") -> t.Union[bool, type(NotImplemented)]:
         return (
             hasattr(subclass, 'initialize') and callable(subclass.initialize) and
             hasattr(subclass, 'update') and callable(subclass.update) or
@@ -71,7 +71,7 @@ class BaseLayer:
     __slots__ = ()
 
     @classmethod
-    def __subclasshook__(cls, subclass: "BaseOptimizer") -> t.Union[True, NotImplemented]:
+    def __subclasshook__(cls, subclass: "BaseOptimizer") -> t.Union[bool, type(NotImplemented)]:
         return (
             hasattr(subclass, 'init') and callable(subclass.init) and
             hasattr(subclass, 'forward') and callable(subclass.forward) and
