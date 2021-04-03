@@ -1,3 +1,5 @@
+import math
+
 import numpy as np
 
 from .abc import BaseActivation
@@ -12,7 +14,13 @@ class Identify(BaseActivation):
 
 
 class Sigmoid(BaseActivation):
-    pass
+    def f(self, x):
+        s = 1 / (1 + math.exp(-x))
+        return s
+
+    def df(self, x, cached_y=None):
+        ds = x * (1 - x)
+        return ds
 
 
 class ReLU(BaseActivation):
@@ -28,5 +36,5 @@ class SoftMax(BaseActivation):
         y = np.exp(x - np.max(x, axis=1, keepdims=True))
         return y / np.sum(y, axis=1, keepdims=True)
 
-    def df():
+    def df(self):
         raise NotImplementedError
