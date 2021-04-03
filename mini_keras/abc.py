@@ -8,10 +8,10 @@ class BaseCostFunction(metaclass=abc.ABCMeta):
     __slots__ = ()
 
     @classmethod
-    def __subclasshook__(cls, subclass: "BaseCostFunction") -> t.Union[True, NotImplemented]:
+    def __subclasshook__(cls, subclass: "BaseCostFunction") -> t.Union[bool, type(NotImplemented)]:
         return (
-            hasattr(subclass, 'f') and callable(subclass.f) and  # noqa: W504
-            hasattr(subclass, 'grad') and callable(subclass.grad) or  # noqa: W504
+            hasattr(subclass, 'f') and callable(subclass.f) and
+            hasattr(subclass, 'grad') and callable(subclass.grad) or
             NotImplemented
         )
 
@@ -28,11 +28,11 @@ class BaseActivation(metaclass=abc.ABCMeta):
     __slots__ = ()
 
     @classmethod
-    def __subclasshook__(cls, subclass: "BaseActivation") -> t.Union[True, NotImplemented]:
+    def __subclasshook__(cls, subclass: "BaseActivation") -> t.Union[bool, type(NotImplemented)]:
         return (
-            hasattr(subclass, 'f') and callable(subclass.f) and  # noqa: W504
-            hasattr(subclass, 'df') and callable(subclass.df) or  # noqa: W504
-            NotImplemented
+            hasattr(subclass, 'f') and callable(subclass.f) and
+            hasattr(subclass, 'df') and callable(subclass.df) or
+            type(NotImplemented)
         )
 
     @abc.abstractmethod
@@ -51,7 +51,7 @@ class BaseOptimizer(metaclass=abc.ABCMeta):
         self.trainable_layers = trainable_layers
 
     @classmethod
-    def __subclasshook__(cls, subclass: "BaseOptimizer") -> t.Union[True, NotImplemented]:
+    def __subclasshook__(cls, subclass: "BaseOptimizer") -> t.Union[bool, type(NotImplemented)]:
         return (
             hasattr(subclass, 'initialize') and callable(subclass.initialize) and  # noqa: W504
             hasattr(subclass, 'update') and callable(subclass.update) or  # noqa: W504
@@ -71,15 +71,15 @@ class BaseLayer:
     __slots__ = ()
 
     @classmethod
-    def __subclasshook__(cls, subclass: "BaseOptimizer") -> t.Union[True, NotImplemented]:
+    def __subclasshook__(cls, subclass: "BaseOptimizer") -> t.Union[bool, type(NotImplemented)]:
         return (
-                hasattr(subclass, 'init') and callable(subclass.init) and  # noqa: W504
-                hasattr(subclass, 'forward') and callable(subclass.forward) and  # noqa: W504
-                hasattr(subclass, 'backward') and callable(subclass.backward) and  # noqa: W504
-                hasattr(subclass, 'update_params') and callable(subclass.update_params) and  # noqa: W504
-                hasattr(subclass, 'get_params') and callable(subclass.get_params) and  # noqa: W504
-                hasattr(subclass, 'get_output_dim') and callable(subclass.get_output_dim) or  # noqa: W504
-                NotImplemented
+            hasattr(subclass, 'init') and callable(subclass.init) and
+            hasattr(subclass, 'forward') and callable(subclass.forward) and
+            hasattr(subclass, 'backward') and callable(subclass.backward) and
+            hasattr(subclass, 'update_params') and callable(subclass.update_params) and
+            hasattr(subclass, 'get_params') and callable(subclass.get_params) and
+            hasattr(subclass, 'get_output_dim') and callable(subclass.get_output_dim) or
+            NotImplemented
         )
 
     def init(self, in_dim: t.Union[int, tuple]) -> None:
