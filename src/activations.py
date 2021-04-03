@@ -7,4 +7,3 @@ class ActivationFunction:
 
     def derivative(self, x, cached_y=None):
         raise NotImplementedError
-        
