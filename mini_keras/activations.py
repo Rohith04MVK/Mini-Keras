@@ -4,10 +4,10 @@ from .abc import BaseActivation
 
 
 class Identify(BaseActivation):
-    def function(self, x):
+    def f(self, x):
         return x
 
-    def derivative(self, x, cached_y=None):
+    def df(self, x, cached_y=None):
         return np.full(x.shape, 1)
 
 
@@ -16,7 +16,11 @@ class Sigmoid(BaseActivation):
 
 
 class ReLU(BaseActivation):
-    pass
+    def f(self, x):
+        return np.maximum(0, x)
+
+    def df(self, x, cached_y=None):
+        return np.where(x <= 0, 0, 1)
 
 
 class Softmax(BaseActivation):
