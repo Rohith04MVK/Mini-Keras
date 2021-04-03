@@ -73,13 +73,13 @@ class BaseLayer:
     @classmethod
     def __subclasshook__(cls, subclass: "BaseOptimizer") -> t.Union[True, NotImplemented]:
         return (
-                hasattr(subclass, 'init') and callable(subclass.init) and
-                hasattr(subclass, 'forward') and callable(subclass.forward) and
-                hasattr(subclass, 'backward') and callable(subclass.backward) and
-                hasattr(subclass, 'update_params') and callable(subclass.update_params) and
-                hasattr(subclass, 'get_params') and callable(subclass.get_params) and
-                hasattr(subclass, 'get_output_dim') and callable(subclass.get_output_dim) or
-                NotImplemented
+            hasattr(subclass, 'init') and callable(subclass.init) and
+            hasattr(subclass, 'forward') and callable(subclass.forward) and
+            hasattr(subclass, 'backward') and callable(subclass.backward) and
+            hasattr(subclass, 'update_params') and callable(subclass.update_params) and
+            hasattr(subclass, 'get_params') and callable(subclass.get_params) and
+            hasattr(subclass, 'get_output_dim') and callable(subclass.get_output_dim) or
+            NotImplemented
         )
 
     def init(self, in_dim: t.Union[int, tuple]) -> None:
