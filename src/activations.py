@@ -15,3 +15,15 @@ class Identify(ActivationFunction):
 
     def derivative(self, x, cached_y=None):
         return np.full(x.shape, 1)
+
+
+class Sigmoid(ActivationFunction):
+    pass
+
+
+class ReLU(ActivationFunction):
+    pass
+
+
+class Softmax(ActivationFunction):
+    pass
