@@ -25,3 +25,17 @@ class Dense(BaseLayer):
             self.cache.update({'a_prev': a_prev, 'z': z, 'a': a})
 
         return a
+
+    def backward(self, da):
+        a_prev, z, a = (self.cache[key] for key in ('a_prev', 'z', 'a'))
+
+        batch_size = a_prev.shape[0]
+
+        dz = da * self.activation.df(z, cached_y=a)
+
+        dw = 1 / batch_size * np.dot(dz.T, a_prev)
+        db = 1 / batch_size * dz.sum(axis=0, keepdims=True)
+        da_prev = np.dot(dz, self.weights)
+
+        return da_prev, dw, db
+        
