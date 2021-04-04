@@ -82,11 +82,11 @@ class BaseLayer:
             NotImplemented
         )
 
-    def init(self, in_dim: t.Union[int, tuple]) -> None:
+    def init(self, input_dims: t.Union[int, tuple]) -> None:
         """
         Parameters
         ----------
-        in_dim : int or tuple
+        input_dims : int or tuple
             Shape of the input data.
         """
         raise NotImplementedError
