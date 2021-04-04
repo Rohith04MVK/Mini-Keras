@@ -38,4 +38,7 @@ class Dense(BaseLayer):
         da_prev = np.dot(dz, self.weights)
 
         return da_prev, dw, db
-        
+
+    def update_params(self, dw, db):
+        self.weights -= dw
+        self.bias -= db
