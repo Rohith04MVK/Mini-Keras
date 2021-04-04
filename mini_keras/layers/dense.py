@@ -1,7 +1,6 @@
 import numpy as np
 
-from .abc import BaseLayer
-
+from mini_keras.abc import BaseLayer
 
 class Dense(BaseLayer):
     def __init__(self, size, activation):
@@ -16,3 +15,5 @@ class Dense(BaseLayer):
         self.weights = np.random.randn(self.size, input_dims) * np.sqrt(2 / input_dims)
 
         self.bias = np.zeros((1, self.size))
+
+
