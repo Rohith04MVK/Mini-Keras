@@ -45,3 +45,6 @@ class Dense(BaseLayer):
 
     def get_params(self):
         return self.weights, self.bias
+
+    def get_output_dim(self):
+        return self.size
