@@ -44,4 +44,4 @@ class Dense(BaseLayer):
         self.bias -= db
 
     def get_params(self):
-        return self.w, self.b
+        return self.weights, self.bias
