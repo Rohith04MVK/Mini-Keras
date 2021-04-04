@@ -42,3 +42,6 @@ class Dense(BaseLayer):
     def update_params(self, dw, db):
         self.weights -= dw
         self.bias -= db
+
+    def get_params(self):
+        return self.w, self.b
