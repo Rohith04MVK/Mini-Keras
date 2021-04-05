@@ -1,5 +1,6 @@
-from .abc import BaseOptimizer
 import numpy as np
+from .abc import BaseOptimizer
+
 
 class GradientDescent(BaseOptimizer):
 
