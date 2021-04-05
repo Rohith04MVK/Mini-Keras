@@ -39,3 +39,5 @@ class RMSprop(BaseOptimizer):
         for layer in self.trainable_layers:
             layer_dw = ('dw', layer)
             layer_db = ('db', layer)
+
+            self.s[layer_dw] = (self.beta * self.s[layer_dw] + (1 - self.beta) * np.square(w_grads[layer]))
