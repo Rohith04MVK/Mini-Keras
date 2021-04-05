@@ -40,4 +40,4 @@ class RMSprop(BaseOptimizer):
             layer_dw = ('dw', layer)
             layer_db = ('db', layer)
 
-            self.s[layer_dw] = (self.beta * self.s[layer_dw] + (1 - self.beta) * np.square(w_grads[layer]))
+            self.cache[layer_dw] = (self.beta * self.cache[layer_dw] + (1 - self.beta) * np.square(w_grads[layer]))
