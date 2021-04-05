@@ -31,3 +31,9 @@ class RMSprop(BaseOptimizer):
             b_shape = b.shape
             self.cache[("dw", layer)] = np.zeros(w_shape)
             self.cache[("db", layer)] = np.zeros(b_shape)
+
+    def update(self, learning_rate, w_grads, b_grads, step):
+        s_corrected = {}
+        s_correction_term = 1 - np.power(self.beta, step)
+        
+        
