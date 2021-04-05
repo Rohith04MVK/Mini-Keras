@@ -1,6 +1,6 @@
 import numpy as np
 
-from mini_keras import BaseOptimizer
+from .abc import BaseOptimizer
 
 
 class GradientDescent(BaseOptimizer):
