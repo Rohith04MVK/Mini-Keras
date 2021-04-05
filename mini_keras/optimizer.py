@@ -1,5 +1,5 @@
 from .abc import BaseOptimizer
-
+import numpy as np
 
 class GradientDescent(BaseOptimizer):
 
@@ -22,3 +22,11 @@ class RMSprop(BaseOptimizer):
         self.cache = {}
         self.beta = beta
         self.epsilon = epsilon
+
+    def initialize(self):
+        for layer in self.trainable_layers:
+            w, b, = layer.get_params
+            w_shape = w.shape
+            b_shape = b.shape
+            self.cache[("dw", layer)] = np.zeros(w_shape)
+            self.cache[("db", layer)] = np.zeros(b_shape)
