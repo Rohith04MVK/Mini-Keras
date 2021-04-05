@@ -35,3 +35,7 @@ class RMSprop(BaseOptimizer):
     def update(self, learning_rate, w_grads, b_grads, step):
         s_corrected = {}
         s_correction_term = 1 - np.power(self.beta, step)
+
+        for layer in self.trainable_layers:
+            layer_dw = ('dw', layer)
+            layer_db = ('db', layer)
