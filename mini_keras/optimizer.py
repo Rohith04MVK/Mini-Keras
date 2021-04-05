@@ -13,3 +13,12 @@ class GradientDescent(BaseOptimizer):
         for layer in self.trainable_layers:
             layer.update(dw=learning_rate * w_grads[layer],
                          db=learning_rate * b_grads[layer])
+
+
+class RMSprop(BaseOptimizer):
+
+    def __init__(self, trainable_layers, beta=0.9, epsilon=1e-8):
+        BaseOptimizer.__init__(self, trainable_layers)
+        self.cache = {}
+        self.beta = beta
+        self.epsilon = epsilon
