@@ -73,7 +73,7 @@ class BaseLayer:
     @classmethod
     def __subclasshook__(cls, subclass: "BaseOptimizer") -> t.Union[bool, type(NotImplemented)]:
         return (
-            hasattr(subclass, 'init') and callable(subclass.init) and
+            hasattr(subclass, 'initialize') and callable(subclass.initialize) and
             hasattr(subclass, 'forward') and callable(subclass.forward) and
             hasattr(subclass, 'backward') and callable(subclass.backward) and
             hasattr(subclass, 'update_params') and callable(subclass.update_params) and
@@ -82,7 +82,7 @@ class BaseLayer:
             NotImplemented
         )
 
-    def init(self, input_dims: t.Union[int, tuple]) -> None:
+    def initialize(self, input_dims: t.Union[int, tuple]) -> None:
         """
         Parameters
         ----------

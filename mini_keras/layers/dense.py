@@ -27,7 +27,7 @@ class Dense(BaseLayer):
         self.biases = None
         self.cache = {}
 
-    def init(self, input_dims):
+    def initialize(self, input_dims):
         self.weights = np.random.randn(self.size, input_dims) * np.sqrt(2 / input_dims)
 
         self.biases = np.zeros((1, self.size))

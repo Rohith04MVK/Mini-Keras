@@ -18,3 +18,5 @@ class Conv2D(BaseLayer):
         self.baises = None
         self.activation = activation
         self.cache = {}
+
+    def ini  
