@@ -1,7 +1,7 @@
 import numpy as np
 
-from mini_keras.activation import identity
 from mini_keras.layer import BaseLayer
+from mini_keras.activation import identity
 
 
 class Conv2D(BaseLayer):
