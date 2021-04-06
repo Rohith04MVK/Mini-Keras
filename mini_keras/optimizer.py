@@ -1,4 +1,5 @@
 import numpy as np
+
 from .abc import BaseOptimizer
 
 
@@ -49,4 +50,4 @@ class RMSprop(BaseOptimizer):
             dw = (learning_rate * (w_grads[layer] / (np.sqrt(s_corrected[layer_dw]) + self.epsilon)))
             db = (learning_rate * (w_grads[layer] / (np.sqrt(s_corrected[layer_db]) + self.epsilon)))
 
-        return dw, db
+            layer.update(dw, db)
