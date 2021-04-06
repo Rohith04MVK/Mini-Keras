@@ -41,3 +41,12 @@ class RMSprop(BaseOptimizer):
             layer_db = ('db', layer)
 
             self.cache[layer_dw] = (self.beta * self.cache[layer_dw] + (1 - self.beta) * np.square(w_grads[layer]))
+            self.cache[layer_db] = (self.beta * self.cache[layer_db] + (1 - self.beta) * np.square(b_grads[layer]))
+
+            s_corrected[layer_dw] = self.cache[layer_dw] / s_correction_term
+            s_corrected[layer_db] = self.cache[layer_db] / s_correction_term
+
+            dw = (learning_rate * (w_grads[layer] / (np.sqrt(s_corrected[layer_dw]) + self.epsilon)))
+            db = (learning_rate * (w_grads[layer] / (np.sqrt(s_corrected[layer_db]) + self.epsilon)))
+
+        return dw, db
