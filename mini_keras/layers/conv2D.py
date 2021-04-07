@@ -20,4 +20,5 @@ class Conv2D(BaseLayer):
         self.cache = {}
 
     def initialize(self, input_dims):
-          
+        self.pad = 0 if self.padding == 'valid' else int((self.kernel_size - 1) / 2)
+    
