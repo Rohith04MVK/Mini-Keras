@@ -33,4 +33,8 @@ class Conv2D(BaseLayer):
     def forward(self, a_prev, training):
         batch_size = a_prev.shape[0]
         a_prev_padded = Conv.zero_pad(a_prev, self.pad)
-        out = np.zeros((batch_size, self.n_h, self.n_w, self.n_c))  
+        out = np.zeros((batch_size, self.n_h, self.n_w, self.n_c))
+
+    @staticmethod
+    def zero_pad(x, pad):
+        
