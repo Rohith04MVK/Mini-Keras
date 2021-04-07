@@ -69,6 +69,10 @@ class Conv2D(BaseLayer):
     def get_output_dim(self):
         return self.n_h, self.n_w, self.n_c
 
+    def update_params(self, dw, db):
+        self.w -= dw
+        self.b -= db
+
     @staticmethod
     def zero_pad(x, pad):
         return np.pad(x, ((0, 0), (pad, pad), (pad, pad), (0, 0)), mode='constant')
