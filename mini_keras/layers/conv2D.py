@@ -37,4 +37,4 @@ class Conv2D(BaseLayer):
 
     @staticmethod
     def zero_pad(x, pad):
-        
+        return np.pad(x, ((0, 0), (pad, pad), (pad, pad), (0, 0)), mode='constant')
