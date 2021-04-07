@@ -21,4 +21,15 @@ class Conv2D(BaseLayer):
 
     def initialize(self, input_dims):
         self.pad = 0 if self.padding == 'valid' else int((self.kernel_size - 1) / 2)
+
+        self.n_h_prev, self.n_w_prev, self.n_c_prev = input_dims
+
+        self.n_h = int((self.n_h_prev - self.kernel_size + 2 * self.pad) / self.stride + 1)
+        self.n_w = int((self.n_w_prev - self.kernel_size + 2 * self.pad) / self.stride + 1)
+
+        self.weights = np.random.randn(self.kernel_size, self.kernel_size, self.n_c_prev, self.n_c)
+        self.baises = np.zeros((1, 1, 1, self.n_c))
+
+    
+        
     
