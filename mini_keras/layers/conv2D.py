@@ -70,8 +70,8 @@ class Conv2D(BaseLayer):
         return self.n_h, self.n_w, self.n_c
 
     def update_params(self, dw, db):
-        self.w -= dw
-        self.b -= db
+        self.weights -= dw
+        self.biases -= db
 
     @staticmethod
     def zero_pad(x, pad):
