@@ -29,7 +29,3 @@ class Conv2D(BaseLayer):
 
         self.weights = np.random.randn(self.kernel_size, self.kernel_size, self.n_c_prev, self.n_c)
         self.baises = np.zeros((1, 1, 1, self.n_c))
-
-    
-        
-    
