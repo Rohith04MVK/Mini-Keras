@@ -66,6 +66,9 @@ class Conv2D(BaseLayer):
         db = 1 / batch_size * dz.sum(axis=(0, 1, 2))
         dw = np.zeros((self.kernel_size, self.kernel_size, self.n_c_prev, self.n_c))
 
+    def get_output_dim(self):
+        return self.n_h, self.n_w, self.n_c
+
     @staticmethod
     def zero_pad(x, pad):
         return np.pad(x, ((0, 0), (pad, pad), (pad, pad), (0, 0)), mode='constant')
