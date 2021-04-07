@@ -29,3 +29,8 @@ class Conv2D(BaseLayer):
 
         self.weights = np.random.randn(self.kernel_size, self.kernel_size, self.n_c_prev, self.n_c)
         self.baises = np.zeros((1, 1, 1, self.n_c))
+
+    def forward(self, a_prev, training):
+        batch_size = a_prev.shape[0]
+        a_prev_padded = Conv.zero_pad(a_prev, self.pad)
+        out = np.zeros((batch_size, self.n_h, self.n_w, self.n_c))  
