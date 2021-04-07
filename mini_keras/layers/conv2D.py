@@ -59,9 +59,8 @@ class Conv2D(BaseLayer):
         a_prev, z, a = (self.cache[key] for key in ('a_prev', 'z', 'a'))
         a_prev_pad = Conv.zero_pad(a_prev, self.pad) if self.pad != 0 else a_prev
 
-        
-
-
+        da_prev = np.zeros((batch_size, self.n_h_prev, self.n_w_prev, self.n_c_prev))
+        da_prev_pad = Conv.zero_pad(da_prev, self.pad) if self.pad != 0 else da_prev
 
     @staticmethod
     def zero_pad(x, pad):
