@@ -46,6 +46,13 @@ class Conv2D(BaseLayer):
                 out[:, i, j, :] = np.sum(a_prev_padded[:, v_start:v_end, h_start:h_end, :, np.newaxis]
                                          * self.weights[np.newaxis, :, :, :], axis=(1, 2, 3))
 
+        z = out + self.b
+        a = self.activation.f(z)
+
+        if training:
+            self.cache.update({'a_prev': a_prev, 'z': z, 'a': a})
+
+        return a
     @staticmethod
     def zero_pad(x, pad):
         return np.pad(x, ((0, 0), (pad, pad), (pad, pad), (0, 0)), mode='constant')
