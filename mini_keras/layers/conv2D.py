@@ -53,6 +53,7 @@ class Conv2D(BaseLayer):
             self.cache.update({'a_prev': a_prev, 'z': z, 'a': a})
 
         return a
+
     @staticmethod
     def zero_pad(x, pad):
         return np.pad(x, ((0, 0), (pad, pad), (pad, pad), (0, 0)), mode='constant')
