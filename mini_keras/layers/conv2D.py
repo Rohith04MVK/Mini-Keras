@@ -54,6 +54,15 @@ class Conv2D(BaseLayer):
 
         return a
 
+    def backward(self, da):
+        batch_size = da.shape[0]
+        a_prev, z, a = (self.cache[key] for key in ('a_prev', 'z', 'a'))
+        a_prev_pad = Conv.zero_pad(a_prev, self.pad) if self.pad != 0 else a_prev
+
+        
+
+
+
     @staticmethod
     def zero_pad(x, pad):
         return np.pad(x, ((0, 0), (pad, pad), (pad, pad), (0, 0)), mode='constant')
