@@ -73,6 +73,9 @@ class Conv2D(BaseLayer):
         self.weights -= dw
         self.biases -= db
 
+    def get_params(self):
+        return self.w, self.b
+
     @staticmethod
     def zero_pad(x, pad):
         return np.pad(x, ((0, 0), (pad, pad), (pad, pad), (0, 0)), mode='constant')
