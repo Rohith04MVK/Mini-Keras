@@ -54,7 +54,7 @@ also be sure to contribute, if you're interested!
 
 ## Maintainers
 
-Me and one of my really closest friends maintain this repo and we aim to provide the best, free open source API for everyone to use and deploy their own instances to make their bot better in a certain way.
+Me and one of my really closest friends maintain this repo and we aim to provide the best, free open source API for deep learning, can be useful and lightweight, hence making it accessible.
 
 - [Rohith](https://github.com/Rohith04MVK)
 - [Sunrit Jana](https://github.com/janaSunrise)
