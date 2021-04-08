@@ -75,8 +75,11 @@ class Conv2D(BaseLayer):
                 h_end = h_start + self.kernel_size
 
                 da_prev_pad[:, v_start:v_end, h_start:h_end, :] += \
-                    np.sum(self.w[np.newaxis, :, :, :, :] * dz[:, i:i + 1, j:j + 1, np.newaxis, :], axis=4)
+                    np.sum(self.weights[np.newaxis, :, :, :, :] * dz[:, i:i + 1, j:j + 1, np.newaxis, :], axis=4)
 
+                dw += np.sum(a_prev_pad[:, v_start:v_end, h_start:h_end, :, np.newaxis] *
+                             dz[:, i:i+1, j:j+1, np.newaxis, :], axis=0)
+                             
     def get_output_dim(self):
         return self.n_h, self.n_w, self.n_c
 
