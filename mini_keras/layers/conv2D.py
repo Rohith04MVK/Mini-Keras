@@ -79,7 +79,13 @@ class Conv2D(BaseLayer):
 
                 dw += np.sum(a_prev_pad[:, v_start:v_end, h_start:h_end, :, np.newaxis] *
                              dz[:, i:i+1, j:j+1, np.newaxis, :], axis=0)
-                             
+
+        dw /= batch_size
+
+        if self.pad != 0:
+            da_prev = da_prev_pad[:, self.pad: -(self.pad), self.pad: -(self.pad), :]
+
+        return da_prev, dw, db
     def get_output_dim(self):
         return self.n_h, self.n_w, self.n_c
 
