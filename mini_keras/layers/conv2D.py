@@ -15,7 +15,7 @@ class Conv2D(BaseLayer):
         self.n_h, self.n_w, self.n_c = None, None, n_c
         self.n_h_prev, self.n_w_prev, self.n_c_prev = None, None, None
         self.weights = None
-        self.baises = None
+        self.biases = None
         self.activation = activation
         self.cache = {}
 
@@ -28,7 +28,7 @@ class Conv2D(BaseLayer):
         self.n_w = int((self.n_w_prev - self.kernel_size + 2 * self.pad) / self.stride + 1)
 
         self.weights = np.random.randn(self.kernel_size, self.kernel_size, self.n_c_prev, self.n_c)
-        self.baises = np.zeros((1, 1, 1, self.n_c))
+        self.biases = np.zeros((1, 1, 1, self.n_c))
 
     def forward(self, a_prev, training):
         batch_size = a_prev.shape[0]
