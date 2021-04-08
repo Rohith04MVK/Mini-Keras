@@ -66,6 +66,17 @@ class Conv2D(BaseLayer):
         db = 1 / batch_size * dz.sum(axis=(0, 1, 2))
         dw = np.zeros((self.kernel_size, self.kernel_size, self.n_c_prev, self.n_c))
 
+        for i in range(self.n_h):
+            v_start = self.stride * i
+            v_end = v_start + self.kernel_size
+
+            for j in range(self.n_w):
+                h_start = self.stride * j
+                h_end = h_start + self.kernel_size
+
+                da_prev_pad[:, v_start:v_end, h_start:h_end, :] += \
+                    np.sum(self.w[np.newaxis, :, :, :, :] * dz[:, i:i+1, j:j+1, np.newaxis, :], axis=4)
+
     def get_output_dim(self):
         return self.n_h, self.n_w, self.n_c
 
