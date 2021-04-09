@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "739624fc16d2fbc5d169d25c6720b20c3fe575bd6154a54907607f9ca0b5b218"
+            "sha256": "01194ff85715e6ce063f3c9bbf27111593f3730647a491e2134450068f1d793d"
         },
         "pipfile-spec": 6,
         "requires": {},
@@ -83,6 +83,10 @@
             ],
             "index": "pypi",
             "version": "==3.4.1"
+        },
+        "mini-keras": {
+            "editable": true,
+            "path": "."
         },
         "numpy": {
             "hashes": [
@@ -244,11 +248,11 @@
         },
         "decorator": {
             "hashes": [
-                "sha256:7280eff5351d7004144b1f302347328c3d06e84271dbe690a5dc4b17eb586994",
-                "sha256:cdd9d86d8aca11e4496f3cd26d48020db5a2fac247af0e918b3e0bbdb6e4a174"
+                "sha256:d9f2d2863183a3c0df05f4b786f2e6b8752c093b3547a558f287bf3022fd2bf4",
+                "sha256:f2e71efb39412bfd23d878e896a51b07744f2e2250b2e87d158e76828c5ae202"
             ],
             "markers": "python_version >= '3.5'",
-            "version": "==5.0.4"
+            "version": "==5.0.6"
         },
         "distlib": {
             "hashes": [
@@ -336,10 +340,10 @@
         },
         "nodeenv": {
             "hashes": [
-                "sha256:5304d424c529c997bc888453aeaa6362d242b6b4631e90f3d4bf1b290f1c84a9",
-                "sha256:ab45090ae383b716c4ef89e690c41ff8c2b257b85b309f01f3654df3d084bd7c"
+                "sha256:3ef13ff90291ba2a4a7a4ff9a979b63ffdd00a464dbe04acf0ea6471517a4c2b",
+                "sha256:621e6b7076565ddcacd2db0294c0381e01fd28945ab36bcf00f41c5daf63bef7"
             ],
-            "version": "==1.5.0"
+            "version": "==1.6.0"
         },
         "parso": {
             "hashes": [
@@ -366,11 +370,11 @@
         },
         "pre-commit": {
             "hashes": [
-                "sha256:94c82f1bf5899d56edb1d926732f4e75a7df29a0c8c092559c77420c9d62428b",
-                "sha256:de55c5c72ce80d79106e48beb1b54104d16495ce7f95b0c7b13d4784193a00af"
+                "sha256:029d53cb83c241fe7d66eeee1e24db426f42c858f15a38d20bcefd8d8e05c9da",
+                "sha256:46b6ffbab37986c47d0a35e40906ae029376deed89a0eb2e446fb6e67b220427"
             ],
             "index": "pypi",
-            "version": "==2.11.1"
+            "version": "==2.12.0"
         },
         "prompt-toolkit": {
             "hashes": [
