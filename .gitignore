@@ -30,3 +30,4 @@ logs/
 # pipenv
 build
 Mini-Keras-egg.info
+Mini_Keras.egg-info
