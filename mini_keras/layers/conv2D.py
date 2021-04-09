@@ -83,7 +83,7 @@ class Conv2D(BaseLayer):
         dw /= batch_size
 
         if self.pad != 0:
-            da_prev = da_prev_pad[:, self.pad: -(self.pad), self.pad: -(self.pad), :]
+            da_prev = da_prev_pad[:, self.pad:-self.pad, self.pad:-self.pad, :]
 
         return da_prev, dw, db
 
