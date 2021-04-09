@@ -46,7 +46,7 @@ class Conv2D(BaseLayer):
                 out[:, i, j, :] = np.sum(a_prev_padded[:, v_start:v_end, h_start:h_end, :, np.newaxis] *
                                          self.weights[np.newaxis, :, :, :], axis=(1, 2, 3))
 
-        z = out + self.b
+        z = out + self.biases
         a = self.activation.f(z)
 
         if training:

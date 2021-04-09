@@ -2,7 +2,7 @@ import math
 
 import numpy as np
 
-from .abc import BaseActivation
+from mini_keras.abc import BaseActivation
 
 
 class Identify(BaseActivation):
