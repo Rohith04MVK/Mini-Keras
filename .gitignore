@@ -26,3 +26,7 @@ logs/
 
 # MacOS generated file
 .DS_STORE
+
+# pipenv
+build
+Mini-Keras-egg.info
