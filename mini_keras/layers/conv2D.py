@@ -95,7 +95,7 @@ class Conv2D(BaseLayer):
         self.biases -= db
 
     def get_params(self):
-        return self.w, self.b
+        return self.weights, self.biases
 
     @staticmethod
     def zero_pad(x, pad):
