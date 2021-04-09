@@ -1,12 +1,12 @@
 import numpy as np
 
-from mini_keras.layer import BaseLayer
-from mini_keras.activation import identity
+from mini_keras.abc import BaseLayer
+from mini_keras.activations import Identify
 
 
 class Conv2D(BaseLayer):
 
-    def __init__(self, kernel_size, stride, n_c, padding='valid', activation=identity):
+    def __init__(self, kernel_size, stride, n_c, padding='valid', activation=Identify):
         super().__init__()
         self.kernel_size = kernel_size
         self.stride = stride
