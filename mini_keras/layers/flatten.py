@@ -6,6 +6,8 @@ from ..base import BaseLayer
 
 
 class Flatten(BaseLayer):
+    __slots__ = ("original_dim", "output_dim")
+
     def __init__(self):
         super().__init__()
         self.original_dim = None

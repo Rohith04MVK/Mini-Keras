@@ -5,8 +5,15 @@ from ..base import BaseLayer
 
 
 class Conv2D(BaseLayer):
+    __slots__ = (
+        "kernel_size", "stride", "padding", "pad", "n_h", "n_w", "n_c",
+        "n_h_prev", "n_w_prev", "n_c_prev", "weights", "biases", "activation",
+        "cache"
+    )
+
     def __init__(self, kernel_size, stride, n_c, padding='valid', activation=Identify) -> None:
         super().__init__()
+
         self.kernel_size = kernel_size
         self.stride = stride
         self.padding = padding

@@ -19,6 +19,8 @@ class GradientDescent(BaseOptimizer):
 
 
 class RMSprop(BaseOptimizer):
+    __slots__ = ("cache", "beta", "epsilon")
+
     def __init__(self, trainable_layers, beta=0.9, epsilon=1e-8) -> None:
         super().__init__(trainable_layers)
         self.cache = {}

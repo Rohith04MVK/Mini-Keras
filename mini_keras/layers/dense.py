@@ -18,6 +18,9 @@ class Dense(BaseLayer):
     biases : numpy.ndarray
         biases.
     """
+    __slots__ = (
+        "size", "activation", "weights", "biases", "cache"
+    )
 
     def __init__(self, size, activation) -> None:
         super().__init__()
