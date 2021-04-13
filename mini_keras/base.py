@@ -16,11 +16,11 @@ class BaseCostFunction(metaclass=abc.ABCMeta):
         )
 
     @abc.abstractmethod
-    def f(self, a_last, y: t.Union[t.List, np.ndarray]) -> None:
+    def f(self, y_pred, y: t.Union[t.List, np.ndarray]) -> None:
         raise NotImplementedError
 
     @abc.abstractmethod
-    def grad(self, a_last, y: t.Union[t.List, np.ndarray]) -> None:
+    def grad(self, y_pred, y: t.Union[t.List, np.ndarray]) -> None:
         raise NotImplementedError
 
 
