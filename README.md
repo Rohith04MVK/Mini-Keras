@@ -73,7 +73,7 @@ also be sure to contribute, if you're interested!
 
 ## 📢 Changelog
 
-**Coming soon!**
+If you're interested in seeing the **Changelog**, Go [here!](https://github.com/Rohith04MVK/Mini-Keras/blob/main/CHANGELOG.md)
 
 ## Maintainers
 
