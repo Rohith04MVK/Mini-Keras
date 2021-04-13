@@ -28,6 +28,29 @@ An advanced and lightweight ML and Deep learning library for python.
 **NOTE**: We are not affliated with [Keras](https://github.com/keras-team) in any way.
 We're making a lightweight library for ML and Deep learning.
 
+## Our principle and Ethics
+
+OUR Principles and Ethics:
+
+- We believe in resources not used, is resources wasted. Hence we have GPU support for people who want speed.
+- We believe in lightweight things, and speeding things up for everyone by default, hence we have kept it 
+  lightweight, and speeding it up as we go.
+- Having an easy to use API is always recommended and better, our API is easy to use, get started, and suits 
+  the needs of everyone.
+- The code we write, follows several linting rules. We believe clean code is the best.
+- Keeping things separate, and different is a good way to manage large things, and we're trying to follow 
+  that and make the API understandable for everyone.
+- **We believe in all the factors combine and make a beautiful, and a production end product, And We'll be giving our 
+  best towards the following things:**
+  - Keeping things the best quality
+  - Enforcing rules to keep things safe, and clean
+  - Being active, and helping out the community.
+  - Reaching out, and helping those who need it.
+
+If you're contributing, we hope you follow the contributing guidelines, and our principles. If this is new 
+to you, It's gonna be a lot helpful in the future too when working with teams and other people, and increases 
+the quality of several factors in many ways.
+
 ## 🤝 Contributing
 
 Contributions, issues and feature requests are welcome. After cloning & setting up project locally, you can just submit 

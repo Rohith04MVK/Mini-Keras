@@ -6,6 +6,7 @@ import setuptools
 # -- Constants --
 BASE_DIR = Path(__file__).resolve().parent
 README = Path(BASE_DIR / "README.md").read_text()
+
 URL = "https://github.com/Rohith04MVK/Mini-Keras"
 
 # -- Version config --
