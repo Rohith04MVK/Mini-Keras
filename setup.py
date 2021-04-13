@@ -46,6 +46,7 @@ setuptools.setup(
         "numpy==1.20.2",
         "matplotlib==3.4.1",
         "scipy==1.6.2",
+        "numba==0.53.1"
     ],
 
     classifiers=[
@@ -67,5 +68,5 @@ setuptools.setup(
         "Natural Language :: English",
     ],
 
-    python_requires='>=3.6',
+    python_requires='>=3.7',
 )
