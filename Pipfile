@@ -7,15 +7,16 @@ name = "pypi"
 numpy = "==1.20.2"
 scipy = "==1.6.2"
 matplotlib = "==3.4.1"
-mini-keras = {editable = true, path = "."}
 
 [dev-packages]
-flake8 = "*"
-autopep8 = "*"
-pre-commit = "*"
-ipython = "*"
-flake8-annotations = "*"
-flake8-bugbear = "*"
+flake8 = "~=3.9.0"
+flake8-annotations = "~=2.6.2"
+flake8-bugbear = "~=21.4.3"
+flake8-import-order = "~=0.18.1"
+autopep8 = "~=1.5.6"
+ipython = "==7.22.0"
+pre-commit = "~=2.12.0"
+mini-keras = {editable = true, path = "."}
 
 [scripts]
 lint = "pre-commit run --all-files"
