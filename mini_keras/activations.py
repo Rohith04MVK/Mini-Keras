@@ -2,7 +2,7 @@ import math
 
 import numpy as np
 
-from mini_keras.abc import BaseActivation
+from .base import BaseActivation
 
 
 class Identify(BaseActivation):
@@ -36,5 +36,5 @@ class SoftMax(BaseActivation):
         y = np.exp(x - np.max(x, axis=1, keepdims=True))
         return y / np.sum(y, axis=1, keepdims=True)
 
-    def df(self):
+    def df(self) -> None:
         raise NotImplementedError

@@ -116,8 +116,8 @@ class BaseLayer:
         """
         raise NotImplementedError
 
-    def get_params(self):
+    def get_params(self) -> None:
         raise NotImplementedError
 
-    def get_output_dim(self):
+    def get_output_dim(self) -> None:
         raise NotImplementedError

@@ -1,6 +1,6 @@
 import numpy as np
 
-from mini_keras.abc import BaseLayer
+from ..base import BaseLayer
 
 
 class Dense(BaseLayer):
@@ -19,15 +19,15 @@ class Dense(BaseLayer):
         biases.
     """
 
-    def __init__(self, size, activation):
-        super().__init__
+    def __init__(self, size, activation) -> None:
+        super().__init__()
         self.size = size
         self.activation = activation
         self.weights = None
         self.biases = None
         self.cache = {}
 
-    def initialize(self, input_dims):
+    def initialize(self, input_dims) -> None:
         self.weights = np.random.randn(self.size, input_dims) * np.sqrt(2 / input_dims)
 
         self.biases = np.zeros((1, self.size))
@@ -41,7 +41,7 @@ class Dense(BaseLayer):
 
         return a
 
-    def backward(self, da):
+    def backward(self, da) -> tuple:
         a_prev, z, a = (self.cache[key] for key in ('a_prev', 'z', 'a'))
 
         batch_size = a_prev.shape[0]
@@ -54,12 +54,12 @@ class Dense(BaseLayer):
 
         return da_prev, dw, db
 
-    def update_params(self, dw, db):
+    def update_params(self, dw, db) -> None:
         self.weights -= dw
         self.biases -= db
 
-    def get_params(self):
+    def get_params(self) -> tuple:
         return self.weights, self.biases
 
-    def get_output_dim(self):
+    def get_output_dim(self) -> int:
         return self.size

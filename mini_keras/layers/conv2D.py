@@ -1,12 +1,11 @@
 import numpy as np
 
-from mini_keras.abc import BaseLayer
-from mini_keras.activations import Identify
+from ..activations import Identify
+from ..base import BaseLayer
 
 
 class Conv2D(BaseLayer):
-
-    def __init__(self, kernel_size, stride, n_c, padding='valid', activation=Identify):
+    def __init__(self, kernel_size, stride, n_c, padding='valid', activation=Identify) -> None:
         super().__init__()
         self.kernel_size = kernel_size
         self.stride = stride
@@ -19,8 +18,8 @@ class Conv2D(BaseLayer):
         self.activation = activation
         self.cache = {}
 
-    def initialize(self, input_dims):
-        self.pad = 0 if self.padding == 'valid' else int((self.kernel_size - 1) / 2)
+    def initialize(self, input_dims) -> None:
+        self.pad = 0 if self.padding == "valid" else int((self.kernel_size - 1) / 2)
 
         self.n_h_prev, self.n_w_prev, self.n_c_prev = input_dims
 
@@ -43,8 +42,10 @@ class Conv2D(BaseLayer):
                 h_start = j * self.stride
                 h_end = h_start + self.kernel_size
 
-                out[:, i, j, :] = np.sum(a_prev_padded[:, v_start:v_end, h_start:h_end, :, np.newaxis] *
-                                         self.weights[np.newaxis, :, :, :], axis=(1, 2, 3))
+                out[:, i, j, :] = np.sum(
+                    a_prev_padded[:, v_start:v_end, h_start:h_end, :, np.newaxis] * self.weights[np.newaxis, :, :, :],
+                    axis=(1, 2, 3)
+                )
 
         z = out + self.biases
         a = self.activation.f(z)
@@ -54,7 +55,7 @@ class Conv2D(BaseLayer):
 
         return a
 
-    def backward(self, da):
+    def backward(self, da) -> tuple:
         batch_size = da.shape[0]
         a_prev, z, a = (self.cache[key] for key in ('a_prev', 'z', 'a'))
         a_prev_pad = Conv2D.zero_pad(a_prev, self.pad) if self.pad != 0 else a_prev
@@ -77,8 +78,10 @@ class Conv2D(BaseLayer):
                 da_prev_pad[:, v_start:v_end, h_start:h_end, :] += \
                     np.sum(self.weights[np.newaxis, :, :, :, :] * dz[:, i:i + 1, j:j + 1, np.newaxis, :], axis=4)
 
-                dw += np.sum(a_prev_pad[:, v_start:v_end, h_start:h_end, :, np.newaxis] *
-                             dz[:, i:i + 1, j:j + 1, np.newaxis, :], axis=0)
+                dw += np.sum(
+                    a_prev_pad[:, v_start:v_end, h_start:h_end, :, np.newaxis] * dz[:, i:i + 1, j:j + 1, np.newaxis, :],
+                    axis=0
+                )
 
         dw /= batch_size
 
@@ -87,16 +90,16 @@ class Conv2D(BaseLayer):
 
         return da_prev, dw, db
 
-    def get_output_dim(self):
+    def get_output_dim(self) -> tuple:
         return self.n_h, self.n_w, self.n_c
 
-    def update_params(self, dw, db):
+    def update_params(self, dw, db) -> None:
         self.weights -= dw
         self.biases -= db
 
-    def get_params(self):
+    def get_params(self) -> tuple:
         return self.weights, self.biases
 
     @staticmethod
-    def zero_pad(x, pad):
-        return np.pad(x, ((0, 0), (pad, pad), (pad, pad), (0, 0)), mode='constant')
+    def zero_pad(x, pad) -> list:
+        return np.pad(x, ((0, 0), (pad, pad), (pad, pad), (0, 0)), mode="constant")
