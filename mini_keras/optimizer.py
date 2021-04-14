@@ -56,6 +56,8 @@ class RMSprop(BaseOptimizer):
 
 
 class Adam(BaseOptimizer):
+    __slots__ = ("v", "s", "beta1", "beta2", "epsilon")
+
     def __init__(self, trainable_layers, beta1=0.9, beta2=0.999, epsilon=1e-8) -> None:
         BaseOptimizer.__init__(self, trainable_layers)
         self.v = {}
@@ -73,7 +75,7 @@ class Adam(BaseOptimizer):
             self.v[('db', layer)] = np.zeros(b_shape)
             self.s[('dw', layer)] = np.zeros(w_shape)
             self.s[('db', layer)] = np.zeros(b_shape)
-    
+
     def update(self, learning_rate, w_grads, b_grads, step):
         v_correction_term = 1 - np.power(self.beta1, step)
         s_correction_term = 1 - np.power(self.beta2, step)

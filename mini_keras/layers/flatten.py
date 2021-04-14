@@ -18,10 +18,10 @@ class Flatten(BaseLayer):
         self.original_dim = input_dims
         self.output_dim = reduce(lambda x, y: x * y, self.original_dim)
 
-    def forward(self, a_prev: np.ndarray, training: bool) -> None:
+    def forward(self, a_prev: np.ndarray, training: bool) -> np.ndarray:
         return a_prev.reshape(a_prev.shape[0], -1)
 
-    def backward(self, da: np.ndarray) -> None:
+    def backward(self, da: np.ndarray) -> tuple:
         return da.reshape(da.shape[0], *self.original_dim), None, None
 
     def update_params(self, dw: np.ndarray, db: np.ndarray) -> None:
