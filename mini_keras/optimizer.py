@@ -53,3 +53,24 @@ class RMSprop(BaseOptimizer):
             db = (learning_rate * (w_grads[layer] / (np.sqrt(s_corrected[layer_db]) + self.epsilon)))
 
             layer.update(dw, db)
+
+
+class Adam(BaseOptimizer):
+    def __init__(self, trainable_layers, beta1=0.9, beta2=0.999, epsilon=1e-8) -> None:
+        BaseOptimizer.__init__(self, trainable_layers)
+        self.v = {}
+        self.s = {}
+        self.beta1 = beta1
+        self.beta2 = beta2
+        self.epsilon = epsilon
+
+    def initialize(self) -> None:
+        for layer in self.trainable_layers:
+            w, b = layer.get_params()
+            w_shape = w.shape
+            b_shape = b.shape
+            self.v[('dw', layer)] = np.zeros(w_shape)
+            self.v[('db', layer)] = np.zeros(b_shape)
+            self.s[('dw', layer)] = np.zeros(w_shape)
+            self.s[('db', layer)] = np.zeros(b_shape)
+    
