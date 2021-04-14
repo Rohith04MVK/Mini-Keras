@@ -74,3 +74,29 @@ class Adam(BaseOptimizer):
             self.s[('dw', layer)] = np.zeros(w_shape)
             self.s[('db', layer)] = np.zeros(b_shape)
     
+    def update(self, learning_rate, w_grads, b_grads, step):
+        v_correction_term = 1 - np.power(self.beta1, step)
+        s_correction_term = 1 - np.power(self.beta2, step)
+        s_corrected = {}
+        v_corrected = {}
+
+        for layer in self.trainable_layers:
+            layer_dw = ('dw', layer)
+            layer_db = ('db', layer)
+
+            self.v[layer_dw] = (self.beta1 * self.v[layer_dw] + (1 - self.beta1) * w_grads[layer])
+            self.v[layer_db] = (self.beta1 * self.v[layer_db] + (1 - self.beta1) * b_grads[layer])
+
+            v_corrected[layer_dw] = self.v[layer_dw] / v_correction_term
+            v_corrected[layer_db] = self.v[layer_db] / v_correction_term
+
+            self.s[layer_dw] = (self.beta2 * self.s[layer_dw] + (1 - self.beta2) * np.square(w_grads[layer]))
+            self.s[layer_db] = (self.beta2 * self.s[layer_db] + (1 - self.beta2) * np.square(b_grads[layer]))
+
+            s_corrected[layer_dw] = self.s[layer_dw] / s_correction_term
+            s_corrected[layer_db] = self.s[layer_db] / s_correction_term
+
+            dw = (learning_rate * v_corrected[layer_dw] / (np.sqrt(s_corrected[layer_dw]) + self.epsilon))
+            db = (learning_rate * v_corrected[layer_db] / (np.sqrt(s_corrected[layer_db]) + self.epsilon))
+
+            layer.update_params(dw, db)
