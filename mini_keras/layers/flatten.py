@@ -3,6 +3,7 @@ import typing as t
 import numpy as np
 
 from functools import reduce
+
 from ..base import BaseLayer
 
 
