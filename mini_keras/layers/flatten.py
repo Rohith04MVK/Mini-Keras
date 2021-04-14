@@ -22,7 +22,7 @@ class Flatten(BaseLayer):
         return a_prev.reshape(a_prev.shape[0], -1)
 
     def backward(self, da: np.ndarray) -> None:
-        return da.reshape(da.shape[0], *self.original_dim), None, None       
+        return da.reshape(da.shape[0], *self.original_dim), None, None
 
     def update_params(self, dw: np.ndarray, db: np.ndarray) -> None:
         raise NotImplementedError

@@ -6,6 +6,7 @@ from .base import BaseCostFunction
 
 epsilon = 1e-20
 
+
 class SoftmaxCrossEntropy(BaseCostFunction):
     def f(self, y_pred, y: t.Union[t.List, np.ndarray]):
         batch_size = y.shape[0]
