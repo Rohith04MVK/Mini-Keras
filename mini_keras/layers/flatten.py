@@ -25,12 +25,6 @@ class Flatten(BaseLayer):
         return da.reshape(da.shape[0], *self.original_dim), None, None       
 
     def update_params(self, dw: np.ndarray, db: np.ndarray) -> None:
-        """
-        dw : numpy.ndarray
-            The gradients wrt the cost of this layer's weights.
-        db : numpy.ndarray
-            The gradients wrt the cost of this layer's biases.
-        """
         raise NotImplementedError
 
     def get_params(self) -> None:
