@@ -2,6 +2,7 @@ import typing as t
 
 import numpy as np
 
+from functools import reduce
 from ..base import BaseLayer
 
 
@@ -14,22 +15,11 @@ class Flatten(BaseLayer):
         self.output_dim = None
 
     def initialize(self, input_dims: t.Union[int, tuple]) -> None:
-        """
-        Parameters
-        ----------
-        input_dims : int or tuple
-            Shape of the input data.
-        """
-        raise NotImplementedError
+        self.original_dim = input_dims
+        self.output_dim = reduce(lambda x, y: x * y, self.original_dim)
 
     def forward(self, a_prev: np.ndarray, training: bool) -> None:
-        """
-        a_prev : numpy.ndarray
-            The input to this layer which corresponds to the previous layer's activations.
-        training : bool
-            Whether the model in which this layer is in is training.
-        """
-        raise NotImplementedError
+        return a_prev.reshape(a_prev.shape[0], -1)
 
     def backward(self, da: np.ndarray) -> None:
         """
