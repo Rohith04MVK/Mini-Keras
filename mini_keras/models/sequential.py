@@ -22,3 +22,8 @@ class Sequential:
         self.trainable_layers = set(layer for layer in self.layers if layer.get_params() is not None)
         self.optimizer = optimizer(self.trainable_layers)
         self.optimizer.initialize()
+
+    def forward_prop(self, x, training=True):
+        for layer in self.layers:
+            a = x
+            a = layer.forward(a, training)
