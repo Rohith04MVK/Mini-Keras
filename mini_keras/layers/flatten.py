@@ -1,11 +1,9 @@
 import typing as t
+from functools import reduce
 
 import numpy as np
 
-from functools import reduce
-
 from ..base import BaseLayer
-
 
 class Flatten(BaseLayer):
     __slots__ = ("original_dim", "output_dim")
