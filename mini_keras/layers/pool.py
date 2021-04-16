@@ -36,3 +36,20 @@ class Pool(BaseLayer):
 
                 if self.mode == 'max':
                     a_prev_slice = a_prev[:, v_start:v_end, h_start:h_end, :]
+
+                    if training:
+                        # Cache for backward pass
+                        self.cache_max_mask(a_prev_slice, (i, j))
+
+                    a[:, i, j, :] = np.max(a_prev_slice, axis=(1, 2))
+
+                elif self.mode == 'average':
+                    a[:, i, j, :] = np.mean(a_prev[:, v_start:v_end, h_start:h_end, :], axis=(1, 2))
+
+                else:
+                    raise NotImplementedError("Invalid type of pooling")
+
+        if training:
+            self.cache['a_prev'] = a_prev
+
+        return a
