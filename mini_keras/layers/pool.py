@@ -20,3 +20,19 @@ class Pool(BaseLayer):
         self.n_h = int((self.n_h_prev - self.pool_size) / self.stride + 1)
         self.n_w = int((self.n_w_prev - self.pool_size) / self.stride + 1)
         self.n_c = self.n_c_prev
+
+    def forward(self, a_prev, training):
+        batch_size = a_prev.shape[0]
+        a = np.zeros((batch_size, self.n_h, self.n_w, self.n_c))
+
+        # Pool
+        for i in range(self.n_h):
+            v_start = i * self.stride
+            v_end = v_start + self.pool_size
+
+            for j in range(self.n_w):
+                h_start = j * self.stride
+                h_end = h_start + self.pool_size
+
+                if self.mode == 'max':
+                    a_prev_slice = a_prev[:, v_start:v_end, h_start:h_end, :]
