@@ -2,8 +2,9 @@ import numpy as np
 
 from ..base import BaseLayer
 
+
 class Pool(BaseLayer):
-    def __init__(self, pool_size, stride, mode):
+    def __init__(self, pool_size, stride, mode) -> None:
         super().__init__()
         self.pool_size = pool_size
         self.stride = stride
@@ -14,7 +15,7 @@ class Pool(BaseLayer):
         self.mode = mode
         self.cache = {}
 
-    def initialize(self, in_dim):
+    def initialize(self, in_dim) -> None:
         self.n_h_prev, self.n_w_prev, self.n_c_prev = in_dim
         self.n_h = int((self.n_h_prev - self.pool_size) / self.stride + 1)
         self.n_w = int((self.n_w_prev - self.pool_size) / self.stride + 1)
