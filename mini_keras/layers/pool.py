@@ -53,3 +53,23 @@ class Pool(BaseLayer):
             self.cache['a_prev'] = a_prev
 
         return a
+
+    def cache_max_mask(self, x, ij):
+        mask = np.zeros_like(x)
+
+        # This would be like doing idx = np.argmax(x, axis=(1,2)) if that was possible
+        reshaped_x = x.reshape(x.shape[0], x.shape[1] * x.shape[2], x.shape[3])
+        idx = np.argmax(reshaped_x, axis=1)
+
+        ax1, ax2 = np.indices((x.shape[0], x.shape[3]))
+        mask.reshape(mask.shape[0], mask.shape[1] * mask.shape[2], mask.shape[3])[ax1, idx, ax2] = 1
+        self.cache[ij] = mask
+
+    def update_params(self, dw, db):
+        pass
+
+    def get_params(self):
+        pass
+
+    def get_output_dim(self):
+        return self.n_h, self.n_w, self.n_c
