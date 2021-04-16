@@ -7,7 +7,7 @@ import setuptools
 BASE_DIR = Path(__file__).resolve().parent
 README = Path(BASE_DIR / "README.md").read_text()
 
-URL = "https://github.com/Rohith04MVK/Mini-Keras"
+URL = "https://github.com/Deep-Alchemy/Mini-Keras"
 
 # -- Version config --
 VERSION = re.search(
@@ -24,10 +24,10 @@ setuptools.setup(
     name="Mini-Keras",
     version=VERSION,
 
-    author="Mini-Keras Team",
+    author="Deep Alchemy Team",
     author_email="warriordefenderz@gmail.com",
 
-    description="An advanced and lightweight ML and Deep learning library for python.",
+    description="An advanced and lightweight ML and deep learning library for python.",
     long_description=README,
     long_description_content_type="text/markdown",
     license="GPL v3",
@@ -69,5 +69,5 @@ setuptools.setup(
         "Natural Language :: English",
     ],
 
-    python_requires='>=3.7',
+    python_requires=">=3.7",
 )
