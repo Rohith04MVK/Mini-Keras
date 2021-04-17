@@ -54,6 +54,16 @@ class Pool(BaseLayer):
 
         return a
 
+    def backward(self, da):
+        a_prev = self.cache['a_prev']
+        batch_size = a_prev.shape[0]
+        da_prev = np.zeros((batch_size, self.n_h_prev, self.n_w_prev, self.n_c_prev))
+
+        # 'Pool' back
+        for i in range(self.n_h):
+            v_start = i * self.stride
+            v_end = v_start + self.pool_size
+
     def cache_max_mask(self, x, ij):
         mask = np.zeros_like(x)
 
