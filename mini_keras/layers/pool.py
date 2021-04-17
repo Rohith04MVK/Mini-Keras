@@ -1,7 +1,6 @@
 import numpy as np
 
 from ..base import BaseLayer
-w
 
 
 class Pool(BaseLayer):
