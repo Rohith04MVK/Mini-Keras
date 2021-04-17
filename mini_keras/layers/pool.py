@@ -64,6 +64,13 @@ class Pool(BaseLayer):
             v_start = i * self.stride
             v_end = v_start + self.pool_size
 
+            for j in range(self.n_w):
+                h_start = j * self.stride
+                h_end = h_start + self.pool_size
+
+                if self.mode == 'max':
+                    da_prev[:, v_start:v_end, h_start:h_end, :] += da[:, i:i + 1, j:j + 1, :] * self.cache[(i, j)]
+
     def cache_max_mask(self, x, ij):
         mask = np.zeros_like(x)
 
