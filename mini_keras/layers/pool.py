@@ -1,6 +1,7 @@
 import numpy as np
 
 from ..base import BaseLayer
+w
 
 
 class Pool(BaseLayer):
@@ -73,7 +74,7 @@ class Pool(BaseLayer):
 
                 elif self.mode == 'average':
                     # Distribute the average value back
-                    mean_value = np.copy(da[:, i:i+1, j:j+1, :])
+                    mean_value = np.copy(da[:, i:i + 1, j:j + 1, :])
                     mean_value[:, :, :, np.arange(mean_value.shape[-1])] /= (self.pool_size * self.pool_size)
                     da_prev[:, v_start:v_end, h_start:h_end, :] += mean_value
 
