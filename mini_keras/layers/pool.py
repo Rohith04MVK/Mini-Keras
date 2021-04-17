@@ -71,6 +71,17 @@ class Pool(BaseLayer):
                 if self.mode == 'max':
                     da_prev[:, v_start:v_end, h_start:h_end, :] += da[:, i:i + 1, j:j + 1, :] * self.cache[(i, j)]
 
+                elif self.mode == 'average':
+                    # Distribute the average value back
+                    mean_value = np.copy(da[:, i:i+1, j:j+1, :])
+                    mean_value[:, :, :, np.arange(mean_value.shape[-1])] /= (self.pool_size * self.pool_size)
+                    da_prev[:, v_start:v_end, h_start:h_end, :] += mean_value
+
+                else:
+                    raise NotImplementedError("Invalid type of pooling")
+
+        return da_prev, None, None
+
     def cache_max_mask(self, x, ij):
         mask = np.zeros_like(x)
 
