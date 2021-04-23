@@ -14,6 +14,12 @@ class Identify(BaseActivation):
 
 
 class Sigmoid(BaseActivation):
+    """
+    Applies the sigmoid activation function. For small values (<-5),
+    `sigmoid` returns a value close to zero, and for large values (>5)
+    the result of the function gets close to 1.
+    """
+
     def f(self, x):
         s = 1 / (1 + math.exp(-x))
         return s
@@ -58,5 +64,5 @@ class SoftMax(BaseActivation):
         y = np.exp(x - np.max(x, axis=1, keepdims=True))
         return y / np.sum(y, axis=1, keepdims=True)
 
-    def df(self) -> None: a
-    raise NotImplementedError
+    def df(self) -> None:
+        raise NotImplementedError
