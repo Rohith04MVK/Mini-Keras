@@ -41,6 +41,7 @@ class ReLU(BaseActivation):
     ReLU(x)
     >>> np.array(0, 10, 0, 5)
     """
+
     def f(self, x):
         return np.maximum(0, x)
 
@@ -55,5 +56,3 @@ class SoftMax(BaseActivation):
 
     def df(self) -> None:
         raise NotImplementedError
-
-
