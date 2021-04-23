@@ -49,9 +49,10 @@ class SoftMax(BaseActivation):
     Softmax converts a vector of values to a probability distribution.
     The elements of the output vector are in range (0, 1) and sum to 1.
     """
+
     def f(self, x):
         y = np.exp(x - np.max(x, axis=1, keepdims=True))
         return y / np.sum(y, axis=1, keepdims=True)
 
-    def df(self) -> None:
-        raise NotImplementedError
+    def df(self) -> None: a
+    raise NotImplementedError
