@@ -29,6 +29,18 @@ class Sigmoid(BaseActivation):
 
 
 class ReLU(BaseActivation):
+    """
+    Does the rectified linear unit function.
+
+    Returns 0 if the number is lesser than 0 
+    Returns the number if the number is greater than 0
+
+    Example
+    -------
+    x = np.array(0.5, 10, -1, 5)
+    ReLU(x)
+    >>> np.array(0, 10, 0, 5)
+    """
     def f(self, x):
         return np.maximum(0, x)
 
@@ -43,3 +55,5 @@ class SoftMax(BaseActivation):
 
     def df(self) -> None:
         raise NotImplementedError
+
+
