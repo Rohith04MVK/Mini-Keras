@@ -48,6 +48,10 @@ class SoftMax(BaseActivation):
     """
     Softmax converts a vector of values to a probability distribution.
     The elements of the output vector are in range (0, 1) and sum to 1.
+
+    Softmax is mostly used as the activation for the last
+    layer of a classification network to get the result as 
+    a probability distribution.
     """
 
     def f(self, x):
