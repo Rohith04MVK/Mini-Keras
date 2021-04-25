@@ -5,10 +5,9 @@ from .base import BaseOptimizer
 
 class GradientDescent(BaseOptimizer):
     """
-    Gradient descent is the algorithm for finding a local minimum of a differentiable function.
-    The idea is to take repeated steps in the opposite direction of the
-    gradient (or approximate gradient) of the function at the current point,
-    because this is the direction of steepest descent.
+    Gradient descent is an optimization algorithm used to minimize some function by
+    iteratively moving in the direction of steepest descent as defined by the negative of the gradient.
+    Here, we use gradient descent to update the parameters of our model.
     """
     def __init__(self, trainable_layers) -> None:
         super().__init__(trainable_layers)
