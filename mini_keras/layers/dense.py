@@ -7,7 +7,7 @@ class Dense(BaseLayer):
     """
     Densely connected layer.
 
-    The simple Neural Network where every node is 
+    The simple Neural Network where every node is
     connected to every node in the previous layer.
 
     Attributes
