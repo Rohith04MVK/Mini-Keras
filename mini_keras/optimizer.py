@@ -24,6 +24,12 @@ class GradientDescent(BaseOptimizer):
 
 
 class RMSprop(BaseOptimizer):
+    """
+    RmsProp optimizer. RmsProp is an optimizer that
+    utilizes the magnitude of recent gradients to normalize the gradients.
+    We always keep a moving average over the root mean squared (hence Rms) gradients,
+    by which we divide the current gradient.
+    """
     __slots__ = ("cache", "beta", "epsilon")
 
     def __init__(self, trainable_layers, beta=0.9, epsilon=1e-8) -> None:
