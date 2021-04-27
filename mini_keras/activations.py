@@ -38,9 +38,10 @@ class ReLU(BaseActivation):
 
     Example
     -------
-    x = np.array(0.5, 10, -1, 5)
-    ReLU(x)
-    >>> np.array(0, 10, 0, 5)
+    relu = mini_keras.activations.ReLU()
+    x = np.array([0.5, 10, -1, 5])
+    relu(x)
+    >>> [0.5 10.0 0.0 5.0]
     """
 
     def f(self, x):
