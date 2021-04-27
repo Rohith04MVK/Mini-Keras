@@ -25,7 +25,7 @@ An advanced and lightweight ML and Deep learning library for python.
 
 </p>
 
-**NOTE**: We are not affliated with [Keras](https://github.com/keras-team) in any way.
+**NOTE**: We are not affiliated with [Keras](https://github.com/keras-team) in any way.
 We're making a lightweight library for ML and Deep learning.
 
 ## Our principle and Ethics
@@ -62,7 +62,7 @@ making the commit message.
 
 ## 💬 Get in touch
 
-If you have various suggestions, questions or want to discuss things wit our community, Join our discord server!
+If you have various suggestions, questions or want to discuss things with our community, Join our discord server!
 
 [![Discord](https://discordapp.com/api/guilds/695008516590534758/widget.png?style=shield)](https://discord.gg/cSC5ZZwYGQ)
 

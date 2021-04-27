@@ -4,6 +4,11 @@ from .base import BaseOptimizer
 
 
 class GradientDescent(BaseOptimizer):
+    """
+    Gradient descent is an optimization algorithm used to minimize some function by
+    iteratively moving in the direction of steepest descent as defined by the negative of the gradient.
+    Here, we use gradient descent to update the parameters of our model.
+    """
     def __init__(self, trainable_layers) -> None:
         super().__init__(trainable_layers)
 
@@ -19,6 +24,12 @@ class GradientDescent(BaseOptimizer):
 
 
 class RMSprop(BaseOptimizer):
+    """
+    RmsProp optimizer. RmsProp is an optimizer that
+    utilizes the magnitude of recent gradients to normalize the gradients.
+    We always keep a moving average over the root mean squared (hence Rms) gradients,
+    by which we divide the current gradient.
+    """
     __slots__ = ("cache", "beta", "epsilon")
 
     def __init__(self, trainable_layers, beta=0.9, epsilon=1e-8) -> None:
