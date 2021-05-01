@@ -52,7 +52,7 @@ class Sequential:
     def forward_prop(self, x, training=True):
         """
         Performs a forward propagation pass.
-        
+
         Parameters
         ----------
         x : numpy.ndarray
@@ -67,3 +67,5 @@ class Sequential:
         for layer in self.layers:
             a = x
             a = layer.forward(a, training)
+    
+    
