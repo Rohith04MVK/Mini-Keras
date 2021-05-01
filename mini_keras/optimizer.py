@@ -114,6 +114,7 @@ class Adam(BaseOptimizer):
 
             layer.update_params(dw, db)
 
+
 adam = Adam
 rmsprop = RMSprop
 gradient_descent = GradientDescent
