@@ -67,5 +67,29 @@ class Sequential:
         for layer in self.layers:
             a = x
             a = layer.forward(a, training)
-    
-    
+
+    def backward_prop(self, a_last, y):
+        """
+                Performs a backward propagation pass.
+        Parameters
+        ----------
+        a_last : numpy.ndarray
+            Last layer's activations.
+        y : numpy.ndarray
+            Target labels.
+        """
+        da = self.cost_function.grad(a_last, y)
+        batch_size = da.shape[0]
+        for layer in reversed(self.layers):
+            da_prev, dw, db = layer.backward(da)
+
+            if layer in self.trainable_layers:
+                if self.l2_lambda != 0:
+                    # Update the weights' gradients also wrt the l2 regularization cost
+                    self.w_grads[layer] = dw + (self.l2_lambda / batch_size) * layer.get_params()[0]
+                else:
+                    self.w_grads[layer] = dw
+
+                self.b_grads[layer] = db
+
+            da = da_prev
