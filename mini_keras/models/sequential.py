@@ -129,7 +129,7 @@ class Sequential:
             return cost
 
     @staticmethod
-    def create_mini_batches(x, y, mini_batch_size):
+    def create_mini_batches(x, y, mini_batch_size) -> list:
 
         batch_size = x.shape[0]
         mini_batches = []
