@@ -1,4 +1,7 @@
+import numpy as np
 import typing as t
+
+from functools import reduce
 
 from ..base import BaseLayer
 from ..loss import SoftmaxCrossEntropy
