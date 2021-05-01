@@ -70,6 +70,7 @@ class Sequential:
         for layer in self.layers:
             a = x
             a = layer.forward(a, training)
+            return a
 
     def backward_prop(self, a_last, y):
         """
@@ -152,3 +153,10 @@ class Sequential:
             ))
 
         return mini_batches
+
+    def train_step(self, x_train, y_train, learning_rate, step):
+        a_last = self.forward_prop(x_train, training=True)
+        self.backward_prop(a_last, y_train)
+        cost = self.compute_cost(a_last, y_train)
+        self.update_params(learning_rate, step)
+        return cost
