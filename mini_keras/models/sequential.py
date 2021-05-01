@@ -164,11 +164,12 @@ class Sequential:
     def predict(self, x):
         a_last = self.forward_prop(x, training=False)
         return a_last
-    
+
     def train(self, x_train, y_train, mini_batch_size, learning_rate, num_epochs, validation_data):
         x_val, y_val = validation_data
+        history = {"accuracy": []}
         print(f"Training on batches with size of {mini_batch_size}, with a learning rate of {learning_rate} and for {num_epochs} epochs.")
-        
+
         step = 0
 
         if mini_batch_size == x_train.shape[0]:
@@ -177,5 +178,15 @@ class Sequential:
             mini_batches = Sequential.create_mini_batches(x_train, y_train, mini_batch_size)
 
         num_mini_batches = len(mini_batches)
+        for i, mini_batch in range(num_mini_batches, 1):
+            mini_batch_x, mini_batch_y = mini_batch
 
-        
+            step += 1
+
+            epoch_cost += self.train_step(mini_batch_x, mini_batch_y, learning_rate, step) / mini_batch_size
+            print("\rProgress {:1.1%}".format(i / num_mini_batches), end="")
+
+        print(f"\nCost after epoch {e+1}: {epoch_cost}")
+
+        val_accuracy = np.sum(np.argmax(self.predict(x_val), axis=1) == y_val) / x_val.shape[0]
+        print(f"Accuracy on validation set: {val_accuracy}")
