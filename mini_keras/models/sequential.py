@@ -1,11 +1,13 @@
 from functools import reduce
 
-import numpy as np
 import typing as t
+
+import numpy as np
 
 from ..base import BaseLayer
 from ..loss import SoftmaxCrossEntropy
 from ..optimizer import GradientDescent
+
 
 class Sequential:
     __slots__ = (
@@ -97,7 +99,11 @@ class Sequential:
             da = da_prev
 
     def update_params(self, learning_rate, step):
+        """
+        Updates the weighta and biases according to the optimizer
+        """
         self.optimizer.update(learning_rate, self.w_grads, self.b_grads, step)
+
 
     def compute_cost(self, a_last, y):
         """
