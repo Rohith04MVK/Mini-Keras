@@ -160,3 +160,22 @@ class Sequential:
         cost = self.compute_cost(a_last, y_train)
         self.update_params(learning_rate, step)
         return cost
+
+    def predict(self, x):
+        a_last = self.forward_prop(x, training=False)
+        return a_last
+    
+    def train(self, x_train, y_train, mini_batch_size, learning_rate, num_epochs, validation_data):
+        x_val, y_val = validation_data
+        print(f"Training on batches with size of {mini_batch_size}, with a learning rate of {learning_rate} and for {num_epochs} epochs.")
+        
+        step = 0
+
+        if mini_batch_size == x_train.shape[0]:
+            mini_batches = (x_train, y_train)
+        else:
+            mini_batches = Sequential.create_mini_batches(x_train, y_train, mini_batch_size)
+
+        num_mini_batches = len(mini_batches)
+
+        
