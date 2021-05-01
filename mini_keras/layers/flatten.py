@@ -24,11 +24,11 @@ class Flatten(BaseLayer):
     def backward(self, da: np.ndarray) -> tuple:
         return da.reshape(da.shape[0], *self.original_dim), None, None
 
-    def update_params(self, dw: np.ndarray, db: np.ndarray) -> None:
-        raise NotImplementedError
+    def get_params(self):
+        pass
 
-    def get_params(self) -> None:
-        raise NotImplementedError
+    def update_params(self, dw, db):
+        pass
 
     def get_output_dim(self) -> None:
-        raise NotImplementedError
+        return self.output_dim
