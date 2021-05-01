@@ -50,7 +50,7 @@ class Conv2D(BaseLayer):
                 h_end = h_start + self.kernel_size
 
                 out[:, i, j, :] = np.sum(a_prev_padded[:, v_start:v_end, h_start:h_end, :, np.newaxis] *
-                                         self.w[np.newaxis, :, :, :], axis=(1, 2, 3))
+                                         self.weights[np.newaxis, :, :, :], axis=(1, 2, 3))
 
         z = out + self.biases
         a = self.activation.f(z)
