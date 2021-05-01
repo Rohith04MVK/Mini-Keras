@@ -113,3 +113,7 @@ class Adam(BaseOptimizer):
             db = (learning_rate * v_corrected[layer_db] / (np.sqrt(s_corrected[layer_db]) + self.epsilon))
 
             layer.update_params(dw, db)
+
+adam = Adam
+rmsprop = RMSProp
+gradient_descent = GradientDescent
