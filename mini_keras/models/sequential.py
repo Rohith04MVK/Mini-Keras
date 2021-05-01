@@ -50,6 +50,20 @@ class Sequential:
             self.layers.append(layers)
 
     def forward_prop(self, x, training=True):
+        """
+        Performs a forward propagation pass.
+        
+        Parameters
+        ----------
+        x : numpy.ndarray
+            Input of the first layer.
+        training : bool
+            Is the model is training or not.
+        Returns
+        -------
+        numpy.ndarray
+            Model's output, corresponding to the last layer's activations.
+        """
         for layer in self.layers:
             a = x
             a = layer.forward(a, training)
