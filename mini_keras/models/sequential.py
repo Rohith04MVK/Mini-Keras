@@ -127,3 +127,28 @@ class Sequential:
             return cost + l2_cost
         else:
             return cost
+
+    @staticmethod
+    def create_mini_batches(x, y, mini_batch_size):
+
+        batch_size = x.shape[0]
+        mini_batches = []
+
+        p = np.random.permutation(x.shape[0])
+        x, y = x[p, :], y[p, :]
+        num_complete_minibatches = batch_size // mini_batch_size
+
+        for k in range(0, num_complete_minibatches):
+            mini_batches.append((
+                x[k * mini_batch_size:(k + 1) * mini_batch_size, :],
+                y[k * mini_batch_size:(k + 1) * mini_batch_size, :]
+            ))
+
+        # Fill with remaining data, if needed
+        if batch_size % mini_batch_size != 0:
+            mini_batches.append((
+                x[num_complete_minibatches * mini_batch_size:, :],
+                y[num_complete_minibatches * mini_batch_size:, :]
+            ))
+
+        return mini_batches
