@@ -93,3 +93,31 @@ class Sequential:
                 self.b_grads[layer] = db
 
             da = da_prev
+
+    def update_params(self, learning_rate, step):
+        self.optimizer.update(learning_rate, self.w_grads, self.b_grads, step)
+
+    def compute_cost(self, a_last, y):
+        """
+        Computes the cost, given the output and the target labels.
+
+        Parameters
+        ----------
+        a_last : numpy.ndarray
+            Output.
+        y : numpy.ndarray
+            Target labels.
+
+        Returns
+        -------
+        float
+            The cost.
+        """
+        cost = self.cost_function.f(a_last, y)
+        if self.l2_lambda != 0:
+            batch_size = y.shape[0]
+            weights = [layer.get_params()[0] for layer in self.trainable_layers]
+            l2_cost = (self.l2_lambda / (2 * batch_size)) * reduce(lambda ws, w: ws + np.sum(np.square(w)), weights, 0)
+            return cost + l2_cost
+        else:
+            return cost
