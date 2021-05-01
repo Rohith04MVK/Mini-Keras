@@ -103,7 +103,6 @@ class Sequential:
         """
         self.optimizer.update(learning_rate, self.w_grads, self.b_grads, step)
 
-
     def compute_cost(self, a_last, y):
         """
         Computes the cost, given the output and the target labels.
