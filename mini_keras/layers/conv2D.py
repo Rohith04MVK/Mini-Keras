@@ -38,19 +38,20 @@ class Conv2D(BaseLayer):
 
     def forward(self, a_prev, training):
         batch_size = a_prev.shape[0]
-        a_prev_padded = Conv2D.zero_pad(a_prev, self.pad)
+        a_prev_padded = Conv.zero_pad(a_prev, self.pad)
         out = np.zeros((batch_size, self.n_h, self.n_w, self.n_c))
 
+        # Convolve
         for i in range(self.n_h):
             v_start = i * self.stride
-            v_end = i * v_start + self.kernel_size
+            v_end = v_start + self.kernel_size
 
             for j in range(self.n_w):
                 h_start = j * self.stride
                 h_end = h_start + self.kernel_size
 
                 out[:, i, j, :] = np.sum(a_prev_padded[:, v_start:v_end, h_start:h_end, :, np.newaxis] *
-                                         self.weights[np.newaxis, :, :, :], axis=(1, 2, 3))
+                                         self.w[np.newaxis, :, :, :], axis=(1, 2, 3))
 
         z = out + self.biases
         a = self.activation.f(z)
