@@ -84,6 +84,7 @@ class Sequential:
         """
         da = self.cost_function.grad(a_last, y)
         batch_size = da.shape[0]
+
         for layer in reversed(self.layers):
             da_prev, dw, db = layer.backward(da)
 
