@@ -1,6 +1,5 @@
-from functools import reduce
-
 import typing as t
+from functools import reduce
 
 import numpy as np
 
