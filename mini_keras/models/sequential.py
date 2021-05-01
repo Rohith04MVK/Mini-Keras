@@ -2,7 +2,7 @@ from functools import reduce
 
 import numpy as np
 
-from src.optimizer import gradient_descent
+from ..optimizer import gradient_descent
 
 
 class Sequential:
