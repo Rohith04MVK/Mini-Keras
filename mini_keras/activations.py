@@ -68,6 +68,7 @@ class SoftMax(BaseActivation):
     def df(self) -> None:
         raise NotImplementedError
 
+
 identity = Identify()
 sigmoid = Sigmoid()
 relu = ReLU()
