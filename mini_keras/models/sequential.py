@@ -167,7 +167,7 @@ class Sequential:
             if mini_batch_size == x_train.shape[0]:
                 mini_batches = (x_train, y_train)
             else:
-                mini_batches = NeuralNetwork.create_mini_batches(x_train, y_train, mini_batch_size)
+                mini_batches = Sequential.create_mini_batches(x_train, y_train, mini_batch_size)
 
             num_mini_batches = len(mini_batches)
             for i, mini_batch in enumerate(mini_batches, 1):
