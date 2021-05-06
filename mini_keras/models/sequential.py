@@ -127,8 +127,18 @@ class Sequential:
             return cost
 
     @staticmethod
-    def create_mini_batches(x, y, mini_batch_size) -> list:
-
+    def create_mini_batches(x, y, mini_batch_size):
+        """
+        Creates sample mini batches from input and target labels batches.
+        x : numpy.ndarray
+            Input batch.
+        y : numpy.ndarray
+            Target labels batch.
+        Returns
+        -------
+        list
+            Mini batches pairs of input and target labels.
+        """
         batch_size = x.shape[0]
         mini_batches = []
 
