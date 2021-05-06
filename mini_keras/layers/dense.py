@@ -1,71 +1,76 @@
 import numpy as np
 
+from ..activations import SoftMax
 from ..base import BaseLayer
 
 
-class Dense(BaseLayer):
-    """
-    Densely connected layer.
-    The simple Neural Network where every node is
-    connected to every node in the previous layer.
+class FullyConnected(BaseLayer):
+    """Densely connected layer.
     Attributes
     ----------
     size : int
         Number of neurons.
     activation : Activation
         Neurons' activation's function.
+    is_softmax : bool
+        Whether or not the activation is softmax.
     cache : dict
         Cache.
-    weights : numpy.ndarray
+    w : numpy.ndarray
         Weights.
-    biases : numpy.ndarray
-        biases.
+    b : numpy.ndarray
+        Biases.
     """
-    __slots__ = (
-        "size", "activation", "weights", "biases", "cache"
-    )
-
-    def __init__(self, size, activation) -> None:
+    def __init__(self, size, activation):
         super().__init__()
         self.size = size
         self.activation = activation
-        self.weights = None
-        self.biases = None
+        self.is_softmax = isinstance(self.activation, SoftMax)
         self.cache = {}
+        self.w = None
+        self.b = None
 
-    def initialize(self, input_dims) -> None:
-        self.weights = np.random.randn(self.size, input_dims) * np.sqrt(2 / input_dims)
+    def initialize(self, in_dim):
+        # He initialization
+        self.w = np.random.randn(self.size, in_dim) * np.sqrt(2 / in_dim)
 
-        self.biases = np.zeros((1, self.size))
+        self.b = np.zeros((1, self.size))
 
     def forward(self, a_prev, training):
-        z = np.dot(a_prev, self.weights.T) + self.biases
+        z = np.dot(a_prev, self.w.T) + self.b
         a = self.activation.f(z)
 
         if training:
+            # Cache for backward pass
             self.cache.update({'a_prev': a_prev, 'z': z, 'a': a})
 
         return a
 
-    def backward(self, da) -> tuple:
+    def backward(self, da):
         a_prev, z, a = (self.cache[key] for key in ('a_prev', 'z', 'a'))
-
         batch_size = a_prev.shape[0]
 
-        dz = da * self.activation.df(z, cached_y=a)
+        if self.is_softmax:
+            # Get back y from the gradient wrt the cost of this layer's activations
+            # That is get back y from - y/a = da
+            y = da * (-a)
+
+            dz = a - y
+        else:
+            dz = da * self.activation.df(z, cached_y=a)
 
         dw = 1 / batch_size * np.dot(dz.T, a_prev)
         db = 1 / batch_size * dz.sum(axis=0, keepdims=True)
-        da_prev = np.dot(dz, self.weights)
+        da_prev = np.dot(dz, self.w)
 
         return da_prev, dw, db
 
-    def update_params(self, dw, db) -> None:
-        self.weights -= dw
-        self.biases -= db
+    def update_params(self, dw, db):
+        self.w -= dw
+        self.b -= db
 
-    def get_params(self) -> tuple:
-        return self.weights, self.biases
+    def get_params(self):
+        return self.w, self.b
 
-    def get_output_dim(self) -> int:
+    def get_output_dim(self):
         return self.size
