@@ -66,10 +66,11 @@ class Sequential:
         numpy.ndarray
             Model's output, corresponding to the last layer's activations.
         """
+        a = x
         for layer in self.layers:
-            a = x
             a = layer.forward(a, training)
-            return a
+
+        return a
 
     def backward_prop(self, a_last, y):
         """
