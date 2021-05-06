@@ -4,7 +4,7 @@ from ..activations import SoftMax
 from ..base import BaseLayer
 
 
-class FullyConnected(BaseLayer):
+class Dense(BaseLayer):
     """Densely connected layer.
     Attributes
     ----------
