@@ -127,23 +127,38 @@ class Sequential:
             return cost
 
     @staticmethod
-    def create_mini_batches(X, y, batch_size):
+    def create_mini_batches(x, y, mini_batch_size):
+        """
+        Creates sample mini batches from input and target labels batches.
+        x : numpy.ndarray
+            Input batch.
+        y : numpy.ndarray
+            Target labels batch.
+        Returns
+        -------
+        list
+            Mini batches pairs of input and target labels.
+        """
+        batch_size = x.shape[0]
         mini_batches = []
-        data = np.hstack((X, y))
-        np.random.shuffle(data)
-        n_minibatches = data.shape[0] // batch_size
-        i = 0
 
-        for i in range(n_minibatches + 1):
-            mini_batch = data[i * batch_size:(i + 1)*batch_size, :]
-            X_mini = mini_batch[:, :-1]
-            Y_mini = mini_batch[:, -1].reshape((-1, 1))
-            mini_batches.append((X_mini, Y_mini))
-        if data.shape[0] % batch_size != 0:
-            mini_batch = data[i * batch_size:data.shape[0]]
-            X_mini = mini_batch[:, :-1]
-            Y_mini = mini_batch[:, -1].reshape((-1, 1))
-            mini_batches.append((X_mini, Y_mini))
+        p = np.random.permutation(x.shape[0])
+        x, y = x[p, :], y[p, :]
+        num_complete_minibatches = batch_size // mini_batch_size
+
+        for k in range(0, num_complete_minibatches):
+            mini_batches.append((
+                x[k * mini_batch_size:(k + 1) * mini_batch_size, :],
+                y[k * mini_batch_size:(k + 1) * mini_batch_size, :]
+            ))
+
+        # Fill with remaining data, if needed
+        if batch_size % mini_batch_size != 0:
+            mini_batches.append((
+                x[num_complete_minibatches * mini_batch_size:, :],
+                y[num_complete_minibatches * mini_batch_size:, :]
+            ))
+
         return mini_batches
 
     def train_step(self, x_train, y_train, learning_rate, step):
