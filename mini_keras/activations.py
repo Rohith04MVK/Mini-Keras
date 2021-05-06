@@ -32,10 +32,8 @@ class Sigmoid(BaseActivation):
 class ReLU(BaseActivation):
     """
     Does the rectified linear unit function.
-
     Returns 0 if the number is lesser than 0
     Returns the number if the number is greater than 0
-
     Example
     -------
     relu = mini_keras.activations.ReLU()
@@ -55,7 +53,6 @@ class SoftMax(BaseActivation):
     """
     Softmax converts a vector of values to a probability distribution.
     The elements of the output vector are in range (0, 1) and sum to 1.
-
     Softmax is mostly used as the activation for the last
     layer of a classification network to get the result as
     a probability distribution.
