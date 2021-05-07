@@ -57,10 +57,10 @@ class Conv2D(BaseLayer):
     def backward(self, da):
         batch_size = da.shape[0]
         a_prev, z, a = (self.cache[key] for key in ('a_prev', 'z', 'a'))
-        a_prev_pad = Conv.zero_pad(a_prev, self.pad) if self.pad != 0 else a_prev
+        a_prev_pad = Conv2D.zero_pad(a_prev, self.pad) if self.pad != 0 else a_prev
 
         da_prev = np.zeros((batch_size, self.n_h_prev, self.n_w_prev, self.n_c_prev))
-        da_prev_pad = Conv.zero_pad(da_prev, self.pad) if self.pad != 0 else da_prev
+        da_prev_pad = Conv2D.zero_pad(da_prev, self.pad) if self.pad != 0 else da_prev
 
         dz = da * self.activation.df(z, cached_y=a)
         db = 1 / batch_size * dz.sum(axis=(0, 1, 2))
