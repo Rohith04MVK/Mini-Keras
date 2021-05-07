@@ -18,7 +18,7 @@ class Conv2D(BaseLayer):
         self.activation = activation
         self.cache = {}
 
-    def init(self, in_dim):
+    def initialize(self, in_dim):
         self.pad = 0 if self.padding == 'valid' else int((self.kernel_size - 1) / 2)
 
         self.n_h_prev, self.n_w_prev, self.n_c_prev = in_dim
