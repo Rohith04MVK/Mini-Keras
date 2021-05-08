@@ -68,7 +68,7 @@ class RMSprop(BaseOptimizer):
 
 class Adam(BaseOptimizer):
     def __init__(self, trainable_layers, beta1=0.9, beta2=0.999, epsilon=1e-8):
-        Optimizer.__init__(self, trainable_layers)
+        BaseOptimizer.__init__(self, trainable_layers)
         self.v = {}
         self.s = {}
         self.beta1 = beta1
