@@ -66,18 +66,16 @@ class RMSprop(BaseOptimizer):
             layer.update(dw, db)
 
 
-class Adam(BaseOptimizer):
-    __slots__ = ("v", "s", "beta1", "beta2", "epsilon")
-
-    def __init__(self, trainable_layers, beta1=0.9, beta2=0.999, epsilon=1e-8) -> None:
-        BaseOptimizer.__init__(self, trainable_layers)
+class Adam(Optimizer):
+    def __init__(self, trainable_layers, beta1=0.9, beta2=0.999, epsilon=1e-8):
+        Optimizer.__init__(self, trainable_layers)
         self.v = {}
         self.s = {}
         self.beta1 = beta1
         self.beta2 = beta2
         self.epsilon = epsilon
 
-    def initialize(self) -> None:
+    def initialize(self):
         for layer in self.trainable_layers:
             w, b = layer.get_params()
             w_shape = w.shape
