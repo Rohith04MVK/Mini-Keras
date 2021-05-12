@@ -84,6 +84,7 @@ class Sequential:
         """
         da = self.cost_function.grad(a_last, y)
         batch_size = da.shape[0]
+
         for layer in reversed(self.layers):
             da_prev, dw, db = layer.backward(da)
 
@@ -166,7 +167,7 @@ class Sequential:
         a_last = self.forward_prop(x_train, training=True)
         self.backward_prop(a_last, y_train)
         cost = self.compute_cost(a_last, y_train)
-        self.update_params(learning_rate, step)
+        self.update_param(learning_rate, step)
         return cost
 
     def predict(self, x):
@@ -175,8 +176,7 @@ class Sequential:
 
     def train(self, x_train, y_train, mini_batch_size, learning_rate, num_epochs, validation_data):
         x_val, y_val = validation_data
-        print(f"Training on batches with size of {mini_batch_size}, with a learning rate of {learning_rate} and for {num_epochs} epochs.")
-
+        print(f"Started training [batch_size={mini_batch_size}, learning_rate={learning_rate}]")
         step = 0
         for e in range(num_epochs):
             print("Epoch " + str(e + 1))
@@ -185,7 +185,7 @@ class Sequential:
             if mini_batch_size == x_train.shape[0]:
                 mini_batches = (x_train, y_train)
             else:
-                mini_batches = Sequential.create_mini_batches(x_train, y_train, mini_batch_size)
+                mini_batches = Seqential.create_mini_batches(x_train, y_train, mini_batch_size)
 
             num_mini_batches = len(mini_batches)
             for i, mini_batch in enumerate(mini_batches, 1):
@@ -196,6 +196,7 @@ class Sequential:
 
             print(f"\nCost after epoch {e+1}: {epoch_cost}")
 
+            print("Computing accuracy on validation set...")
             accuracy = np.sum(np.argmax(self.predict(x_val), axis=1) == y_val) / x_val.shape[0]
             print(f"Accuracy on validation set: {accuracy}")
 
