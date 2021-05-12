@@ -4,18 +4,18 @@ from ..base import BaseLayer
 
 
 class Pool(BaseLayer):
-    def __init__(self, pool_size, stride, mode) -> None:
+    def __init__(self, pool_size, stride, mode):
         super().__init__()
         self.pool_size = pool_size
         self.stride = stride
         self.n_h, self.n_w, self.n_c = None, None, None
         self.n_h_prev, self.n_w_prev, self.n_c_prev = None, None, None
-        self.weights = None
-        self.biases = None
+        self.w = None
+        self.b = None
         self.mode = mode
         self.cache = {}
 
-    def initialize(self, in_dim) -> None:
+    def init(self, in_dim):
         self.n_h_prev, self.n_w_prev, self.n_c_prev = in_dim
         self.n_h = int((self.n_h_prev - self.pool_size) / self.stride + 1)
         self.n_w = int((self.n_w_prev - self.pool_size) / self.stride + 1)
@@ -69,11 +69,11 @@ class Pool(BaseLayer):
                 h_end = h_start + self.pool_size
 
                 if self.mode == 'max':
-                    da_prev[:, v_start:v_end, h_start:h_end, :] += da[:, i:i + 1, j:j + 1, :] * self.cache[(i, j)]
+                    da_prev[:, v_start:v_end, h_start:h_end, :] += da[:, i:i+1, j:j+1, :] * self.cache[(i, j)]
 
                 elif self.mode == 'average':
                     # Distribute the average value back
-                    mean_value = np.copy(da[:, i:i + 1, j:j + 1, :])
+                    mean_value = np.copy(da[:, i:i+1, j:j+1, :])
                     mean_value[:, :, :, np.arange(mean_value.shape[-1])] /= (self.pool_size * self.pool_size)
                     da_prev[:, v_start:v_end, h_start:h_end, :] += mean_value
 
