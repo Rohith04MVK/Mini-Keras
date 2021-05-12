@@ -21,7 +21,7 @@ class Dense(BaseLayer):
     b : numpy.ndarray
         Biases.
     """
-    def __init__(self, size, activation):
+def __init__(self, size, activation):
         super().__init__()
         self.size = size
         self.activation = activation
