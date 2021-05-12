@@ -15,7 +15,7 @@ class Pool(BaseLayer):
         self.mode = mode
         self.cache = {}
 
-    def init(self, in_dim):
+    def initialize(self, in_dim):
         self.n_h_prev, self.n_w_prev, self.n_c_prev = in_dim
         self.n_h = int((self.n_h_prev - self.pool_size) / self.stride + 1)
         self.n_w = int((self.n_w_prev - self.pool_size) / self.stride + 1)
