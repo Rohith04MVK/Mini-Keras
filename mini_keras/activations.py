@@ -21,12 +21,11 @@ class Sigmoid(BaseActivation):
     """
 
     def f(self, x):
-        s = 1 / (1 + math.exp(-x))
-        return s
+        return np.where(x >= 0, 1 / (1 + np.exp(-x)), np.exp(x) / (1 + np.exp(x)))
 
     def df(self, x, cached_y=None):
-        ds = x * (1 - x)
-        return ds
+        y = cached_y if cached_y is not None else self.f(x)
+        return y * (1 - y)
 
 
 class ReLU(BaseActivation):
@@ -62,7 +61,7 @@ class SoftMax(BaseActivation):
         y = np.exp(x - np.max(x, axis=1, keepdims=True))
         return y / np.sum(y, axis=1, keepdims=True)
 
-    def df(self) -> None:
+    def df(self, x, cached_y=None):
         raise NotImplementedError
 
 
