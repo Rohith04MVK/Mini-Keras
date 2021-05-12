@@ -5,7 +5,7 @@ from ..base import BaseLayer
 
 
 class Conv2D(BaseLayer):
-    def __init__(self, kernel_size, stride, n_c, padding='valid', activation=identity):
+    def __init__(self, kernel_size, stride, n_c, padding='valid', activation=Identify):
         super().__init__()
         self.kernel_size = kernel_size
         self.stride = stride
