@@ -5,7 +5,7 @@ from ..base import BaseLayer
 
 
 class Conv2D(BaseLayer):
-    def __init__(self, kernel_size, stride, n_c, padding='valid', activation=Identify):
+    def __init__(self, kernel_size, stride, n_c, padding='valid', activation=identity):
         super().__init__()
         self.kernel_size = kernel_size
         self.stride = stride
@@ -18,7 +18,7 @@ class Conv2D(BaseLayer):
         self.activation = activation
         self.cache = {}
 
-    def initialize(self, in_dim):
+    def init(self, in_dim):
         self.pad = 0 if self.padding == 'valid' else int((self.kernel_size - 1) / 2)
 
         self.n_h_prev, self.n_w_prev, self.n_c_prev = in_dim
@@ -101,4 +101,3 @@ class Conv2D(BaseLayer):
     @staticmethod
     def zero_pad(x, pad):
         return np.pad(x, ((0, 0), (pad, pad), (pad, pad), (0, 0)), mode='constant')
-
