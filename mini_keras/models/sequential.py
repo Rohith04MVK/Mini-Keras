@@ -167,7 +167,7 @@ class Sequential:
         a_last = self.forward_prop(x_train, training=True)
         self.backward_prop(a_last, y_train)
         cost = self.compute_cost(a_last, y_train)
-        self.update_param(learning_rate, step)
+        self.update_params(learning_rate, step)
         return cost
 
     def predict(self, x):
