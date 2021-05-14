@@ -1,11 +1,11 @@
 import numpy as np
 
-from ..activations import Identify
+from ..activations import identity
 from ..base import BaseLayer
 
 
 class Conv2D(BaseLayer):
-    def __init__(self, kernel_size, stride, n_c, padding='valid', activation=Identify):
+    def __init__(self, kernel_size, stride, n_c, padding='valid', activation=identity):
         super().__init__()
         self.kernel_size = kernel_size
         self.stride = stride
