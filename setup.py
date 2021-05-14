@@ -58,7 +58,7 @@ setuptools.setup(
 
         "Programming Language :: Python :: Implementation :: CPython",
 
-        "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
+        "License :: OSI Approved :: MIT License",
 
         "Operating System :: OS Independent",
 
