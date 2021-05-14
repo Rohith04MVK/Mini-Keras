@@ -12,22 +12,22 @@ class Sequential:
         "input_dim", "layers", "w_grads", "b_grads", "cost_function", "optimizer", "l2_lambda", "trainable_layers"
     )
 
-def __init__(self, input_dim, layers, cost_function, optimizer=gradient_descent, l2_lambda=0):
-        self.layers = layers
-        self.w_grads = {}
-        self.b_grads = {}
-        self.cost_function = cost_function
-        self.optimizer = optimizer
-        self.l2_lambda = l2_lambda
+    def __init__(self, input_dim, layers, cost_function, optimizer=gradient_descent, l2_lambda=0):
+            self.layers = layers
+            self.w_grads = {}
+            self.b_grads = {}
+            self.cost_function = cost_function
+            self.optimizer = optimizer
+            self.l2_lambda = l2_lambda
 
-        # Initialize the layers in the model providing the input dimension they should expect
-        self.layers[0].init(input_dim)
-        for prev_layer, curr_layer in zip(self.layers, self.layers[1:]):
-            curr_layer.init(prev_layer.get_output_dim())
+            # Initialize the layers in the model providing the input dimension they should expect
+            self.layers[0].init(input_dim)
+            for prev_layer, curr_layer in zip(self.layers, self.layers[1:]):
+                curr_layer.init(prev_layer.get_output_dim())
 
-        self.trainable_layers = set(layer for layer in self.layers if layer.get_params() is not None)
-        self.optimizer = optimizer(self.trainable_layers)
-        self.optimizer.initialize()
+            self.trainable_layers = set(layer for layer in self.layers if layer.get_params() is not None)
+            self.optimizer = optimizer(self.trainable_layers)
+            self.optimizer.initialize()
 
     def forward_prop(self, x, training=True):
         """
