@@ -20,7 +20,6 @@ __all__: t.Tuple[str, ...] = (
     "__version__",
     "__license__",
     "__copyright__",
-
     "Identify",
     "ReLU",
     "Sigmoid",
@@ -32,5 +31,5 @@ __all__: t.Tuple[str, ...] = (
     "Sequential",
     "Adam",
     "GradientDescent",
-    "RMSprop"
+    "RMSprop",
 )

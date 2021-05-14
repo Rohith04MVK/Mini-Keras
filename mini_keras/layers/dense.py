@@ -21,6 +21,7 @@ class Dense(BaseLayer):
     b : numpy.ndarray
         Biases.
     """
+
     def __init__(self, size, activation):
         super().__init__()
         self.size = size
@@ -42,12 +43,12 @@ class Dense(BaseLayer):
 
         if training:
             # Cache for backward pass
-            self.cache.update({'a_prev': a_prev, 'z': z, 'a': a})
+            self.cache.update({"a_prev": a_prev, "z": z, "a": a})
 
         return a
 
     def backward(self, da):
-        a_prev, z, a = (self.cache[key] for key in ('a_prev', 'z', 'a'))
+        a_prev, z, a = (self.cache[key] for key in ("a_prev", "z", "a"))
         batch_size = a_prev.shape[0]
 
         if self.is_softmax:

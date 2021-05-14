@@ -8,11 +8,15 @@ class BaseCostFunction(metaclass=abc.ABCMeta):
     __slots__ = ()
 
     @classmethod
-    def __subclasshook__(cls, subclass: "BaseCostFunction") -> t.Union[bool, type(NotImplemented)]:
+    def __subclasshook__(
+        cls, subclass: "BaseCostFunction"
+    ) -> t.Union[bool, type(NotImplemented)]:
         return (
-            hasattr(subclass, 'f') and callable(subclass.f) and
-            hasattr(subclass, 'grad') and callable(subclass.grad) or
-            NotImplemented
+            hasattr(subclass, "f")
+            and callable(subclass.f)  # noqa: W503
+            and hasattr(subclass, "grad")  # noqa: W503
+            and callable(subclass.grad)  # noqa: W503
+            or NotImplemented  # noqa: W503
         )
 
     @abc.abstractmethod
@@ -28,11 +32,15 @@ class BaseActivation(metaclass=abc.ABCMeta):
     __slots__ = ()
 
     @classmethod
-    def __subclasshook__(cls, subclass: "BaseActivation") -> t.Union[bool, type(NotImplemented)]:
+    def __subclasshook__(
+        cls, subclass: "BaseActivation"
+    ) -> t.Union[bool, type(NotImplemented)]:
         return (
-            hasattr(subclass, 'f') and callable(subclass.f) and
-            hasattr(subclass, 'df') and callable(subclass.df) or
-            type(NotImplemented)
+            hasattr(subclass, "f")
+            and callable(subclass.f)  # noqa: W503
+            and hasattr(subclass, "df")  # noqa: W503
+            and callable(subclass.df)  # noqa: W503
+            or type(NotImplemented)  # noqa: W503
         )
 
     @abc.abstractmethod
@@ -45,17 +53,21 @@ class BaseActivation(metaclass=abc.ABCMeta):
 
 
 class BaseOptimizer(metaclass=abc.ABCMeta):
-    __slots__ = ('trainable_layers',)
+    __slots__ = ("trainable_layers",)
 
     def __init__(self, trainable_layers) -> None:
         self.trainable_layers = trainable_layers
 
     @classmethod
-    def __subclasshook__(cls, subclass: "BaseOptimizer") -> t.Union[bool, type(NotImplemented)]:
+    def __subclasshook__(
+        cls, subclass: "BaseOptimizer"
+    ) -> t.Union[bool, type(NotImplemented)]:
         return (
-            hasattr(subclass, 'initialize') and callable(subclass.initialize) and  # noqa: W504
-            hasattr(subclass, 'update') and callable(subclass.update) or  # noqa: W504
-            NotImplemented
+            hasattr(subclass, "initialize")
+            and callable(subclass.initialize)  # noqa: W503
+            and hasattr(subclass, "update")  # noqa: W503
+            and callable(subclass.update)  # noqa: W503
+            or NotImplemented  # noqa: W503
         )
 
     @abc.abstractmethod
@@ -71,15 +83,23 @@ class BaseLayer:
     __slots__ = ()
 
     @classmethod
-    def __subclasshook__(cls, subclass: "BaseOptimizer") -> t.Union[bool, type(NotImplemented)]:
+    def __subclasshook__(
+        cls, subclass: "BaseOptimizer"
+    ) -> t.Union[bool, type(NotImplemented)]:
         return (
-            hasattr(subclass, 'initialize') and callable(subclass.initialize) and
-            hasattr(subclass, 'forward') and callable(subclass.forward) and
-            hasattr(subclass, 'backward') and callable(subclass.backward) and
-            hasattr(subclass, 'update_params') and callable(subclass.update_params) and
-            hasattr(subclass, 'get_params') and callable(subclass.get_params) and
-            hasattr(subclass, 'get_output_dim') and callable(subclass.get_output_dim) or
-            NotImplemented
+            hasattr(subclass, "initialize")
+            and callable(subclass.initialize)  # noqa: W503
+            and hasattr(subclass, "forward")  # noqa: W503
+            and callable(subclass.forward)  # noqa: W503
+            and hasattr(subclass, "backward")  # noqa: W503
+            and callable(subclass.backward)  # noqa: W503
+            and hasattr(subclass, "update_params")  # noqa: W503
+            and callable(subclass.update_params)  # noqa: W503
+            and hasattr(subclass, "get_params")  # noqa: W503
+            and callable(subclass.get_params)  # noqa: W503
+            and hasattr(subclass, "get_output_dim")  # noqa: W503
+            and callable(subclass.get_output_dim)  # noqa: W503
+            or NotImplemented  # noqa: W503
         )
 
     def initialize(self, input_dims: t.Union[int, tuple]) -> None:

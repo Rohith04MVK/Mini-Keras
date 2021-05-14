@@ -21,7 +21,7 @@ class SoftmaxCrossEntropy(BaseCostFunction):
         return cost
 
     def grad(self, a_last, y):
-        return - np.divide(y, np.clip(a_last, epsilon, 1.0))
+        return -np.divide(y, np.clip(a_last, epsilon, 1.0))
 
 
 softmax_cross_entropy = SoftmaxCrossEntropy()
