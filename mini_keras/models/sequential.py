@@ -3,9 +3,8 @@ from functools import reduce
 
 import numpy as np
 
-from ..base import BaseLayer
-from ..loss import SoftmaxCrossEntropy
-from ..optimizer import GradientDescent
+from ..loss import softmax_cross_entropy
+from ..optimizer import gradient_descent
 
 
 class Sequential:
@@ -13,16 +12,8 @@ class Sequential:
         "input_dim", "layers", "w_grads", "b_grads", "cost_function", "optimizer", "l2_lambda", "trainable_layers"
     )
 
-    def __init__(
-            self, input_dim, layers=None, cost_function=SoftmaxCrossEntropy, optimizer=GradientDescent, l2_lambda=0
-    ):
-        self.input_dim = input_dim
-
-        if layers is not None:
-            self.layers = layers
-        else:
-            self.layers = []
-
+def __init__(self, input_dim, layers, cost_function, optimizer=gradient_descent, l2_lambda=0):
+        self.layers = layers
         self.w_grads = {}
         self.b_grads = {}
         self.cost_function = cost_function
@@ -30,27 +21,13 @@ class Sequential:
         self.l2_lambda = l2_lambda
 
         # Initialize the layers in the model providing the input dimension they should expect
-        if self.layers:
-            self.layers[0].initialize(input_dim)
-            for prev_layer, curr_layer in zip(self.layers, self.layers[1:]):
-                curr_layer.initialize(prev_layer.get_output_dim())
+        self.layers[0].init(input_dim)
+        for prev_layer, curr_layer in zip(self.layers, self.layers[1:]):
+            curr_layer.init(prev_layer.get_output_dim())
 
         self.trainable_layers = set(layer for layer in self.layers if layer.get_params() is not None)
         self.optimizer = optimizer(self.trainable_layers)
         self.optimizer.initialize()
-
-    def __call__(self):
-        """Initialize by calling the object."""
-        self.layers[0].initialize(self.input_dim)
-
-        for prev_layer, curr_layer in zip(self.layers, self.layers[1:]):
-            curr_layer.initialize(prev_layer.get_output_dim())
-
-    def add(self, layers: t.Union[list, BaseLayer]):
-        if isinstance(layers, list):
-            self.layers += layers
-        else:
-            self.layers.append(layers)
 
     def forward_prop(self, x, training=True):
         """
@@ -58,9 +35,9 @@ class Sequential:
         Parameters
         ----------
         x : numpy.ndarray
-            Input of the first layer.
+            Input that is fed to the first layer.
         training : bool
-            Is the model is training or not.
+            Whether the model is training.
         Returns
         -------
         numpy.ndarray
@@ -74,7 +51,7 @@ class Sequential:
 
     def backward_prop(self, a_last, y):
         """
-                Performs a backward propagation pass.
+        Performs a backward propagation pass.
         Parameters
         ----------
         a_last : numpy.ndarray
@@ -99,9 +76,30 @@ class Sequential:
 
             da = da_prev
 
-    def update_params(self, learning_rate, step):
+    def predict(self, x):
         """
-        Updates the weighta and biases according to the optimizer
+        Calculates the output of the model for the input.
+        Parameters
+        ----------
+        x : numpy.ndarray
+            Input.
+        Returns
+        -------
+        numpy.ndarray
+            Prediction of the model, corresponding to the last layer's activations.
+        """
+        a_last = self.forward_prop(x, training=False)
+        return a_last
+
+    def update_param(self, learning_rate, step):
+        """
+        Updates the trainable parameters of the layers in the model.
+        Parameters
+        ----------
+        learning_rate : float
+            Update's learning rate.
+        step : int
+            How many updates have been performed from the start of the training.
         """
         self.optimizer.update(learning_rate, self.w_grads, self.b_grads, step)
 
@@ -127,6 +125,75 @@ class Sequential:
             return cost + l2_cost
         else:
             return cost
+
+    def train(self, x_train, y_train, mini_batch_size, learning_rate, num_epochs, validation_data):
+        """
+        Trains the model for a given number of epochs.
+        Parameters
+        ----------
+        x_train : numpy.ndarray
+            Training input data.
+        y_train : numpy.ndarray
+            Training target labels.
+        mini_batch_size : int
+            Size of a mini batch. Number of samples per parameters update step.
+        learning_rate : float
+            Parameters' update learning rate.
+        num_epochs : int
+            The number of epochs.
+        validation_data : tuple
+            A pair of input data and target labels to evaluate the model on.
+        """
+        x_val, y_val = validation_data
+        print(f"Started training [batch_size={mini_batch_size}, learning_rate={learning_rate}]")
+        step = 0
+        for e in range(num_epochs):
+            print("Epoch " + str(e + 1))
+            epoch_cost = 0
+
+            if mini_batch_size == x_train.shape[0]:
+                mini_batches = (x_train, y_train)
+            else:
+                mini_batches = NeuralNetwork.create_mini_batches(x_train, y_train, mini_batch_size)
+
+            num_mini_batches = len(mini_batches)
+            for i, mini_batch in enumerate(mini_batches, 1):
+                mini_batch_x, mini_batch_y = mini_batch
+                step += 1
+                epoch_cost += self.train_step(mini_batch_x, mini_batch_y, learning_rate, step) / mini_batch_size
+                print("\rProgress {:1.1%}".format(i / num_mini_batches), end="")
+
+            print(f"\nCost after epoch {e+1}: {epoch_cost}")
+
+            print("Computing accuracy on validation set...")
+            accuracy = np.sum(np.argmax(self.predict(x_val), axis=1) == y_val) / x_val.shape[0]
+            print(f"Accuracy on validation set: {accuracy}")
+
+        print("Finished training")
+
+    def train_step(self, x_train, y_train, learning_rate, step):
+        """
+        Performs one model training step.
+        Parameters
+        ----------
+        x_train : numpy.ndarray
+            Training input data.
+        y_train : numpy.ndarray
+            Training target labels.
+        learning_rate : float
+            Parameters' update learning rate.
+        step : int
+            How many parameters updates have been performed from the start of the training.
+        Returns
+        -------
+        float
+            The cost during this training step.
+        """
+        a_last = self.forward_prop(x_train, training=True)
+        self.backward_prop(a_last, y_train)
+        cost = self.compute_cost(a_last, y_train)
+        self.update_param(learning_rate, step)
+        return cost
 
     @staticmethod
     def create_mini_batches(x, y, mini_batch_size):
@@ -162,42 +229,3 @@ class Sequential:
             ))
 
         return mini_batches
-
-    def train_step(self, x_train, y_train, learning_rate, step):
-        a_last = self.forward_prop(x_train, training=True)
-        self.backward_prop(a_last, y_train)
-        cost = self.compute_cost(a_last, y_train)
-        self.update_params(learning_rate, step)
-        return cost
-
-    def predict(self, x):
-        a_last = self.forward_prop(x, training=False)
-        return a_last
-
-    def train(self, x_train, y_train, mini_batch_size, learning_rate, num_epochs, validation_data):
-        x_val, y_val = validation_data
-        print(f"Started training [batch_size={mini_batch_size}, learning_rate={learning_rate}]")
-        step = 0
-        for e in range(num_epochs):
-            print("Epoch " + str(e + 1))
-            epoch_cost = 0
-
-            if mini_batch_size == x_train.shape[0]:
-                mini_batches = (x_train, y_train)
-            else:
-                mini_batches = Sequential.create_mini_batches(x_train, y_train, mini_batch_size)
-
-            num_mini_batches = len(mini_batches)
-            for i, mini_batch in enumerate(mini_batches, 1):
-                mini_batch_x, mini_batch_y = mini_batch
-                step += 1
-                epoch_cost += self.train_step(mini_batch_x, mini_batch_y, learning_rate, step) / mini_batch_size
-                print("\rProgress {:1.1%}".format(i / num_mini_batches), end="")
-
-            print(f"\nCost after epoch {e+1}: {epoch_cost}")
-
-            print("Computing accuracy on validation set...")
-            accuracy = np.sum(np.argmax(self.predict(x_val), axis=1) == y_val) / x_val.shape[0]
-            print(f"Accuracy on validation set: {accuracy}")
-
-        print("Finished training")
