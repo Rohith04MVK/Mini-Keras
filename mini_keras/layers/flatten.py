@@ -1,6 +1,6 @@
 from functools import reduce
 
-from src.layers.layer import Layer
+from .layer import Layer
 
 
 class Flatten(Layer):
