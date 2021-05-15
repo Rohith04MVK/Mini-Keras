@@ -2,11 +2,11 @@ import typing as t
 
 import numpy as np
 
-from .layer import Layer
 from ..activations import identity
+from ..base import BaseLayer
 
 
-class Conv(Layer):
+class Conv(BaseLayer):
     """2D convolutional layer.
     Attributes
     ----------

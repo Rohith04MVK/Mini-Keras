@@ -1,9 +1,9 @@
 from functools import reduce
 
-from .layer import Layer
+from ..base import BaseLayer
 
 
-class Flatten(Layer):
+class Flatten(BaseLayer):
     """Flatten layer.
     Attributes
     ----------

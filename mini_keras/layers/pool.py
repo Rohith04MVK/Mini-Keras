@@ -1,9 +1,9 @@
 import numpy as np
 
-from .layer import Layer
+from ..base import BaseLayer
 
 
-class Pool(Layer):
+class Pool(BaseLayer):
     """2D pooling layer.
     Supports both max and average pooling.
     Attributes

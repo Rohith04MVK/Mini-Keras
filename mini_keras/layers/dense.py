@@ -1,10 +1,10 @@
 import numpy as np
 
-from .layer import Layer
 from ..activations import SoftMax
+from ..base import BaseLayer
 
 
-class Dense(Layer):
+class Dense(BaseLayer):
     """Densely connected layer.
     Attributes
     ----------

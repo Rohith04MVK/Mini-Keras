@@ -1,43 +1,11 @@
 import numpy as np
 
+from .base import BaseOptimizer
 
-class Optimizer:
-    """Optimizer.
-    Attributes
-    ----------
-    trainable_layers : list
-        Trainable layers(those that have weights and biases).
-    """
 
+class GradientDescent(BaseOptimizer):
     def __init__(self, trainable_layers):
-        self.trainable_layers = trainable_layers
-
-    def initialize(self):
-        """
-        Initializes the optimizer.
-        """
-        raise NotImplementedError
-
-    def update(self, learning_rate, w_grads, b_grads, step):
-        """
-        Updates the parameters of trainable layers.
-        Parameters
-        ----------
-        learning_rate : float
-            Parameters' update learning rate.
-        w_grads : numpy.ndarray
-            Weights' gradients.
-        b_grads : numpy.ndarray
-            Biases' gradients.
-        step : int
-            How many updates have been performed by this optimizer.
-        """
-        raise NotImplementedError
-
-
-class GradientDescent(Optimizer):
-    def __init__(self, trainable_layers):
-        Optimizer.__init__(self, trainable_layers)
+        super(GradientDescent, self).__init__(trainable_layers)
 
     def initialize(self):
         pass
@@ -49,9 +17,9 @@ class GradientDescent(Optimizer):
             )
 
 
-class RMSProp(Optimizer):
+class RMSProp(BaseOptimizer):
     def __init__(self, trainable_layers, beta=0.9, epsilon=1e-8):
-        Optimizer.__init__(self, trainable_layers)
+        super(RMSProp, self).__init__(trainable_layers)
         self.s = {}
         self.beta = beta
         self.epsilon = epsilon
@@ -92,9 +60,9 @@ class RMSProp(Optimizer):
             layer.update_params(dw, db)
 
 
-class Adam(Optimizer):
+class Adam(BaseOptimizer):
     def __init__(self, trainable_layers, beta1=0.9, beta2=0.999, epsilon=1e-8):
-        Optimizer.__init__(self, trainable_layers)
+        super(Adam, self).__init__(trainable_layers)
         self.v = {}
         self.s = {}
         self.beta1 = beta1
@@ -151,6 +119,7 @@ class Adam(Optimizer):
             layer.update_params(dw, db)
 
 
+# -- Assign to the short forms --
 adam = Adam
 rmsprop = RMSProp
 gradient_descent = GradientDescent

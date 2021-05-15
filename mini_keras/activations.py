@@ -1,15 +1,9 @@
 import numpy as np
 
-
-class ActivationFunction:
-    def f(self, x):
-        raise NotImplementedError
-
-    def df(self, x, cached_y=None):
-        raise NotImplementedError
+from .base import BaseActivation
 
 
-class Identity(ActivationFunction):
+class Identity(BaseActivation):
     def f(self, x):
         return x
 
@@ -17,7 +11,7 @@ class Identity(ActivationFunction):
         return np.full(x.shape, 1)
 
 
-class Sigmoid(ActivationFunction):
+class Sigmoid(BaseActivation):
     def f(self, x):
         return np.where(x >= 0, 1 / (1 + np.exp(-x)), np.exp(x) / (1 + np.exp(x)))
 
@@ -26,7 +20,7 @@ class Sigmoid(ActivationFunction):
         return y * (1 - y)
 
 
-class ReLU(ActivationFunction):
+class ReLU(BaseActivation):
     def f(self, x):
         return np.maximum(0, x)
 
@@ -34,7 +28,7 @@ class ReLU(ActivationFunction):
         return np.where(x <= 0, 0, 1)
 
 
-class SoftMax(ActivationFunction):
+class SoftMax(BaseActivation):
     def f(self, x):
         y = np.exp(x - np.max(x, axis=1, keepdims=True))
         return y / np.sum(y, axis=1, keepdims=True)
@@ -43,6 +37,7 @@ class SoftMax(ActivationFunction):
         raise NotImplementedError
 
 
+# -- Assign to the short forms --
 identity = Identity()
 sigmoid = Sigmoid()
 relu = ReLU()
