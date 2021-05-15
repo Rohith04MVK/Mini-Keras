@@ -1,5 +1,4 @@
 class Layer:
-
     def init(self, in_dim):
         """
         Initializes the layer.

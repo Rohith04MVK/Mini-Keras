@@ -1,10 +1,13 @@
+import logging
 import typing as t
+
+from rich.logging import RichHandler
 
 from .activations import identity, relu, sigmoid, softmax
 from .layers.conv2D import Conv
 from .layers.dense import Dense
 from .layers.flatten import Flatten
-from .loss import softmax_cross_entropy, sigmoid_cross_entropy
+from .loss import sigmoid_cross_entropy, softmax_cross_entropy
 from .models.sequential import Sequential
 from .optimizer import adam, gradient_descent, rmsprop
 
@@ -34,3 +37,10 @@ __all__: t.Tuple[str, ...] = (
     "gradient_descent",
     "rmsprop",
 )
+
+logging.basicConfig(
+    level="INFO",
+    format="%(message)s",
+    handlers=[RichHandler(rich_tracebacks=True, show_time=False)],
+)
+logging.getLogger(__name__).addHandler(logging.NullHandler())
