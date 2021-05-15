@@ -1,27 +1,31 @@
-import typing as t
 from functools import reduce
 
 import numpy as np
 
-from ..loss import softmax_cross_entropy
 from ..optimizer import gradient_descent
 
 
 class Sequential:
-    __slots__ = (
-        "input_dim",
-        "layers",
-        "w_grads",
-        "b_grads",
-        "cost_function",
-        "optimizer",
-        "l2_lambda",
-        "trainable_layers",
-    )
+    """Neural network model.
+    Attributes
+    ----------
+    layers : list
+        Layers used in the model.
+    w_grads : dict
+        Weights' gradients during backpropagation.
+    b_grads : dict
+        Biases' gradients during backpropagation.
+    cost_function : CostFunction
+        Cost function to be minimized.
+    optimizer : Optimizer
+        Optimizer used to update trainable parameters (weights and biases).
+    l2_lambda : float
+        L2 regularization parameter.
+    trainable_layers: list
+        Trainable layers(those that have trainable parameters) used in the model.
+    """
 
-    def __init__(
-        self, input_dim, layers, cost_function, optimizer=gradient_descent, l2_lambda=0
-    ):
+    def __init__(self, input_dim, layers, cost_function, optimizer=gradient_descent, l2_lambda=0):
         self.layers = layers
         self.w_grads = {}
         self.b_grads = {}
@@ -30,13 +34,11 @@ class Sequential:
         self.l2_lambda = l2_lambda
 
         # Initialize the layers in the model providing the input dimension they should expect
-        self.layers[0].initialize(input_dim)
+        self.layers[0].init(input_dim)
         for prev_layer, curr_layer in zip(self.layers, self.layers[1:]):
-            curr_layer.initialize(prev_layer.get_output_dim())
+            curr_layer.init(prev_layer.get_output_dim())
 
-        self.trainable_layers = set(
-            layer for layer in self.layers if layer.get_params() is not None
-        )
+        self.trainable_layers = set(layer for layer in self.layers if layer.get_params() is not None)
         self.optimizer = optimizer(self.trainable_layers)
         self.optimizer.initialize()
 
@@ -79,9 +81,7 @@ class Sequential:
             if layer in self.trainable_layers:
                 if self.l2_lambda != 0:
                     # Update the weights' gradients also wrt the l2 regularization cost
-                    self.w_grads[layer] = (
-                        dw + (self.l2_lambda / batch_size) * layer.get_params()[0]
-                    )
+                    self.w_grads[layer] = dw + (self.l2_lambda / batch_size) * layer.get_params()[0]
                 else:
                     self.w_grads[layer] = dw
 
@@ -134,22 +134,12 @@ class Sequential:
         if self.l2_lambda != 0:
             batch_size = y.shape[0]
             weights = [layer.get_params()[0] for layer in self.trainable_layers]
-            l2_cost = (self.l2_lambda / (2 * batch_size)) * reduce(
-                lambda ws, w: ws + np.sum(np.square(w)), weights, 0
-            )
+            l2_cost = (self.l2_lambda / (2 * batch_size)) * reduce(lambda ws, w: ws + np.sum(np.square(w)), weights, 0)
             return cost + l2_cost
         else:
             return cost
 
-    def train(
-        self,
-        x_train,
-        y_train,
-        mini_batch_size,
-        learning_rate,
-        num_epochs,
-        validation_data,
-    ):
+    def train(self, x_train, y_train, mini_batch_size, learning_rate, num_epochs, validation_data):
         """
         Trains the model for a given number of epochs.
         Parameters
@@ -168,9 +158,7 @@ class Sequential:
             A pair of input data and target labels to evaluate the model on.
         """
         x_val, y_val = validation_data
-        print(
-            f"Started training [batch_size={mini_batch_size}, learning_rate={learning_rate}]"
-        )
+        print(f"Started training [batch_size={mini_batch_size}, learning_rate={learning_rate}]")
         step = 0
         for e in range(num_epochs):
             print("Epoch " + str(e + 1))
@@ -179,25 +167,19 @@ class Sequential:
             if mini_batch_size == x_train.shape[0]:
                 mini_batches = (x_train, y_train)
             else:
-                mini_batches = Sequential.create_mini_batches(
-                    x_train, y_train, mini_batch_size
-                )
+                mini_batches = Sequential.create_mini_batches(x_train, y_train, mini_batch_size)
 
             num_mini_batches = len(mini_batches)
             for i, mini_batch in enumerate(mini_batches, 1):
                 mini_batch_x, mini_batch_y = mini_batch
                 step += 1
-                epoch_cost += (
-                    self.train_step(mini_batch_x, mini_batch_y, learning_rate, step) / mini_batch_size
-                )
+                epoch_cost += self.train_step(mini_batch_x, mini_batch_y, learning_rate, step) / mini_batch_size
                 print("\rProgress {:1.1%}".format(i / num_mini_batches), end="")
 
             print(f"\nCost after epoch {e+1}: {epoch_cost}")
 
             print("Computing accuracy on validation set...")
-            accuracy = (
-                np.sum(np.argmax(self.predict(x_val), axis=1) == y_val) / x_val.shape[0]
-            )
+            accuracy = np.sum(np.argmax(self.predict(x_val), axis=1) == y_val) / x_val.shape[0]
             print(f"Accuracy on validation set: {accuracy}")
 
         print("Finished training")
@@ -227,7 +209,7 @@ class Sequential:
         return cost
 
     @staticmethod
-    def create_mini_batches(x, y, mini_batch_size) -> list:
+    def create_mini_batches(x, y, mini_batch_size):
         """
         Creates sample mini batches from input and target labels batches.
         x : numpy.ndarray
@@ -247,12 +229,19 @@ class Sequential:
         num_complete_minibatches = batch_size // mini_batch_size
 
         for k in range(0, num_complete_minibatches):
-            mini_batches.append(
-                (
-                    x[k * mini_batch_size: (k + 1) * mini_batch_size, :],
-                    y[k * mini_batch_size: (k + 1) * mini_batch_size, :],
-                )
-            )
+            mini_batches.append((
+                x[k * mini_batch_size:(k + 1) * mini_batch_size, :],
+                y[k * mini_batch_size:(k + 1) * mini_batch_size, :]
+            ))
+
+        # Fill with remaining data, if needed
+        if batch_size % mini_batch_size != 0:
+            mini_batches.append((
+                x[num_complete_minibatches * mini_batch_size:, :],
+                y[num_complete_minibatches * mini_batch_size:, :]
+            ))
+
+        return mini_batches
 
         # Fill with remaining data, if needed
         if batch_size % mini_batch_size != 0:
