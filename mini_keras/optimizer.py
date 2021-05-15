@@ -1,83 +1,90 @@
 import numpy as np
 
-from .base import BaseOptimizer
 
-
-class GradientDescent(BaseOptimizer):
+class Optimizer:
+    """Optimizer.
+    Attributes
+    ----------
+    trainable_layers : list
+        Trainable layers(those that have weights and biases).
     """
-    Gradient descent is an optimization algorithm used to minimize some function by
-    iteratively moving in the direction of steepest descent as defined by the negative of the gradient.
-    Here, we use gradient descent to update the parameters of our model.
-    """
+    def __init__(self, trainable_layers):
+        self.trainable_layers = trainable_layers
 
-    def __init__(self, trainable_layers) -> None:
-        super().__init__(trainable_layers)
-
-    def initialize(self) -> None:
+    def initialize(self):
+        """
+        Initializes the optimizer.
+        """
         raise NotImplementedError
 
-    def update(self, learning_rate, w_grads, b_grads, step) -> None:
+    def update(self, learning_rate, w_grads, b_grads, step):
+        """
+        Updates the parameters of trainable layers.
+        Parameters
+        ----------
+        learning_rate : float
+            Parameters' update learning rate.
+        w_grads : numpy.ndarray
+            Weights' gradients.
+        b_grads : numpy.ndarray
+            Biases' gradients.
+        step : int
+            How many updates have been performed by this optimizer.
+        """
+        raise NotImplementedError
+
+
+class GradientDescent(Optimizer):
+    def __init__(self, trainable_layers):
+        Optimizer.__init__(self, trainable_layers)
+
+    def initialize(self):
+        pass
+
+    def update(self, learning_rate, w_grads, b_grads, step):
         for layer in self.trainable_layers:
-            layer.update(
-                dw=learning_rate * w_grads[layer], db=learning_rate * b_grads[layer]
-            )
+            layer.update_params(dw=learning_rate * w_grads[layer],
+                                db=learning_rate * b_grads[layer])
 
 
-class RMSprop(BaseOptimizer):
-    """
-    RmsProp optimizer. RmsProp is an optimizer that
-    utilizes the magnitude of recent gradients to normalize the gradients.
-    We always keep a moving average over the root mean squared (hence Rms) gradients,
-    by which we divide the current gradient.
-    """
-
-    __slots__ = ("cache", "beta", "epsilon")
-
-    def __init__(self, trainable_layers, beta=0.9, epsilon=1e-8) -> None:
-        super().__init__(trainable_layers)
-        self.cache = {}
+class RMSProp(Optimizer):
+    def __init__(self, trainable_layers, beta=0.9, epsilon=1e-8):
+        Optimizer.__init__(self, trainable_layers)
+        self.s = {}
         self.beta = beta
         self.epsilon = epsilon
 
-    def initialize(self) -> None:
+    def initialize(self):
         for layer in self.trainable_layers:
-            w, b, = layer.get_params
+            w, b = layer.get_params()
             w_shape = w.shape
             b_shape = b.shape
-            self.cache[("dw", layer)] = np.zeros(w_shape)
-            self.cache[("db", layer)] = np.zeros(b_shape)
+            self.s[('dw', layer)] = np.zeros(w_shape)
+            self.s[('db', layer)] = np.zeros(b_shape)
 
-    def update(self, learning_rate, w_grads, b_grads, step) -> None:
+    def update(self, learning_rate, w_grads, b_grads, step):
         s_corrected = {}
         s_correction_term = 1 - np.power(self.beta, step)
 
         for layer in self.trainable_layers:
-            layer_dw = ("dw", layer)
-            layer_db = ("db", layer)
+            layer_dw = ('dw', layer)
+            layer_db = ('db', layer)
 
-            self.cache[layer_dw] = self.beta * self.cache[layer_dw] + (
-                1 - self.beta
-            ) * np.square(w_grads[layer])
-            self.cache[layer_db] = self.beta * self.cache[layer_db] + (
-                1 - self.beta
-            ) * np.square(b_grads[layer])
+            self.s[layer_dw] = (self.beta * self.s[layer_dw] + (1 - self.beta) * np.square(w_grads[layer]))
+            self.s[layer_db] = (self.beta * self.s[layer_db] + (1 - self.beta) * np.square(b_grads[layer]))
 
-            s_corrected[layer_dw] = self.cache[layer_dw] / s_correction_term
-            s_corrected[layer_db] = self.cache[layer_db] / s_correction_term
+            s_corrected[layer_dw] = self.s[layer_dw] / s_correction_term
+            s_corrected[layer_db] = self.s[layer_db] / s_correction_term
 
-            dw = learning_rate * (
-                w_grads[layer] / (np.sqrt(s_corrected[layer_dw]) + self.epsilon)
-            )
-            db = learning_rate * (
-                w_grads[layer] / (np.sqrt(s_corrected[layer_db]) + self.epsilon)
-            )
+            dw = (learning_rate * (w_grads[layer] / (np.sqrt(s_corrected[layer_dw]) + self.epsilon)))
+            db = (learning_rate * (b_grads[layer] / (np.sqrt(s_corrected[layer_db]) + self.epsilon)))
 
-            layer.update(dw, db)
+            layer.update_params(dw, db)
 
 
-class Adam(BaseOptimizer):
+class Adam(Optimizer):
     def __init__(self, trainable_layers, beta1=0.9, beta2=0.999, epsilon=1e-8):
-        BaseOptimizer.__init__(self, trainable_layers)
+        Optimizer.__init__(self, trainable_layers)
         self.v = {}
         self.s = {}
         self.beta1 = beta1
@@ -123,5 +130,5 @@ class Adam(BaseOptimizer):
 
 
 adam = Adam
-rmsprop = RMSprop
+rmsprop = RMSProp
 gradient_descent = GradientDescent
