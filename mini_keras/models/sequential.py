@@ -34,9 +34,9 @@ class Sequential:
         self.l2_lambda = l2_lambda
 
         # Initialize the layers in the model providing the input dimension they should expect
-        self.layers[0].initialize(input_dim)
+        self.layers[0].init(input_dim)
         for prev_layer, curr_layer in zip(self.layers, self.layers[1:]):
-            curr_layer.initialize(prev_layer.get_output_dim())
+            curr_layer.init(prev_layer.get_output_dim())
 
         self.trainable_layers = set(layer for layer in self.layers if layer.get_params() is not None)
         self.optimizer = optimizer(self.trainable_layers)
@@ -240,16 +240,5 @@ class Sequential:
                 x[num_complete_minibatches * mini_batch_size:, :],
                 y[num_complete_minibatches * mini_batch_size:, :]
             ))
-
-        return mini_batches
-
-        # Fill with remaining data, if needed
-        if batch_size % mini_batch_size != 0:
-            mini_batches.append(
-                (
-                    x[num_complete_minibatches * mini_batch_size:, :],
-                    y[num_complete_minibatches * mini_batch_size:, :],
-                )
-            )
 
         return mini_batches
