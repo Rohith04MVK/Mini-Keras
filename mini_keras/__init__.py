@@ -1,12 +1,12 @@
 import typing as t
 
-from .activations import Identify, ReLU, Sigmoid, SoftMax
-from .layers.conv2D import Conv2D
+from .activations import identity, relu, sigmoid, softmax
+from .layers.conv2D import Conv
 from .layers.dense import Dense
 from .layers.flatten import Flatten
-from .loss import SoftmaxCrossEntropy
+from .loss import softmax_cross_entropy, sigmoid_cross_entropy
 from .models.sequential import Sequential
-from .optimizer import Adam, GradientDescent, RMSprop
+from .optimizer import adam, gradient_descent, rmsprop
 
 __author__ = "Deep alchemy team"
 __email__ = "warriordefenderz@gmail.com"
@@ -20,16 +20,17 @@ __all__: t.Tuple[str, ...] = (
     "__version__",
     "__license__",
     "__copyright__",
-    "Identify",
-    "ReLU",
-    "Sigmoid",
-    "SoftMax",
-    "Conv2D",
+    "identity",
+    "relu",
+    "sigmoid",
+    "softmax",
+    "Conv",
     "Dense",
     "Flatten",
-    "SoftmaxCrossEntropy",
+    "softmax_cross_entropy",
+    "sigmoid_cross_entropy",
     "Sequential",
-    "Adam",
-    "GradientDescent",
-    "RMSprop",
+    "adam",
+    "gradient_descent",
+    "rmsprop",
 )
