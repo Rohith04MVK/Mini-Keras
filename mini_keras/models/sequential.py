@@ -178,7 +178,7 @@ class Sequential:
         """
         x_val, y_val = validation_data
         logger.info(
-            f"[bold cyan]Started training[/bold cyan] (batch_size={mini_batch_size}, learning_rate={learning_rate})"
+            f"[bold cyan]Started training[/] (batch_size={mini_batch_size}, learning_rate={learning_rate})"
         )
 
         step = 0
@@ -200,7 +200,7 @@ class Sequential:
                 epoch_cost += (
                     self.train_step(mini_batch_x, mini_batch_y, learning_rate, step) / mini_batch_size
                 )
-                logger.info("\rProgress [bold yellow]{:1.1%}[/]".format(i / num_mini_batches))
+                logger.info("\rProgress [bold yellow]{:1.1%}[/]".format(i / num_mini_batches).rstrip("\n"))
 
             logger.info(f"\nCost after epoch [bold yellow]{e + 1}[/]: [bold cyan]{epoch_cost}[/]")
 
