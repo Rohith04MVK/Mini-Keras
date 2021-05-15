@@ -1,6 +1,6 @@
 import numpy as np
 
-from ..activation import SoftMax
+from ..activations import SoftMax
 from .layer import Layer
 
 
