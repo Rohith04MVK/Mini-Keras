@@ -1,8 +1,11 @@
+import logging
 from functools import reduce
 
 import numpy as np
 
 from ..optimizer import gradient_descent
+
+logger = logging.getLogger(__name__)
 
 
 class Sequential:
@@ -174,12 +177,13 @@ class Sequential:
             A pair of input data and target labels to evaluate the model on.
         """
         x_val, y_val = validation_data
-        print(
-            f"Started training [batch_size={mini_batch_size}, learning_rate={learning_rate}]"
+        logger.info(
+            f"[bold cyan]Started training[/bold cyan] (batch_size={mini_batch_size}, learning_rate={learning_rate})"
         )
+
         step = 0
         for e in range(num_epochs):
-            print("Epoch " + str(e + 1))
+            logger.info(f"Epoch [bold yellow]{e + 1}[/bold yellow]")
             epoch_cost = 0
 
             if mini_batch_size == x_train.shape[0]:
@@ -196,17 +200,26 @@ class Sequential:
                 epoch_cost += (
                     self.train_step(mini_batch_x, mini_batch_y, learning_rate, step) / mini_batch_size
                 )
-                print("\rProgress {:1.1%}".format(i / num_mini_batches), end="")
+                logger.info("\rProgress [bold yellow]{:1.1%}[/bold yellow]".format(i / num_mini_batches), end="")
 
-            print(f"\nCost after epoch {e+1}: {epoch_cost}")
+            logger.info(f"\nCost after epoch [bold yellow]{e + 1}[/bold yellow]: [bold cyan]{epoch_cost}[/bold cyan]")
 
-            print("Computing accuracy on validation set...")
+            logger.info("[bold yellow]Computing accuracy on validation set...[/bold yellow]")
+
             accuracy = (
                 np.sum(np.argmax(self.predict(x_val), axis=1) == y_val) / x_val.shape[0]
             )
-            print(f"Accuracy on validation set: {accuracy}")
 
-        print("Finished training")
+            if 0.7 > round(accuracy) > 0.3:
+                color = "bold yellow"
+            elif round(accuracy) > 0.7:
+                color = "bold green"
+            elif round(accuracy) < 0.3:
+                color = "bold red"
+
+            logger.info(f"Accuracy on validation set: [{color}]{accuracy}[/{color}]")
+
+        logger.info("[bold green]Finished training[/bold green]")
 
     def train_step(self, x_train, y_train, learning_rate, step):
         """
@@ -228,8 +241,10 @@ class Sequential:
         """
         a_last = self.forward_prop(x_train, training=True)
         self.backward_prop(a_last, y_train)
+
         cost = self.compute_cost(a_last, y_train)
         self.update_param(learning_rate, step)
+
         return cost
 
     @staticmethod
