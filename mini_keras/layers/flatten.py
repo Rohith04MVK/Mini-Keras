@@ -1,20 +1,23 @@
-import typing as t
 from functools import reduce
 
-import numpy as np
-
-from ..base import BaseLayer
+from src.layers.layer import Layer
 
 
-class Flatten(BaseLayer):
-    __slots__ = ("original_dim", "output_dim")
-
+class Flatten(Layer):
+    """Flatten layer.
+    Attributes
+    ----------
+    original_dim : tuple
+        Shape of the input ndarray.
+    output_dim : tuple
+        Shape of the output ndarray.
+    """
     def __init__(self):
         super().__init__()
         self.original_dim = None
         self.output_dim = None
 
-    def initialize(self, in_dim):
+    def init(self, in_dim):
         self.original_dim = in_dim
         self.output_dim = reduce(lambda x, y: x * y, self.original_dim)
 
