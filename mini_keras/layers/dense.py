@@ -1,10 +1,10 @@
 import numpy as np
 
-from ..activations import SoftMax
-from ..base import BaseLayer
+from ..activation import SoftMax
+from .layer import Layer
 
 
-class Dense(BaseLayer):
+class Dense(Layer):
     """Densely connected layer.
     Attributes
     ----------
@@ -21,7 +21,6 @@ class Dense(BaseLayer):
     b : numpy.ndarray
         Biases.
     """
-
     def __init__(self, size, activation):
         super().__init__()
         self.size = size
@@ -31,7 +30,7 @@ class Dense(BaseLayer):
         self.w = None
         self.b = None
 
-    def initialize(self, in_dim):
+    def init(self, in_dim):
         # He initialization
         self.w = np.random.randn(self.size, in_dim) * np.sqrt(2 / in_dim)
 
@@ -43,12 +42,12 @@ class Dense(BaseLayer):
 
         if training:
             # Cache for backward pass
-            self.cache.update({"a_prev": a_prev, "z": z, "a": a})
+            self.cache.update({'a_prev': a_prev, 'z': z, 'a': a})
 
         return a
 
     def backward(self, da):
-        a_prev, z, a = (self.cache[key] for key in ("a_prev", "z", "a"))
+        a_prev, z, a = (self.cache[key] for key in ('a_prev', 'z', 'a'))
         batch_size = a_prev.shape[0]
 
         if self.is_softmax:
