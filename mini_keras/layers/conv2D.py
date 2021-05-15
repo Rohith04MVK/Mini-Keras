@@ -1,7 +1,7 @@
 import numpy as np
 
-from ..activation import identity
-from ..layers.layer import Layer
+from ..activations import identity
+from .layer import Layer
 
 
 class Conv(Layer):
