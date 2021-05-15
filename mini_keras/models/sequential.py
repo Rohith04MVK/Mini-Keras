@@ -183,7 +183,7 @@ class Sequential:
 
         step = 0
         for e in range(num_epochs):
-            logger.info(f"Epoch [bold yellow]{e + 1}[/bold yellow]")
+            logger.info(f"Epoch [bold yellow]{e + 1}[/]")
             epoch_cost = 0
 
             if mini_batch_size == x_train.shape[0]:
@@ -200,11 +200,11 @@ class Sequential:
                 epoch_cost += (
                     self.train_step(mini_batch_x, mini_batch_y, learning_rate, step) / mini_batch_size
                 )
-                logger.info("\rProgress [bold yellow]{:1.1%}[/bold yellow]".format(i / num_mini_batches), end="")
+                logger.info("\rProgress [bold yellow]{:1.1%}[/]".format(i / num_mini_batches))
 
-            logger.info(f"\nCost after epoch [bold yellow]{e + 1}[/bold yellow]: [bold cyan]{epoch_cost}[/bold cyan]")
+            logger.info(f"\nCost after epoch [bold yellow]{e + 1}[/]: [bold cyan]{epoch_cost}[/]")
 
-            logger.info("[bold yellow]Computing accuracy on validation set...[/bold yellow]")
+            logger.info("[bold yellow]Computing accuracy on validation set...[/]")
 
             accuracy = (
                 np.sum(np.argmax(self.predict(x_val), axis=1) == y_val) / x_val.shape[0]
@@ -217,9 +217,9 @@ class Sequential:
             elif round(accuracy) < 0.3:
                 color = "bold red"
 
-            logger.info(f"Accuracy on validation set: [{color}]{accuracy}[/{color}]")
+            logger.info(f"Accuracy on validation set: [{color}]{accuracy}[/]")
 
-        logger.info("[bold green]Finished training[/bold green]")
+        logger.info("[bold green]Finished training[/]")
 
     def train_step(self, x_train, y_train, learning_rate, step):
         """
