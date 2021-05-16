@@ -1,10 +1,9 @@
-import abc
 import typing as t
 
 import numpy as np
 
 
-class BaseCostFunction(metaclass=abc.ABCMeta):
+class BaseCostFunction:
     __slots__ = ()
 
     @classmethod
@@ -19,16 +18,14 @@ class BaseCostFunction(metaclass=abc.ABCMeta):
             or NotImplemented  # noqa: W503
         )
 
-    @abc.abstractmethod
     def f(self, y_pred, y: t.Union[t.List, np.ndarray]) -> None:
         raise NotImplementedError
 
-    @abc.abstractmethod
     def grad(self, y_pred, y: t.Union[t.List, np.ndarray]) -> None:
         raise NotImplementedError
 
 
-class BaseActivation(metaclass=abc.ABCMeta):
+class BaseActivation:
     __slots__ = ()
 
     @classmethod
@@ -43,16 +40,14 @@ class BaseActivation(metaclass=abc.ABCMeta):
             or type(NotImplemented)  # noqa: W503
         )
 
-    @abc.abstractmethod
     def f(self, x: t.Union[t.List, np.ndarray]) -> None:
         raise NotImplementedError
 
-    @abc.abstractmethod
     def df(self, x: t.Union[t.List, np.ndarray], cached_y=None) -> None:
         raise NotImplementedError
 
 
-class BaseOptimizer(metaclass=abc.ABCMeta):
+class BaseOptimizer:
     __slots__ = ("trainable_layers",)
 
     def __init__(self, trainable_layers) -> None:
@@ -70,11 +65,9 @@ class BaseOptimizer(metaclass=abc.ABCMeta):
             or NotImplemented  # noqa: W503
         )
 
-    @abc.abstractmethod
     def initialize(self) -> None:
         raise NotImplementedError
 
-    @abc.abstractmethod
     def update(self, learning_rate, w_grads, b_grads, step) -> None:
         raise NotImplementedError
 
@@ -84,7 +77,7 @@ class BaseLayer:
 
     @classmethod
     def __subclasshook__(
-        cls, subclass: "BaseOptimizer"
+        cls, subclass: "BaseLayer"
     ) -> t.Union[bool, type(NotImplemented)]:
         return (
             hasattr(subclass, "initialize")
