@@ -6,7 +6,40 @@ from ..activations import identity
 from ..base import BaseLayer
 
 
-class Conv2D(BaseLayer):
+class Conv(BaseLayer):
+    """2D convolutional layer.
+    Attributes
+    ----------
+    kernel_size : int
+        Height and Width of the 2D convolution window.
+    stride : int
+        Stride along height and width of the input volume on which the convolution is applied.
+    padding: str
+        Padding mode, 'valid' or 'same'.
+    pad : int
+        Padding size.
+    n_h : int
+        Height of the output volume.
+    n_w : int
+        Width of the output volume.
+    n_c : int
+        Number of channels of the output volume. Corresponds to the number of filters.
+    n_h_prev : int
+        Height of the input volume.
+    n_w_prev : int
+        Width of the input volume.
+    n_c_prev : int
+        Number of channels of the input volume.
+    w : numpy.ndarray
+        Weights.
+    b : numpy.ndarray
+        Biases.
+    activation : Activation
+        Activation function applied to the output volume after performing the convolution operation.
+    cache : dict
+        Cache.
+    """
+
     def __init__(self, kernel_size, stride, n_c, padding="valid", activation=identity):
         super().__init__()
         self.kernel_size = kernel_size
@@ -20,7 +53,7 @@ class Conv2D(BaseLayer):
         self.activation = activation
         self.cache = {}
 
-    def initialize(self, in_dim):
+    def init(self, in_dim):
         self.pad = 0 if self.padding == "valid" else int((self.kernel_size - 1) / 2)
 
         self.n_h_prev, self.n_w_prev, self.n_c_prev = in_dim
@@ -38,7 +71,7 @@ class Conv2D(BaseLayer):
 
     def forward(self, a_prev, training):
         batch_size = a_prev.shape[0]
-        a_prev_padded = Conv2D.zero_pad(a_prev, self.pad)
+        a_prev_padded = Conv.zero_pad(a_prev, self.pad)
         out = np.zeros((batch_size, self.n_h, self.n_w, self.n_c))
 
         # Convolve
@@ -67,10 +100,10 @@ class Conv2D(BaseLayer):
     def backward(self, da):
         batch_size = da.shape[0]
         a_prev, z, a = (self.cache[key] for key in ("a_prev", "z", "a"))
-        a_prev_pad = Conv2D.zero_pad(a_prev, self.pad) if self.pad != 0 else a_prev
+        a_prev_pad = Conv.zero_pad(a_prev, self.pad) if self.pad != 0 else a_prev
 
         da_prev = np.zeros((batch_size, self.n_h_prev, self.n_w_prev, self.n_c_prev))
-        da_prev_pad = Conv2D.zero_pad(da_prev, self.pad) if self.pad != 0 else da_prev
+        da_prev_pad = Conv.zero_pad(da_prev, self.pad) if self.pad != 0 else da_prev
 
         dz = da * self.activation.df(z, cached_y=a)
         db = 1 / batch_size * dz.sum(axis=(0, 1, 2))
@@ -91,7 +124,8 @@ class Conv2D(BaseLayer):
                 )
 
                 dw += np.sum(
-                    a_prev_pad[:, v_start:v_end, h_start:h_end, :, np.newaxis] * dz[:, i: i + 1, j: j + 1, np.newaxis, :],
+                    a_prev_pad[:, v_start:v_end, h_start:h_end, :, np.newaxis]
+                    * dz[:, i: i + 1, j: j + 1, np.newaxis, :],  # noqa: W503
                     axis=0,
                 )
 
@@ -113,5 +147,5 @@ class Conv2D(BaseLayer):
         return self.w, self.b
 
     @staticmethod
-    def zero_pad(x, pad) -> t.Any:  # TODO: Replace with actual return type.
+    def zero_pad(x, pad) -> t.Any:  # TODO: Soon to be replaced with the actual return value.
         return np.pad(x, ((0, 0), (pad, pad), (pad, pad), (0, 0)), mode="constant")

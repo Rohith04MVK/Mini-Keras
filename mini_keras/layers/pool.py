@@ -4,6 +4,36 @@ from ..base import BaseLayer
 
 
 class Pool(BaseLayer):
+    """2D pooling layer.
+    Supports both max and average pooling.
+    Attributes
+    ----------
+    pool_size : int
+        Height and Width of the 2D pooling window.
+    stride : int
+        Stride along height and width of the input volume on which the pooling operation is applied.
+    n_h : int
+        Height of the output volume.
+    n_w : int
+        Width of the output volume.
+    n_c : int
+        Number of channels of the output volume.
+    n_h_prev : int
+        Height of the input volume.
+    n_w_prev : int
+        Width of the input volume.
+    n_c_prev : int
+        Number of channels of the input volume.
+    w : numpy.ndarray
+        Weights.
+    b : numpy.ndarray
+        Biases.
+    mode : str
+        Pooling mode, either max or average.
+    cache : dict
+        Cache.
+    """
+
     def __init__(self, pool_size, stride, mode):
         super().__init__()
         self.pool_size = pool_size
@@ -15,7 +45,7 @@ class Pool(BaseLayer):
         self.mode = mode
         self.cache = {}
 
-    def initialize(self, in_dim):
+    def init(self, in_dim):
         self.n_h_prev, self.n_w_prev, self.n_c_prev = in_dim
         self.n_h = int((self.n_h_prev - self.pool_size) / self.stride + 1)
         self.n_w = int((self.n_w_prev - self.pool_size) / self.stride + 1)

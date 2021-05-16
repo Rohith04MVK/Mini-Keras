@@ -31,7 +31,7 @@ class Dense(BaseLayer):
         self.w = None
         self.b = None
 
-    def initialize(self, in_dim):
+    def init(self, in_dim):
         # He initialization
         self.w = np.random.randn(self.size, in_dim) * np.sqrt(2 / in_dim)
 

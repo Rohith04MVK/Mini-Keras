@@ -3,6 +3,15 @@ from pathlib import Path
 
 import setuptools
 
+# Dependencies
+dependencies = {
+    "numpy": "1.20.2",
+    "matplotlib": "3.4.1",
+    "scipy": "1.6.2",
+    "numba": "0.53.1",
+    "rich": "10.2.0",
+}
+
 # -- Constants --
 BASE_DIR = Path(__file__).resolve().parent
 README = Path(BASE_DIR / "README.md").read_text()
@@ -32,12 +41,7 @@ setuptools.setup(
     url=URL,
     project_urls={"Documentation": URL, "Issue tracker": f"{URL}/issues"},
     packages=setuptools.find_packages(exclude=["tests", "tests.*", "tools", "tools.*"]),
-    install_requires=[
-        "numpy==1.20.2",
-        "matplotlib==3.4.1",
-        "scipy==1.6.2",
-        "numba==0.53.1",
-    ],
+    install_requires=[f"{k}=={v}" for k, v in dependencies.items()],
     classifiers=[
         "Programming Language :: Python :: 3",
         "Programming Language :: Python :: 3.6",
