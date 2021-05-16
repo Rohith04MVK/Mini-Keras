@@ -1,7 +1,4 @@
-import logging
 import typing as t
-
-from rich.logging import RichHandler
 
 from .activations import identity, relu, sigmoid, softmax
 from .layers.conv2D import Conv
@@ -37,10 +34,3 @@ __all__: t.Tuple[str, ...] = (
     "gradient_descent",
     "rmsprop",
 )
-
-logging.basicConfig(
-    level="INFO",
-    format="%(message)s",
-    handlers=[RichHandler(rich_tracebacks=True, show_time=False)],
-)
-logging.getLogger(__name__).addHandler(logging.NullHandler())

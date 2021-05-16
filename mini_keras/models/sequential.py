@@ -1,11 +1,8 @@
-import logging
 from functools import reduce
 
 import numpy as np
 
 from ..optimizer import gradient_descent
-
-logger = logging.getLogger(__name__)
 
 
 class Sequential:
@@ -177,13 +174,11 @@ class Sequential:
             A pair of input data and target labels to evaluate the model on.
         """
         x_val, y_val = validation_data
-        logger.info(
-            f"[bold cyan]Started training[/] (batch_size={mini_batch_size}, learning_rate={learning_rate})"
-        )
+        print(f"Started training (batch_size={mini_batch_size}, learning_rate={learning_rate})")
 
         step = 0
         for e in range(num_epochs):
-            logger.info(f"Epoch [bold yellow]{e + 1}[/]")
+            print(f"Epoch {e + 1}")
             epoch_cost = 0
 
             if mini_batch_size == x_train.shape[0]:
@@ -200,26 +195,19 @@ class Sequential:
                 epoch_cost += (
                     self.train_step(mini_batch_x, mini_batch_y, learning_rate, step) / mini_batch_size
                 )
-                logger.info("\rProgress [bold yellow]{:1.1%}[/]".format(i / num_mini_batches).rstrip("\n"))
+                print("\rProgress {:1.1%}".format(i / num_mini_batches), end="")
 
-            logger.info(f"\nCost after epoch [bold yellow]{e + 1}[/]: [bold cyan]{epoch_cost}[/]")
+            print(f"\nCost after epoch {e + 1}: {epoch_cost}")
 
-            logger.info("[bold yellow]Computing accuracy on validation set...[/]")
+            print("Computing accuracy on validation set...")
 
             accuracy = (
                 np.sum(np.argmax(self.predict(x_val), axis=1) == y_val) / x_val.shape[0]
             )
 
-            if 0.7 > round(accuracy) > 0.3:
-                color = "bold yellow"
-            elif round(accuracy) > 0.7:
-                color = "bold green"
-            elif round(accuracy) < 0.3:
-                color = "bold red"
+            print(f"Accuracy on validation set: {accuracy}")
 
-            logger.info(f"Accuracy on validation set: [{color}]{accuracy}[/]")
-
-        logger.info("[bold green]Finished training[/]")
+        print("Finished training")
 
     def train_step(self, x_train, y_train, learning_rate, step):
         """
