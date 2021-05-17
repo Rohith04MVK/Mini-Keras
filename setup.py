@@ -10,6 +10,7 @@ dependencies = {
     "scipy": "1.6.2",
     "numba": "0.53.1",
     "rich": "10.2.0",
+    "requests": "2.25.1",
 }
 
 # -- Constants --

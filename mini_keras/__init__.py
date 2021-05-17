@@ -7,7 +7,6 @@ from .layers.flatten import Flatten
 from .loss import sigmoid_cross_entropy, softmax_cross_entropy
 from .models.sequential import Sequential
 from .optimizer import adam, gradient_descent, rmsprop
-from .utils.utils_data import get_file
 
 __author__ = "Deep alchemy team"
 __email__ = "warriordefenderz@gmail.com"
