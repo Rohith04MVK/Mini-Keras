@@ -7,6 +7,7 @@ from .layers.flatten import Flatten
 from .loss import sigmoid_cross_entropy, softmax_cross_entropy
 from .models.sequential import Sequential
 from .optimizer import adam, gradient_descent, rmsprop
+from .utils.encoder import one_hot_encoder
 
 __author__ = "Deep alchemy team"
 __email__ = "warriordefenderz@gmail.com"
@@ -33,5 +34,5 @@ __all__: t.Tuple[str, ...] = (
     "adam",
     "gradient_descent",
     "rmsprop",
-    "get_file"
+    "one_hot_encoder"
 )
