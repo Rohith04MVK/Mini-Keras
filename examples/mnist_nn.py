@@ -3,17 +3,18 @@ import numpy as np
 # Importing everything we need from Mini-keras liberay
 from mini_keras.activations import relu, softmax
 from mini_keras.datasets import mnist
-from mini_keras.loss import softmax_cross_entropy
 from mini_keras.layers.conv2D import Conv
 from mini_keras.layers.dense import Dense
 from mini_keras.layers.flatten import Flatten
 from mini_keras.layers.pool import Pool
+from mini_keras.loss import softmax_cross_entropy
 from mini_keras.models.sequential import Sequential
 from mini_keras.optimizer import adam
 from mini_keras.utils.encoder import one_hot_encoder
 
 # Loading the data for training
 (x_train, y_train), (x_test, y_test) = mnist.load_mnist()
+
 
 def preprocess(x_train, y_train, x_test, y_test):
     x_train = x_train.reshape(x_train.shape[0], 28, 28, 1).astype(np.float32)
@@ -22,6 +23,7 @@ def preprocess(x_train, y_train, x_test, y_test):
     x_train /= 255
     x_test /= 255
     return x_train, y_train, x_test, y_test
+
 
 # Preprocessing the data to make it compatible for training
 x_train, y_train, x_test, y_test = preprocess(x_train, y_train, x_test, y_test)
