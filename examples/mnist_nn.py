@@ -47,5 +47,3 @@ cnn.train(x_train, y_train,
           learning_rate=0.001,
           num_epochs=30,
           validation_data=(x_test, y_test))
-
-y_train[0]
