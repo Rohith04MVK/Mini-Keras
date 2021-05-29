@@ -84,4 +84,4 @@ Me and one of my really closest friends maintain this repo and we aim to provide
 
 ## License
 
-- [GPL V3](https://github.com/Rohith04MVK/Mini-Keras/blob/main/LICENSE)
+- [MIT](https://github.com/Rohith04MVK/Mini-Keras/blob/main/LICENSE)
