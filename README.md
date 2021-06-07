@@ -60,12 +60,6 @@ a PR to this repo and it will be deployed once it's accepted.
 commit or the PR Created. Read [conventional commits](https://www.conventionalcommits.org/en/v1.0.0-beta.3/) before 
 making the commit message.
 
-## 💬 Get in touch
-
-If you have various suggestions, questions or want to discuss things with our community, Join our discord server!
-
-[![Discord](https://discordapp.com/api/guilds/695008516590534758/widget.png?style=shield)](https://discord.gg/cSC5ZZwYGQ)
-
 ## Show your support
 
 We love people's support in growing and improving. Be sure to leave a ⭐️ if you like the project and 
@@ -84,4 +78,4 @@ Me and one of my really closest friends maintain this repo and we aim to provide
 
 ## License
 
-- [GPL V3](https://github.com/Rohith04MVK/Mini-Keras/blob/main/LICENSE)
+- [MIT](https://github.com/Rohith04MVK/Mini-Keras/blob/main/LICENSE)

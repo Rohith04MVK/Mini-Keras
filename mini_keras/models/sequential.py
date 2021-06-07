@@ -178,7 +178,7 @@ class Sequential:
 
         step = 0
         for e in range(num_epochs):
-            print(f"Epoch {e + 1}")
+            print(f"Epoch {e + 1} / {num_epochs}")
             epoch_cost = 0
 
             if mini_batch_size == x_train.shape[0]:

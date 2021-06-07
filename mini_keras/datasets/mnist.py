@@ -3,7 +3,7 @@ import numpy as np
 from ..utils.data_utils import get_file
 
 
-def load_mnist():
+def load_data():
     file_path = get_file("https://storage.googleapis.com/tensorflow/tf-keras-datasets/mnist.npz", "mnist.npz")
 
     with np.load(file_path, allow_pickle=True) as f:
