@@ -47,7 +47,7 @@ setuptools.setup(
     project_urls={"Documentation": URL, "Issue tracker": f"{URL}/issues"},
     packages=setuptools.find_packages(exclude=["tests", "tests.*", "tools", "tools.*"]),
     install_requires=[f"{k}=={v}" for k, v in dependencies.items()],
-    ext_modules=cythonize(Path(BASE_DIR / "mini_keras/c_extention/*.pyx")),
+    ext_modules=cythonize(list(Path(BASE_DIR / "mini_keras/c_extension").glob("*.pyx"))),
     classifiers=[
         "Programming Language :: Python :: 3",
         "Programming Language :: Python :: 3.6",
