@@ -4,7 +4,7 @@ import numpy as np
 
 from ..activations import identity
 from ..base import BaseLayer
-from ..c_extension import conv_bc01
+from ..c_extension.conv import conv_bc01
 
 
 class Conv(BaseLayer):
