@@ -3,6 +3,9 @@ from pathlib import Path
 
 import setuptools
 
+from Cython.Build import cythonize
+
+
 # Dependencies
 dependencies = {
     "numpy": "1.20.2",
@@ -43,6 +46,7 @@ setuptools.setup(
     project_urls={"Documentation": URL, "Issue tracker": f"{URL}/issues"},
     packages=setuptools.find_packages(exclude=["tests", "tests.*", "tools", "tools.*"]),
     install_requires=[f"{k}=={v}" for k, v in dependencies.items()],
+    ext_modules=cythonize(Path(BASE_DIR / "mini_keras/c_extention/*.pyx")),
     classifiers=[
         "Programming Language :: Python :: 3",
         "Programming Language :: Python :: 3.6",
