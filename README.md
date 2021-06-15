@@ -1,10 +1,10 @@
 ```
-                        _____  .__       .__   ____  __.                          
+                        _____  .__       .__   ____  __.  
                        /     \ |__| ____ |__| |    |/ _|________________    ______
                       /  \ /  \|  |/    \|  | |      <_/ __ \_  __ \__  \  /  ___/
-                     /    Y    \  |   |  \  | |    |  \  ___/|  | \// __ \_\___ \ 
+                     /    Y    \  |   |  \  | |    |  \  ___/|  | \// __ \_\___ \
                      \____|__  /__|___|  /__| |____|__ \___  >__|  (____  /____  >
-                             \/        \/             \/   \/           \/     \/ 
+                             \/        \/             \/   \/           \/     \/
 ```
 
 <h1 align="center">
@@ -33,36 +33,36 @@ We're making a lightweight library for ML and Deep learning.
 OUR Principles and Ethics:
 
 - We believe in resources not used, is resources wasted. Hence we have GPU support for people who want speed.
-- We believe in lightweight things, and speeding things up for everyone by default, hence we have kept it 
+- We believe in lightweight things, and speeding things up for everyone by default, hence we have kept it
   lightweight, and speeding it up as we go.
-- Having an easy to use API is always recommended and better, our API is easy to use, get started, and suits 
+- Having an easy to use API is always recommended and better, our API is easy to use, get started, and suits
   the needs of everyone.
 - The code we write, follows several linting rules. We believe clean code is the best.
-- Keeping things separate, and different is a good way to manage large things, and we're trying to follow 
+- Keeping things separate, and different is a good way to manage large things, and we're trying to follow
   that and make the API understandable for everyone.
-- **We believe in all the factors combine and make a beautiful, and a production end product, And We'll be giving our 
+- **We believe in all the factors combine and make a beautiful, and a production end product, And We'll be giving our
   best towards the following things:**
   - Keeping things the best quality
   - Enforcing rules to keep things safe, and clean
   - Being active, and helping out the community.
   - Reaching out, and helping those who need it.
 
-If you're contributing, we hope you follow the contributing guidelines, and our principles. If this is new 
-to you, It's gonna be a lot helpful in the future too when working with teams and other people, and increases 
+If you're contributing, we hope you follow the contributing guidelines, and our principles. If this is new
+to you, It's gonna be a lot helpful in the future too when working with teams and other people, and increases
 the quality of several factors in many ways.
 
 ## 🤝 Contributing
 
-Contributions, issues and feature requests are welcome. After cloning & setting up project locally, you can just submit 
+Contributions, issues and feature requests are welcome. After cloning & setting up project locally, you can just submit
 a PR to this repo and it will be deployed once it's accepted.
 
-⚠️ It’s good to have descriptive commit messages, or PR titles so that other contributors can understand about your 
-commit or the PR Created. Read [conventional commits](https://www.conventionalcommits.org/en/v1.0.0-beta.3/) before 
+⚠️ It’s good to have descriptive commit messages, or PR titles so that other contributors can understand about your
+commit or the PR Created. Read [conventional commits](https://www.conventionalcommits.org/en/v1.0.0-beta.3/) before
 making the commit message.
 
 ## Show your support
 
-We love people's support in growing and improving. Be sure to leave a ⭐️ if you like the project and 
+We love people's support in growing and improving. Be sure to leave a ⭐️ if you like the project and
 also be sure to contribute, if you're interested!
 
 ## 📢 Changelog

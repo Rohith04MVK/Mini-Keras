@@ -99,15 +99,15 @@ def foo(bar: int, baz: t.Optional[t.Dict[str, str]] = None) -> bool:
 ```
 
 ### Logging Levels
-* **TRACE:** These events should be used to provide a *verbose* trace of every step of a complex process. This is 
+* **TRACE:** These events should be used to provide a *verbose* trace of every step of a complex process. This is
   essentially the `logging` equivalent of sprinkling `print` statements throughout the code.
-* **DEBUG:** These events should add context to what's happening in a development setup to make it easier to follow 
-  what's going while working on a project. This is in the same vein as **TRACE** logging but at a much lower level of 
+* **DEBUG:** These events should add context to what's happening in a development setup to make it easier to follow
+  what's going while working on a project. This is in the same vein as **TRACE** logging but at a much lower level of
   verbosity.
-* **INFO:** These events are normal and don't need direct attention but are worth keeping track of in production, 
+* **INFO:** These events are normal and don't need direct attention but are worth keeping track of in production,
   like checking which cogs were loaded during a start-up.
 * **WARNING:** These events are out of the ordinary and should be fixed, but have not caused a failure.
-  * **NOTE:** Events at this logging level and higher should be reserved for events that require the attention of the 
+  * **NOTE:** Events at this logging level and higher should be reserved for events that require the attention of the
     DevOps team.
 * **ERROR:** These events have caused a failure in a specific part of the application and require urgent attention.
 * **CRITICAL:** These events have caused the whole application to fail and require immediate intervention.
