@@ -17,4 +17,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Conv2D
   - Dense
   - Flatten
-- Optimizers are being implemented, such as gradient descent, RMSProp and more.    
+- Optimizers are being implemented, such as gradient descent, RMSProp and more.  

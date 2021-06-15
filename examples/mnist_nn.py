@@ -30,18 +30,18 @@ x_train, y_train, x_test, y_test = preprocess(x_train, y_train, x_test, y_test)
 
 # Making the a cnn using the Sequential model with conv, dense, pool and flatten layers
 cnn = Sequential(
-        input_dim=(28, 28, 1),
-        layers=[
-            Conv(5, 1, 32, activation=relu),
-            Pool(2, 2, 'max'),
-            Flatten(),
-            Dense(128, relu),
-            Dense(64, relu),
-            Dense(10, softmax),
-        ],
-        cost_function=softmax_cross_entropy,
-        optimizer=adam
-    )
+    input_dim=(28, 28, 1),
+    layers=[
+        Conv(5, 1, 32, activation=relu),
+        Pool(2, 2, 'max'),
+        Flatten(),
+        Dense(128, relu),
+        Dense(64, relu),
+        Dense(10, softmax),
+    ],
+    cost_function=softmax_cross_entropy,
+    optimizer=adam
+)
 
 # Feeding the data through the network aka learning or training
 cnn.train(x_train, y_train,
