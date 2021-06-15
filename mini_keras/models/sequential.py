@@ -173,6 +173,7 @@ class Sequential:
         validation_data : tuple
             A pair of input data and target labels to evaluate the model on.
         """
+        stats = {"train_loss": [], "test_acc": []}
         x_val, y_val = validation_data
         print(f"Started training (batch_size={mini_batch_size}, learning_rate={learning_rate})")
 
@@ -180,7 +181,9 @@ class Sequential:
         for e in range(num_epochs):
             print(f"Epoch {e + 1} / {num_epochs}")
             epoch_cost = 0
-
+            
+            stats["train_loss"].append(epoch_cost)
+            
             if mini_batch_size == x_train.shape[0]:
                 mini_batches = (x_train, y_train)
             else:
@@ -204,10 +207,12 @@ class Sequential:
             accuracy = (
                 np.sum(np.argmax(self.predict(x_val), axis=1) == y_val) / x_val.shape[0]
             )
+            stats["test_acc"].append(accuracy)
 
             print(f"Accuracy on validation set: {accuracy}")
 
         print("Finished training")
+        return stats
 
     def train_step(self, x_train, y_train, learning_rate, step):
         """
