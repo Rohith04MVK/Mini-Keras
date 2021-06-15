@@ -196,12 +196,11 @@ class Sequential:
                 epoch_cost += (
                     self.train_step(mini_batch_x, mini_batch_y, learning_rate, step) / mini_batch_size
                 )
-                
-                stats["train_loss"].append(epoch_cost)
+
                 print("\rProgress {:1.1%}".format(i / num_mini_batches), end="")
 
             print(f"\nCost after epoch {e + 1}: {epoch_cost}")
-            
+            stats["train_loss"].append(epoch_cost)
             print("Computing accuracy on validation set...")
 
             accuracy = (
