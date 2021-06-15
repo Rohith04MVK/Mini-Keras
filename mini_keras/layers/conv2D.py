@@ -1,4 +1,4 @@
-import typing as t
+import typing as t  # noqa: E902
 
 import numpy as np
 

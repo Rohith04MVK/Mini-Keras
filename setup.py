@@ -2,7 +2,6 @@ import re
 from pathlib import Path
 
 import setuptools
-
 from Cython.Build import cythonize
 
 
