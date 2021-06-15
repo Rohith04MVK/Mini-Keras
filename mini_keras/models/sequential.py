@@ -181,9 +181,7 @@ class Sequential:
         for e in range(num_epochs):
             print(f"Epoch {e + 1} / {num_epochs}")
             epoch_cost = 0
-            
-            stats["train_loss"].append(epoch_cost)
-            
+
             if mini_batch_size == x_train.shape[0]:
                 mini_batches = (x_train, y_train)
             else:
@@ -198,6 +196,7 @@ class Sequential:
                 epoch_cost += (
                     self.train_step(mini_batch_x, mini_batch_y, learning_rate, step) / mini_batch_size
                 )
+                stats["train_loss"].append(epoch_cost)
                 print("\rProgress {:1.1%}".format(i / num_mini_batches), end="")
 
             print(f"\nCost after epoch {e + 1}: {epoch_cost}")
