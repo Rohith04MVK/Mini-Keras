@@ -67,28 +67,27 @@ class Conv(BaseLayer):
 
         self.w = np.random.randn(
             self.kernel_size, self.kernel_size, self.n_c_prev, self.n_c
-        )
-        self.b = np.zeros((1, 1, 1, self.n_c))
+        ).astype("float32")
+        self.b = np.zeros((1, 1, 1, self.n_c)).astype("float32")
 
      def forward(self, a_prev, training):
         batch_size = a_prev.shape[0]
-         a_prev_padded = Conv.zero_pad(a_prev, self.pad)
-         out = np.zeros((batch_size, self.n_h, self.n_w, self.n_c))
+        a_prev_padded = Conv.zero_pad(a_prev, self.pad)
+        out = np.zeros((batch_size, self.n_h, self.n_w, self.n_c))
 
-#         # Convolve
-#         for i in range(self.n_h):
-#             v_start = i * self.stride
-#             v_end = v_start + self.kernel_size
+        # Convolve
+        for i in range(self.n_h):
+            v_start = i * self.stride
+            v_end = v_start + self.kernel_size
 
-#             for j in range(self.n_w):
-#                 h_start = j * self.stride
-#                 h_end = h_start + self.kernel_size
+            for j in range(self.n_w):
+                h_start = j * self.stride
+                h_end = h_start + self.kernel_size
 
-#                 out[:, i, j, :] = np.sum(
-#                     a_prev_padded[:, v_start:v_end, h_start:h_end, :, np.newaxis] * self.w[np.newaxis, :, :, :],
-#                     axis=(1, 2, 3),
-#                 )
-        conv_bc01(a_prev_padded, self.w, out)
+                out[:, i, j, :] = np.sum(
+                    a_prev_padded[:, v_start:v_end, h_start:h_end, :, np.newaxis] * self.w[np.newaxis, :, :, :],
+                    axis=(1, 2, 3),
+                )
 
         z = out + self.b
         a = self.activation.f(z)
@@ -104,12 +103,15 @@ class Conv(BaseLayer):
         a_prev, z, a = (self.cache[key] for key in ("a_prev", "z", "a"))
         a_prev_pad = Conv.zero_pad(a_prev, self.pad) if self.pad != 0 else a_prev
 
-        da_prev = np.zeros((batch_size, self.n_h_prev, self.n_w_prev, self.n_c_prev))
+        da_prev = np.zeros((batch_size, self.n_h_prev, self.n_w_prev, self.n_c_prev)).astype("float32")
         da_prev_pad = Conv.zero_pad(da_prev, self.pad) if self.pad != 0 else da_prev
 
         dz = da * self.activation.df(z, cached_y=a)
+        dz = dz.astype("float32")
         db = 1 / batch_size * dz.sum(axis=(0, 1, 2))
+        db = db.astype("float32")
         dw = np.zeros((self.kernel_size, self.kernel_size, self.n_c_prev, self.n_c))
+        dw = dw.astype("float32")
 
         # 'Convolve' back
         for i in range(self.n_h):
