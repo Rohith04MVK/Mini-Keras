@@ -2,8 +2,6 @@ import re
 from pathlib import Path
 
 import setuptools
-from Cython.Build import cythonize
-
 
 # Dependencies
 dependencies = {
@@ -13,7 +11,6 @@ dependencies = {
     "numba": "0.53.1",
     "rich": "10.2.0",
     "requests": "2.25.1",
-    "Cython": "0.29.23"
 }
 
 # -- Constants --
@@ -46,7 +43,6 @@ setuptools.setup(
     project_urls={"Documentation": URL, "Issue tracker": f"{URL}/issues"},
     packages=setuptools.find_packages(exclude=["tests", "tests.*", "tools", "tools.*"]),
     install_requires=[f"{k}=={v}" for k, v in dependencies.items()],
-    ext_modules=cythonize(list(Path(BASE_DIR / "mini_keras/c_extension").glob("*.pyx"))),
     classifiers=[
         "Programming Language :: Python :: 3",
         "Programming Language :: Python :: 3.6",
