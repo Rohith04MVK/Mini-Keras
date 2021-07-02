@@ -53,7 +53,7 @@ class Pool(BaseLayer):
 
     def forward(self, a_prev, training):
         batch_size = a_prev.shape[0]
-        a = np.zeros((batch_size, self.n_h, self.n_w, self.n_c))
+        a = np.zeros((batch_size, self.n_h, self.n_w, self.n_c)).astype("float32")
 
         # Pool
         for i in range(self.n_h):
@@ -88,8 +88,9 @@ class Pool(BaseLayer):
 
     def backward(self, da):
         a_prev = self.cache["a_prev"]
+        a_prev = a_prev.astype("float32")
         batch_size = a_prev.shape[0]
-        da_prev = np.zeros((batch_size, self.n_h_prev, self.n_w_prev, self.n_c_prev))
+        da_prev = np.zeros((batch_size, self.n_h_prev, self.n_w_prev, self.n_c_prev)).astype("float32")
 
         # 'Pool' back
         for i in range(self.n_h):

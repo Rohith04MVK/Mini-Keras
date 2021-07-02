@@ -71,8 +71,8 @@ class Conv(BaseLayer):
 
     def forward(self, a_prev, training):
         batch_size = a_prev.shape[0]
-        a_prev_padded = Conv.zero_pad(a_prev, self.pad)
-        out = np.zeros((batch_size, self.n_h, self.n_w, self.n_c))
+        a_prev_padded = Conv.zero_pad(a_prev, self.pad).astype("float32")
+        out = np.zeros((batch_size, self.n_h, self.n_w, self.n_c)).astype("float32")
 
         # Convolve
         for i in range(self.n_h):
@@ -89,7 +89,9 @@ class Conv(BaseLayer):
                 )
 
         z = out + self.b
+        z = z.astype("float32")
         a = self.activation.f(z)
+        a = a.astype("float32")
 
         if training:
             # Cache for backward pass
