@@ -1,7 +1,9 @@
 import numpy as np
 
-from ..activations import SoftMax
+from ..activations import *
 from ..base import BaseLayer
+
+activation_dict = {"relu": relu, "softmax": softmax, "sigmoid": sigmoid, "identity": identity}
 
 
 class Dense(BaseLayer):
