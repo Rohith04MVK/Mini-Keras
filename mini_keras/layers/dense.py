@@ -27,7 +27,7 @@ class Dense(BaseLayer):
     def __init__(self, size, activation):
         super().__init__()
         self.size = size
-        self.activation = activation
+        self.activation = activation_dict.get(activation.lower())
         self.is_softmax = isinstance(self.activation, SoftMax)
         self.cache = {}
         self.w = None
