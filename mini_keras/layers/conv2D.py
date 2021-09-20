@@ -56,8 +56,12 @@ class Conv(BaseLayer):
             "sigmoid": sigmoid,
             "identity": identity,
         }
+
         if type(activation) is str:
-            self.activation = activation_dict.get(activation.lower())
+            if activation in activation_dict:
+                self.activation = activation_dict.get(activation.lower())
+            else:
+                raise (ValueError(f"The activation '{activation} is not supported'"))
         else:
             self.activation = activation
 
