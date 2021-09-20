@@ -3,8 +3,6 @@ import numpy as np
 from ..activations import *
 from ..base import BaseLayer
 
-activation_dict = {"relu": relu, "softmax": softmax, "sigmoid": sigmoid, "identity": identity}
-
 
 class Dense(BaseLayer):
     """Densely connected layer.
@@ -25,6 +23,12 @@ class Dense(BaseLayer):
     """
 
     def __init__(self, size, activation):
+        self.activation_dict = activation_dict = {
+            "relu": relu,
+            "softmax": softmax,
+            "sigmoid": sigmoid,
+            "identity": identity,
+        }
         super().__init__()
         self.size = size
         self.activation = activation_dict.get(activation.lower())
