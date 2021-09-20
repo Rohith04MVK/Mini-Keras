@@ -23,14 +23,14 @@ class Dense(BaseLayer):
     """
 
     def __init__(self, size, activation):
+        super().__init__()
+        self.size = size
         self.activation_dict = activation_dict = {
             "relu": relu,
             "softmax": softmax,
             "sigmoid": sigmoid,
             "identity": identity,
         }
-        super().__init__()
-        self.size = size
         if type(activation) is str:
             self.activation = activation_dict.get(activation.lower())
         else:

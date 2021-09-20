@@ -2,7 +2,7 @@ import typing as t  # noqa: E902
 
 import numpy as np
 
-from ..activations import identity
+from ..activations import *
 from ..base import BaseLayer
 
 
@@ -50,7 +50,17 @@ class Conv(BaseLayer):
         self.n_h_prev, self.n_w_prev, self.n_c_prev = None, None, None
         self.w = None
         self.b = None
-        self.activation = activation
+        self.activation_dict = activation_dict = {
+            "relu": relu,
+            "softmax": softmax,
+            "sigmoid": sigmoid,
+            "identity": identity,
+        }
+        if type(activation) is str:
+            self.activation = activation_dict.get(activation.lower())
+        else:
+            self.activation = activation
+
         self.cache = {}
 
     def init(self, in_dim):
@@ -84,7 +94,8 @@ class Conv(BaseLayer):
                 h_end = h_start + self.kernel_size
 
                 out[:, i, j, :] = np.sum(
-                    a_prev_padded[:, v_start:v_end, h_start:h_end, :, np.newaxis] * self.w[np.newaxis, :, :, :],
+                    a_prev_padded[:, v_start:v_end, h_start:h_end, :, np.newaxis]
+                    * self.w[np.newaxis, :, :, :],
                     axis=(1, 2, 3),
                 )
 
@@ -104,7 +115,9 @@ class Conv(BaseLayer):
         a_prev, z, a = (self.cache[key] for key in ("a_prev", "z", "a"))
         a_prev_pad = Conv.zero_pad(a_prev, self.pad) if self.pad != 0 else a_prev
 
-        da_prev = np.zeros((batch_size, self.n_h_prev, self.n_w_prev, self.n_c_prev)).astype("float32")
+        da_prev = np.zeros(
+            (batch_size, self.n_h_prev, self.n_w_prev, self.n_c_prev)
+        ).astype("float32")
         da_prev_pad = Conv.zero_pad(da_prev, self.pad) if self.pad != 0 else da_prev
 
         dz = da * self.activation.df(z, cached_y=a)
@@ -124,20 +137,21 @@ class Conv(BaseLayer):
                 h_end = h_start + self.kernel_size
 
                 da_prev_pad[:, v_start:v_end, h_start:h_end, :] += np.sum(
-                    self.w[np.newaxis, :, :, :, :] * dz[:, i: i + 1, j: j + 1, np.newaxis, :],
+                    self.w[np.newaxis, :, :, :, :]
+                    * dz[:, i : i + 1, j : j + 1, np.newaxis, :],
                     axis=4,
                 )
 
                 dw += np.sum(
                     a_prev_pad[:, v_start:v_end, h_start:h_end, :, np.newaxis]
-                    * dz[:, i: i + 1, j: j + 1, np.newaxis, :],  # noqa: W503
+                    * dz[:, i : i + 1, j : j + 1, np.newaxis, :],  # noqa: W503
                     axis=0,
                 )
 
         dw /= batch_size
 
         if self.pad != 0:
-            da_prev = da_prev_pad[:, self.pad: -self.pad, self.pad: -self.pad, :]
+            da_prev = da_prev_pad[:, self.pad : -self.pad, self.pad : -self.pad, :]
 
         return da_prev, dw, db
 
@@ -152,5 +166,7 @@ class Conv(BaseLayer):
         return self.w, self.b
 
     @staticmethod
-    def zero_pad(x, pad) -> t.Any:  # TODO: Soon to be replaced with the actual return value.
+    def zero_pad(
+        x, pad
+    ) -> t.Any:  # TODO: Soon to be replaced with the actual return value.
         return np.pad(x, ((0, 0), (pad, pad), (pad, pad), (0, 0)), mode="constant")
