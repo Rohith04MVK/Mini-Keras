@@ -35,7 +35,6 @@ cnn = Sequential(
         Conv(5, 1, 32, activation=relu),
         Pool(2, 2, 'max'),
         Flatten(),
-        Dense(128, relu),
         Dense(64, relu),
         Dense(10, softmax),
     ],
