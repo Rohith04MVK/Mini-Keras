@@ -61,7 +61,7 @@ class Conv(BaseLayer):
             if activation in activation_dict:
                 self.activation = activation_dict.get(activation.lower())
             else:
-                raise (ValueError(f"The activation '{activation} is not supported'"))
+                raise (ValueError(f"The activation '{activation}' is not supported"))
         else:
             self.activation = activation
 
