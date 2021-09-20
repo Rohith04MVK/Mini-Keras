@@ -31,7 +31,10 @@ class Dense(BaseLayer):
         }
         super().__init__()
         self.size = size
-        self.activation = activation_dict.get(activation.lower())
+        if type(activation) is str:
+            self.activation = activation_dict.get(activation.lower())
+        else:
+            self.activation = activation
         self.is_softmax = isinstance(self.activation, SoftMax)
         self.cache = {}
         self.w = None
