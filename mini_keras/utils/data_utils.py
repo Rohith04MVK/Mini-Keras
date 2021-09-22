@@ -5,7 +5,9 @@ import requests
 
 def get_file(url, filename, cache_dir_location="datasets"):
     # TODO: Add more parameters such as Untar, Extract and more features, so It's useful for the Enduser API.
-    cache_location = os.path.join(os.path.expanduser("~"), ".mini_keras", cache_dir_location)
+    cache_location = os.path.join(
+        os.path.expanduser("~"), ".mini_keras", cache_dir_location
+    )
 
     if not os.path.exists(cache_location):
         os.makedirs(cache_location)

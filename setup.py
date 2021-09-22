@@ -33,16 +33,22 @@ if not VERSION:
 setuptools.setup(
     name="Mini-Keras",
     version=VERSION,
+
     author="Deep Alchemy Team",
     author_email="warriordefenderz@gmail.com",
+
     description="An advanced and lightweight ML and deep learning library for python.",
     long_description=README,
     long_description_content_type="text/markdown",
-    license="GPL v3",
+
+    license="MIT",
     url=URL,
     project_urls={"Documentation": URL, "Issue tracker": f"{URL}/issues"},
+
     packages=setuptools.find_packages(exclude=["tests", "tests.*", "tools", "tools.*"]),
+
     install_requires=[f"{k}=={v}" for k, v in dependencies.items()],
+
     classifiers=[
         "Programming Language :: Python :: 3",
         "Programming Language :: Python :: 3.6",
@@ -55,5 +61,6 @@ setuptools.setup(
         "Topic :: Scientific/Engineering :: Artificial Intelligence",
         "Natural Language :: English",
     ],
+
     python_requires=">=3.7",
 )

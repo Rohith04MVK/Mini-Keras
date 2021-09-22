@@ -1,6 +1,6 @@
 import numpy as np
 
-from ..activations import *
+from ..activations import SoftMax, identity, relu, sigmoid, softmax
 from ..base import BaseLayer
 
 

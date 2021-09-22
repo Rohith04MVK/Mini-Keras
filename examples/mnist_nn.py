@@ -33,18 +33,21 @@ cnn = Sequential(
     input_dim=(28, 28, 1),
     layers=[
         Conv(5, 1, 32, activation=relu),
-        Pool(2, 2, 'max'),
+        Pool(2, 2, "max"),
         Flatten(),
         Dense(64, relu),
         Dense(10, softmax),
     ],
     cost_function=softmax_cross_entropy,
-    optimizer=adam
+    optimizer=adam,
 )
 
 # Feeding the data through the network aka learning or training
-cnn.train(x_train, y_train,
-          mini_batch_size=256,
-          learning_rate=0.001,
-          num_epochs=30,
-          validation_data=(x_test, y_test))
+cnn.train(
+    x_train,
+    y_train,
+    mini_batch_size=256,
+    learning_rate=0.001,
+    num_epochs=30,
+    validation_data=(x_test, y_test),
+)

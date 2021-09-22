@@ -34,5 +34,5 @@ __all__: t.Tuple[str, ...] = (
     "adam",
     "gradient_descent",
     "rmsprop",
-    "one_hot_encoder"
+    "one_hot_encoder",
 )

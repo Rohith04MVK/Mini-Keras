@@ -2,7 +2,7 @@ import typing as t  # noqa: E902
 
 import numpy as np
 
-from ..activations import *
+from ..activations import identity, relu, sigmoid, softmax
 from ..base import BaseLayer
 
 
@@ -98,8 +98,7 @@ class Conv(BaseLayer):
                 h_end = h_start + self.kernel_size
 
                 out[:, i, j, :] = np.sum(
-                    a_prev_padded[:, v_start:v_end, h_start:h_end, :, np.newaxis]
-                    * self.w[np.newaxis, :, :, :],
+                    a_prev_padded[:, v_start:v_end, h_start:h_end, :, np.newaxis] * self.w[np.newaxis, :, :, :],
                     axis=(1, 2, 3),
                 )
 
@@ -141,21 +140,19 @@ class Conv(BaseLayer):
                 h_end = h_start + self.kernel_size
 
                 da_prev_pad[:, v_start:v_end, h_start:h_end, :] += np.sum(
-                    self.w[np.newaxis, :, :, :, :]
-                    * dz[:, i : i + 1, j : j + 1, np.newaxis, :],
+                    self.w[np.newaxis, :, :, :, :] * dz[:, i: i + 1, j: j + 1, np.newaxis, :],
                     axis=4,
                 )
 
                 dw += np.sum(
-                    a_prev_pad[:, v_start:v_end, h_start:h_end, :, np.newaxis]
-                    * dz[:, i : i + 1, j : j + 1, np.newaxis, :],  # noqa: W503
+                    a_prev_pad[:, v_start:v_end, h_start:h_end, :, np.newaxis] * dz[:, i: i + 1, j: j + 1, np.newaxis, :],  # noqa: W503
                     axis=0,
                 )
 
         dw /= batch_size
 
         if self.pad != 0:
-            da_prev = da_prev_pad[:, self.pad : -self.pad, self.pad : -self.pad, :]
+            da_prev = da_prev_pad[:, self.pad: -self.pad, self.pad: -self.pad, :]
 
         return da_prev, dw, db
 

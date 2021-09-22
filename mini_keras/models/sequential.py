@@ -175,7 +175,9 @@ class Sequential:
         """
         stats = {"train_loss": [], "test_acc": []}
         x_val, y_val = validation_data
-        print(f"Started training (batch_size={mini_batch_size}, learning_rate={learning_rate})")
+        print(
+            f"Started training (batch_size={mini_batch_size}, learning_rate={learning_rate})"
+        )
 
         step = 0
         for e in range(num_epochs):
