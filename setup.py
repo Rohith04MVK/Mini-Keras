@@ -15,7 +15,7 @@ dependencies = {
 
 # -- Constants --
 BASE_DIR = Path(__file__).resolve().parent
-README = Path(BASE_DIR / "README.md").read_text()
+README = Path(BASE_DIR / "README.md").read_text(encoding="utf8")
 
 URL = "https://github.com/Deep-Alchemy/Mini-Keras"
 
