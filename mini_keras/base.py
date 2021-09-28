@@ -6,18 +6,6 @@ import numpy as np
 class BaseCostFunction:
     __slots__ = ()
 
-    @classmethod
-    def __subclasshook__(
-        cls, subclass: "BaseCostFunction"
-    ) -> t.Union[bool, type(NotImplemented)]:
-        return (
-            hasattr(subclass, "f")
-            and callable(subclass.f)  # noqa: W503
-            and hasattr(subclass, "grad")  # noqa: W503
-            and callable(subclass.grad)  # noqa: W503
-            or NotImplemented  # noqa: W503
-        )
-
     def f(self, y_pred, y: t.Union[t.List, np.ndarray]) -> None:
         raise NotImplementedError
 
@@ -27,18 +15,6 @@ class BaseCostFunction:
 
 class BaseActivation:
     __slots__ = ()
-
-    @classmethod
-    def __subclasshook__(
-        cls, subclass: "BaseActivation"
-    ) -> t.Union[bool, type(NotImplemented)]:
-        return (
-            hasattr(subclass, "f")
-            and callable(subclass.f)  # noqa: W503
-            and hasattr(subclass, "df")  # noqa: W503
-            and callable(subclass.df)  # noqa: W503
-            or type(NotImplemented)  # noqa: W503
-        )
 
     def f(self, x: t.Union[t.List, np.ndarray]) -> None:
         raise NotImplementedError
@@ -53,18 +29,6 @@ class BaseOptimizer:
     def __init__(self, trainable_layers) -> None:
         self.trainable_layers = trainable_layers
 
-    @classmethod
-    def __subclasshook__(
-        cls, subclass: "BaseOptimizer"
-    ) -> t.Union[bool, type(NotImplemented)]:
-        return (
-            hasattr(subclass, "initialize")
-            and callable(subclass.initialize)  # noqa: W503
-            and hasattr(subclass, "update")  # noqa: W503
-            and callable(subclass.update)  # noqa: W503
-            or NotImplemented  # noqa: W503
-        )
-
     def initialize(self) -> None:
         raise NotImplementedError
 
@@ -74,26 +38,6 @@ class BaseOptimizer:
 
 class BaseLayer:
     __slots__ = ()
-
-    @classmethod
-    def __subclasshook__(
-        cls, subclass: "BaseLayer"
-    ) -> t.Union[bool, type(NotImplemented)]:
-        return (
-            hasattr(subclass, "initialize")
-            and callable(subclass.initialize)  # noqa: W503
-            and hasattr(subclass, "forward")  # noqa: W503
-            and callable(subclass.forward)  # noqa: W503
-            and hasattr(subclass, "backward")  # noqa: W503
-            and callable(subclass.backward)  # noqa: W503
-            and hasattr(subclass, "update_params")  # noqa: W503
-            and callable(subclass.update_params)  # noqa: W503
-            and hasattr(subclass, "get_params")  # noqa: W503
-            and callable(subclass.get_params)  # noqa: W503
-            and hasattr(subclass, "get_output_dim")  # noqa: W503
-            and callable(subclass.get_output_dim)  # noqa: W503
-            or NotImplemented  # noqa: W503
-        )
 
     def initialize(self, input_dims: t.Union[int, tuple]) -> None:
         """
