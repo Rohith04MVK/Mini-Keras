@@ -18,6 +18,7 @@ flake8-import-order = "~=0.18.1"
 autopep8 = "~=1.5.6"
 ipython = "==7.22.0"
 pre-commit = "~=2.12.0"
+setuptools-rust = "==0.12.1"
 mini-keras = {editable = true, path = "."}
 
 [scripts]

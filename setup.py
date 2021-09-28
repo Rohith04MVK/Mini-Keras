@@ -2,6 +2,13 @@ import re
 from pathlib import Path
 
 import setuptools
+from setuptools_rust import RustExtension
+
+# Setup requires
+setup_requires = [
+    'setuptools-rust>=0.11.1',
+    'wheel',
+]
 
 # Dependencies
 dependencies = {
@@ -31,6 +38,7 @@ if not VERSION:
 
 # -- Setup --
 setuptools.setup(
+    # Project info
     name="Mini-Keras",
     version=VERSION,
 
@@ -41,14 +49,18 @@ setuptools.setup(
     long_description=README,
     long_description_content_type="text/markdown",
 
+    # Project repo info
     license="MIT",
     url=URL,
     project_urls={"Documentation": URL, "Issue tracker": f"{URL}/issues"},
 
+    # Packages in the project
     packages=setuptools.find_packages(exclude=["tests", "tests.*", "tools", "tools.*"]),
 
+    # Dependencies for the package
     install_requires=[f"{k}=={v}" for k, v in dependencies.items()],
 
+    # Classifiers
     classifiers=[
         "Programming Language :: Python :: 3",
         "Programming Language :: Python :: 3.6",
@@ -62,5 +74,17 @@ setuptools.setup(
         "Natural Language :: English",
     ],
 
+    # Python minimum version
     python_requires=">=3.7",
+
+    # Rust extension config
+    rust_extensions=[
+        RustExtension(
+            "mini_keras._mini_keras",
+            debug=False,
+        ),
+    ],
+    setup_requires=setup_requires,
+    include_package_data=True,
+    zip_safe=False,
 )

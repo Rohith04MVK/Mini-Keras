@@ -1,5 +1,8 @@
 import typing as t
 
+# Rust package
+import _mini_keras
+
 from .activations import identity, relu, sigmoid, softmax
 from .layers.conv2D import Conv
 from .layers.dense import Dense
