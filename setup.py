@@ -2,12 +2,12 @@ import re
 from pathlib import Path
 
 import setuptools
-from setuptools_rust import RustExtension
+from setuptools_rust import Binding, RustExtension
 
 # Setup requires
 setup_requires = [
-    'setuptools-rust>=0.11.1',
-    'wheel',
+    "setuptools-rust>=0.11.1",
+    "wheel",
 ]
 
 # Dependencies
@@ -81,7 +81,7 @@ setuptools.setup(
     rust_extensions=[
         RustExtension(
             "mini_keras._mini_keras",
-            debug=False,
+            binding=Binding.PyO3
         ),
     ],
     setup_requires=setup_requires,
