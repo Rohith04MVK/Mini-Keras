@@ -13,7 +13,7 @@ from mini_keras.optimizer import adam
 from mini_keras.utils.encoder import one_hot_encoder
 
 # Loading the data for training
-(x_train, y_train), (x_test, y_test) = mnist.data()
+(x_train, y_train), (x_test, y_test) = mnist.load_data()
 
 
 def preprocess(x_train, y_train, x_test, y_test):
