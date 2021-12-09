@@ -1,6 +1,7 @@
 from functools import reduce
 
 import numpy as np
+from tqdm import tqdm
 
 from ..optimizer import gradient_descent
 
@@ -192,7 +193,7 @@ class Sequential:
                 )
 
             num_mini_batches = len(mini_batches)
-            for i, mini_batch in enumerate(mini_batches, 1):
+            for i, mini_batch in enumerate(tqdm(mini_batches), 1):
                 mini_batch_x, mini_batch_y = mini_batch
                 step += 1
                 epoch_cost += (
