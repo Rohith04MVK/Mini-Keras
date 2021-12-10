@@ -50,7 +50,7 @@ class Conv(BaseLayer):
         self.n_h_prev, self.n_w_prev, self.n_c_prev = None, None, None
         self.w = None
         self.b = None
-        self.activation_dict = activation_dict = {
+        self.activation_dict = {
             "relu": relu,
             "softmax": softmax,
             "sigmoid": sigmoid,
