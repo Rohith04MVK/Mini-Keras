@@ -1,0 +1,14 @@
+[package]
+name = "Mini-Keras"
+version = "0.1.0"
+license = "MIT OR Apache-2.0"
+description = "An advanced and lightweight ML and deep learning library for python."
+author = ["Sunrit Jana <warriordefenderz@gmail.com>", "Rohith <007rohitjj04@gmail.com>"]
+edition = "2018"
+
+[lib]
+name = "_mini_keras"
+crate-type = ["cdylib"]
+
+[dependencies]
+pyo3 = { version = "0.14.5", features = ["extension-module"] }
